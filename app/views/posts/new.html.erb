@@ -1,0 +1,179 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Create New Post</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">Share your content across platforms</p>
+      </div>
+      <%= link_to posts_path, class: "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" do %>
+        ← Back to Posts
+      <% end %>
+    </div>
+  </div>
+
+  <%= form_with model: @post, local: true, class: "space-y-6", data: { controller: "post-form" } do |form| %>
+    <% if @post.errors.any? %>
+      <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+        <h3 class="text-red-800 dark:text-red-400 font-medium mb-2">Please fix the following errors:</h3>
+        <ul class="text-red-700 dark:text-red-300 space-y-1">
+          <% @post.errors.full_messages.each do |message| %>
+            <li>• <%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Main Content Area -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <!-- Content Input -->
+      <div class="p-6">
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            Post Content
+          </label>
+          <%= form.text_area :content, 
+                            placeholder: "What would you like to share?", 
+                            rows: 6,
+                            class: "w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white resize-none",
+                            data: { action: "input->post-form#updateCharacterCount", target: "post-form.contentInput" } %>
+          <div class="flex justify-between items-center mt-2">
+            <span class="text-xs text-gray-500 dark:text-gray-400" data-target="post-form.characterCount">0 characters</span>
+            <div class="flex space-x-2">
+              <button type="button" 
+                      class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                      data-action="click->post-form#generateWithAI">
+                ✨ Generate with AI
+              </button>
+              <button type="button" 
+                      class="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
+                      data-action="click->post-form#optimizeContent">
+                🎯 Optimize Content
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Generation Loading -->
+        <div class="hidden bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4 mb-4" data-target="post-form.aiLoading">
+          <div class="flex items-center">
+            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-3"></div>
+            <span class="text-blue-700 dark:text-blue-300">Generating content with AI...</span>
+          </div>
+        </div>
+
+        <!-- Platform Selection -->
+        <div class="border-t border-gray-200 dark:border-gray-600 pt-6">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Publishing Options</h3>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Platform Selection -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Select Platforms</label>
+              <div class="space-y-2">
+                <!-- Post to All Option -->
+                <label class="flex items-center p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-900/30">
+                  <%= check_box_tag "post[platforms][]", "all", false, 
+                                   id: "platform_all",
+                                   class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded",
+                                   data: { action: "change->post-form#toggleAllPlatforms" } %>
+                  <div class="ml-3">
+                    <span class="text-sm font-medium text-blue-900 dark:text-blue-100">📡 Post to All Connected Platforms</span>
+                    <p class="text-xs text-blue-700 dark:text-blue-300">Publish to all your connected social media accounts</p>
+                  </div>
+                </label>
+
+                <!-- Individual Platforms -->
+                <% if current_user.linkedin_connected? %>
+                  <label class="flex items-center p-3 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <%= check_box_tag "post[platforms][]", "linkedin", false,
+                                     id: "platform_linkedin", 
+                                     class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded individual-platform" %>
+                    <div class="ml-3">
+                      <span class="text-sm font-medium text-gray-900 dark:text-gray-100">💼 LinkedIn</span>
+                      <p class="text-xs text-gray-600 dark:text-gray-400">Professional network • Connected</p>
+                    </div>
+                  </label>
+                <% else %>
+                  <div class="p-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg opacity-60">
+                    <div class="flex items-center">
+                      <span class="text-sm text-gray-500 dark:text-gray-400">💼 LinkedIn</span>
+                      <span class="ml-auto text-xs text-gray-400 dark:text-gray-500">Not connected</span>
+                    </div>
+                  </div>
+                <% end %>
+
+                <!-- Future Platforms -->
+                <div class="p-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg opacity-60">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500 dark:text-gray-400">📘 Facebook • 📸 Instagram • 🎵 TikTok</span>
+                    <span class="text-xs text-gray-400 dark:text-gray-500">Coming Soon</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Scheduling -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Schedule Post</label>
+              <div class="space-y-3">
+                <label class="flex items-center">
+                  <%= radio_button_tag "schedule_option", "now", true, 
+                                      class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300",
+                                      data: { action: "change->post-form#toggleScheduling" } %>
+                  <span class="ml-2 text-sm text-gray-900 dark:text-gray-100">🚀 Publish Now</span>
+                </label>
+                
+                <label class="flex items-center">
+                  <%= radio_button_tag "schedule_option", "schedule", false, 
+                                      class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300",
+                                      data: { action: "change->post-form#toggleScheduling" } %>
+                  <span class="ml-2 text-sm text-gray-900 dark:text-gray-100">⏰ Schedule for Later</span>
+                </label>
+
+                <div class="ml-6 hidden" data-target="post-form.scheduleInput">
+                  <%= form.datetime_local_field :scheduled_for, 
+                                               class: "px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white text-sm" %>
+                </div>
+
+                <label class="flex items-center">
+                  <%= radio_button_tag "schedule_option", "draft", false, 
+                                      class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300" %>
+                  <span class="ml-2 text-sm text-gray-900 dark:text-gray-100">📝 Save as Draft</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-600 dark:text-gray-400">
+            <span class="font-medium"><%= current_user.content_mode.humanize %> Mode</span> • 
+            <% if current_user.ai_enabled? %>
+              <span class="text-green-600 dark:text-green-400">⚡ AI Enabled</span>
+            <% else %>
+              <span class="text-gray-500 dark:text-gray-400">AI Disabled</span>
+            <% end %>
+          </span>
+        </div>
+        
+        <div class="flex space-x-3">
+          <%= link_to "Cancel", posts_path, 
+                     class: "px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" %>
+          
+          <%= form.submit "Create Post", 
+                         class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium",
+                         data: { target: "post-form.submitButton" } %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Add the Stimulus controller for interactive functionality -->
+<script>
+// This will be moved to a proper Stimulus controller file
+</script>

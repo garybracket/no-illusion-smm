@@ -1,0 +1,155 @@
+<div class="relative overflow-hidden">
+  <!-- Hero Section -->
+  <div class="relative bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-16 pb-20">
+    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-6xl md:text-7xl font-extrabold text-gray-900 dark:text-white mb-8 leading-tight">
+          Publish to <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Facebook, Instagram, LinkedIn & TikTok</span> without storing your content.
+        </h1>
+        
+        <p class="text-2xl text-gray-600 dark:text-gray-300 mb-4 max-w-4xl mx-auto">
+          Your posts never touch our database - we process in memory and flush immediately.
+        </p>
+        
+        <p class="text-lg text-gray-500 dark:text-gray-400 mb-12 max-w-3xl mx-auto">
+          Maximum privacy, minimal data collection.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <% if user_signed_in? %>
+            <%= link_to "Go to Dashboard →", dashboard_path, 
+                class: "group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl" %>
+          <% else %>
+            <%= link_to "Get Started Free →", user_auth0_omniauth_authorize_path,
+                class: "group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl text-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl" %>
+            <%= link_to "Sign In", user_auth0_omniauth_authorize_path,
+                class: "bg-white border-2 border-gray-200 text-gray-700 px-8 py-4 rounded-xl text-lg font-semibold hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 shadow-md hover:shadow-lg" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mission Statement -->
+  <div class="bg-white dark:bg-gray-800 py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/30 dark:to-purple-900/30 border border-blue-100 dark:border-gray-700 rounded-2xl p-8 md:p-12 shadow-xl">
+        <div class="text-center">
+          <h2 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+            Built Different. <span class="text-blue-600">Built Honest.</span>
+          </h2>
+          <p class="text-xl text-gray-700 dark:text-gray-300 leading-relaxed max-w-4xl mx-auto">
+            Unlike big corporations and consulting firms, we don't take advantage of people who don't understand technology. 
+            Built by someone who started as a teen fixing computers and spent 20+ years patiently helping non-tech users 
+            navigate technology, we provide honest social media tools that <strong>empower</strong> small business owners - not exploit them.
+          </p>
+          <div class="mt-8 flex items-center justify-center space-x-2 text-gray-600 dark:text-gray-400">
+            <span class="text-2xl">🛡️</span>
+            <span class="font-medium">Privacy-First</span>
+            <span class="text-gray-400">•</span>
+            <span class="text-2xl">⚡</span>
+            <span class="font-medium">Optional AI</span>
+            <span class="text-gray-400">•</span>
+            <span class="text-2xl">📊</span>
+            <span class="font-medium">Transparent Tools</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Grid -->
+  <div class="bg-gray-50 dark:bg-gray-900 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Why Choose No iLLusion Social?</h2>
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-4">Seamless publishing across Facebook, Instagram, LinkedIn & TikTok with optional AI assistance — all in one transparent platform.</p>
+        <p class="text-lg text-gray-500 dark:text-gray-400">No games, no gimmicks. Just honest tools that work.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Zero-Storage Content Processing -->
+        <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-gradient-to-r from-green-400 to-green-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">Zero-Storage Content Processing</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-4">
+            Your content exists only in memory during processing, then gets published and immediately deleted. 
+            We literally cannot see your posts - and that's by design. Optional AI assistance available if you choose to enable it.
+          </p>
+          <div class="bg-green-50 dark:bg-green-900/30 rounded-lg px-4 py-2 mx-auto w-fit">
+            <p class="text-sm font-medium text-green-800 dark:text-green-200">✓ Processed in-memory, never stored</p>
+          </div>
+        </div>
+        
+        <!-- Secure API-Only Publishing -->
+        <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-gradient-to-r from-blue-400 to-blue-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">Secure API-Only Publishing</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-4">
+            We connect directly to platform APIs to publish your content. No passwords stored, no account data saved - 
+            just secure, encrypted API connections. Complete control over your authentication.
+          </p>
+          <div class="bg-blue-50 dark:bg-blue-900/30 rounded-lg px-4 py-2 mx-auto w-fit">
+            <p class="text-sm font-medium text-blue-800 dark:text-blue-200">✓ API-direct, password-free</p>
+          </div>
+        </div>
+        
+        <!-- Creator & Entrepreneur Focused -->
+        <div class="group bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+          <div class="bg-gradient-to-r from-purple-400 to-purple-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 text-center">Creator & Entrepreneur Focused</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-center leading-relaxed mb-4">
+            Stop working long hours managing multiple platforms. Reduce self-advertising workload and focus on what you do best - 
+            creating and building your business. Transparent tools that empower, not exploit.
+          </p>
+          <div class="bg-purple-50 dark:bg-purple-900/30 rounded-lg px-4 py-2 mx-auto w-fit">
+            <p class="text-sm font-medium text-purple-800 dark:text-purple-200">✓ Less work, more focus</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Proof / Platforms -->
+  <div class="bg-white dark:bg-gray-800 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <p class="text-lg font-medium text-gray-600 dark:text-gray-300 mb-8">Publish seamlessly to all major platforms</p>
+        <div class="flex items-center justify-center space-x-12 opacity-60">
+          <div class="text-4xl">📘</div>
+          <div class="text-4xl">📷</div>
+          <div class="text-4xl">💼</div>
+          <div class="text-4xl">🎵</div>
+        </div>
+        <div class="flex items-center justify-center space-x-12 mt-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+          <span>Facebook</span>
+          <span>Instagram</span>
+          <span>LinkedIn</span>
+          <span>TikTok</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+</style>

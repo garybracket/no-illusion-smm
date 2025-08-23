@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No iLLusion Social - Feature Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            padding: 40px 0;
+        }
+        
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .brand {
+            color: #00d4ff;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .feature-section {
+            margin-bottom: 50px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .feature-section h2 {
+            font-size: 2.2em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 24px;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .feature-card h3 {
+            color: #495057;
+            font-size: 1.3em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-icon {
+            width: 24px;
+            height: 24px;
+            background: #667eea;
+            border-radius: 6px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .feature-card p {
+            color: #6c757d;
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ecef;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .feature-list li:before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .status-complete {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-partial {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .tech-stack {
+            background: linear-gradient(135deg, #00d4ff, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .tech-stack h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .tech-category {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tech-category h4 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #00d4ff;
+        }
+        
+        .workflow-section {
+            background: #e8f4f8;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        
+        .workflow-step {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .footer a {
+            color: #00d4ff;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .feature-section h2 {
+                font-size: 1.8em;
+            }
+            
+            .workflow-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><span class="brand">No iLLusion</span> Social</h1>
+            <p>Complete Feature Documentation & Technical Overview</p>
+        </div>
+        
+        <div class="main-content">
+            <!-- Authentication & Security -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">🔐</div>
+                    Authentication & Security
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">A</div>Auth0 Integration</h3>
+                        <p>Enterprise-grade authentication with Auth0 SDK v4.9.0</p>
+                        <ul class="feature-list">
+                            <li>Automatic route mounting at /auth/*</li>
+                            <li>Centralized session management</li>
+                            <li>Complete v4 migration compatibility</li>
+                            <li>Production-ready on smm.no-illusion.com</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🛡</div>Security Features</h3>
+                        <p>Comprehensive security measures and data protection</p>
+                        <ul class="feature-list">
+                            <li>Route protection middleware</li>
+                            <li>Encrypted API key storage</li>
+                            <li>Session-based access control</li>
+                            <li>Environment-specific configurations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Multi-Provider AI System -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">🤖</div>
+                    Multi-Provider AI System
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">AI</div>AI Providers</h3>
+                        <p>Support for multiple AI content generation providers</p>
+                        <ul class="feature-list">
+                            <li>OpenAI (ChatGPT) integration</li>
+                            <li>Anthropic (Claude) integration</li>
+                            <li>Google (Gemini) integration</li>
+                            <li>User-configurable API keys</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🔄</div>Intelligent Fallback</h3>
+                        <p>Smart cycling between providers when rate limits are hit</p>
+                        <ul class="feature-list">
+                            <li>Automatic provider switching</li>
+                            <li>Priority-based selection (1st, 2nd, 3rd choice)</li>
+                            <li>Rate limit intelligence</li>
+                            <li>Proactive switching before limits</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📊</div>Usage Analytics</h3>
+                        <p>Comprehensive tracking of AI usage and costs</p>
+                        <ul class="feature-list">
+                            <li>Token usage tracking</li>
+                            <li>Real-time cost estimates</li>
+                            <li>Performance monitoring</li>
+                            <li>Success rates and error tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Integration -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">📱</div>
+                    Social Media Integration
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📘</div>Facebook & Instagram</h3>
+                        <p>Complete Facebook Graph API and Instagram Business API integration</p>
+                        <ul class="feature-list">
+                            <li>OAuth 2.0 authentication flow</li>
+                            <li>Post to Facebook pages</li>
+                            <li>Instagram Business account posting</li>
+                            <li>Real-time status tracking</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">💼</div>LinkedIn Integration</h3>
+                        <p>LinkedIn API v2 for professional networking</p>
+                        <ul class="feature-list">
+                            <li>Personal profile posting</li>
+                            <li>Company page management</li>
+                            <li>Professional content optimization</li>
+                            <li>Profile data import/export</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🎵</div>TikTok for Business</h3>
+                        <p>TikTok for Business API with video support</p>
+                        <ul class="feature-list">
+                            <li>Video upload capabilities</li>
+                            <li>Business account integration</li>
+                            <li>Content scheduling support</li>
+                            <li>Performance tracking</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Creation & Management -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">✍️</div>
+                    Content Creation & Management
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📝</div>Post Creator</h3>
+                        <p>Advanced content creation interface with multiple options</p>
+                        <ul class="feature-list">
+                            <li>Manual content creation</li>
+                            <li>AI-assisted generation (optional)</li>
+                            <li>Multi-platform targeting</li>
+                            <li>Image upload support</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🎯</div>Content Modes</h3>
+                        <p>Different content styles for various use cases</p>
+                        <ul class="feature-list">
+                            <li>Business Mode: Professional, mission-aligned</li>
+                            <li>Influencer Mode: Platform-specific, trendy</li>
+                            <li>Personal Mode: Casual, authentic</li>
+                            <li>Skills-based contextualization</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📄</div>Content Options</h3>
+                        <p>Multiple approaches to content generation</p>
+                        <ul class="feature-list">
+                            <li>Skills-based AI content</li>
+                            <li>Bio-based AI content</li>
+                            <li>Industry-specific content</li>
+                            <li>Mission statement integration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics & Insights -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">📊</div>
+                    Analytics & Insights
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📈</div>Social Media Analytics</h3>
+                        <p>Comprehensive performance tracking across all platforms</p>
+                        <ul class="feature-list">
+                            <li>Real-time metrics collection</li>
+                            <li>Platform performance comparison</li>
+                            <li>User growth tracking</li>
+                            <li>Top performing posts analysis</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🤖</div>AI Usage Dashboard</h3>
+                        <p>Detailed AI usage and cost tracking interface</p>
+                        <ul class="feature-list">
+                            <li>Provider-specific usage metrics</li>
+                            <li>Cost breakdown and estimates</li>
+                            <li>Performance monitoring</li>
+                            <li>Usage trends and insights</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📅</div>Date Range Filtering</h3>
+                        <p>Flexible analytics with customizable time ranges</p>
+                        <ul class="feature-list">
+                            <li>Monthly growth metrics</li>
+                            <li>Custom date range selection</li>
+                            <li>Trend analysis capabilities</li>
+                            <li>Data refresh functionality</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile & User Management -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">👤</div>
+                    Profile & User Management
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">⚙️</div>Profile Configuration</h3>
+                        <p>Comprehensive user profile management system</p>
+                        <ul class="feature-list">
+                            <li>Skills selection and management</li>
+                            <li>Mission statement integration</li>
+                            <li>Bio and personal information</li>
+                            <li>Content mode preferences</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🔧</div>AI Preferences</h3>
+                        <p>Granular control over AI features and providers</p>
+                        <ul class="feature-list">
+                            <li>Enable/disable specific AI features</li>
+                            <li>Provider priority configuration</li>
+                            <li>API key management per provider</li>
+                            <li>Fallback cycling settings</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">💼</div>LinkedIn Sync</h3>
+                        <p>Professional profile synchronization capabilities</p>
+                        <ul class="feature-list">
+                            <li>Import LinkedIn profile data</li>
+                            <li>Export profile information</li>
+                            <li>Skill synchronization</li>
+                            <li>Professional experience import</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notification System -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">🔔</div>
+                    Notification System
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📧</div>Email Notifications</h3>
+                        <p>Multi-provider email notification system</p>
+                        <ul class="feature-list">
+                            <li>Resend API integration</li>
+                            <li>SMTP fallback support</li>
+                            <li>Welcome emails</li>
+                            <li>Post status notifications</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🔔</div>In-App Notifications</h3>
+                        <p>Real-time notification system with persistence</p>
+                        <ul class="feature-list">
+                            <li>Notification bell with unread count</li>
+                            <li>Dropdown interface</li>
+                            <li>Real-time updates</li>
+                            <li>Persistent notification history</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Architecture -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">🗄️</div>
+                    Database Architecture
+                    <span class="status-badge status-complete">✓ Complete</span>
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🐘</div>Production Database</h3>
+                        <p>Supabase PostgreSQL with complete schema</p>
+                        <ul class="feature-list">
+                            <li>User profiles with Auth0 integration</li>
+                            <li>Platform connections management</li>
+                            <li>Posts and publishing logs</li>
+                            <li>Analytics data storage</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">💾</div>Local Development</h3>
+                        <p>SQLite database for offline development</p>
+                        <ul class="feature-list">
+                            <li>Identical schema to production</li>
+                            <li>Local development support</li>
+                            <li>Easy setup and initialization</li>
+                            <li>Data migration support</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">📊</div>Specialized Tables</h3>
+                        <p>Purpose-built tables for specific features</p>
+                        <ul class="feature-list">
+                            <li>AI usage tracking</li>
+                            <li>Rate limits monitoring</li>
+                            <li>Post analytics storage</li>
+                            <li>Notification management</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical Stack -->
+            <div class="tech-stack">
+                <h3>🛠️ Technical Stack</h3>
+                <div class="tech-grid">
+                    <div class="tech-category">
+                        <h4>Frontend</h4>
+                        <ul>
+                            <li>Next.js 15 (App Router)</li>
+                            <li>TypeScript</li>
+                            <li>Tailwind CSS</li>
+                            <li>React 19</li>
+                            <li>Lucide Icons</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h4>Authentication</h4>
+                        <ul>
+                            <li>Auth0 SDK v4.9.0</li>
+                            <li>Session Management</li>
+                            <li>Route Protection</li>
+                            <li>Centralized Client</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h4>Database</h4>
+                        <ul>
+                            <li>Supabase PostgreSQL</li>
+                            <li>SQLite (Local Dev)</li>
+                            <li>Better-SQLite3</li>
+                            <li>Database Migrations</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h4>AI Services</h4>
+                        <ul>
+                            <li>OpenAI GPT API</li>
+                            <li>Anthropic Claude API</li>
+                            <li>Google Gemini API</li>
+                            <li>Multi-provider cycling</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h4>Social APIs</h4>
+                        <ul>
+                            <li>Facebook Graph API</li>
+                            <li>Instagram Business API</li>
+                            <li>LinkedIn API v2</li>
+                            <li>TikTok for Business API</li>
+                        </ul>
+                    </div>
+                    <div class="tech-category">
+                        <h4>Email Services</h4>
+                        <ul>
+                            <li>Resend API</li>
+                            <li>Nodemailer (SMTP)</li>
+                            <li>Email Templates</li>
+                            <li>Notification System</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Workflow -->
+            <div class="workflow-section">
+                <h3>🔄 Complete User Workflow</h3>
+                <div class="workflow-steps">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <h4>Registration & Setup</h4>
+                        <p>User signs up with Auth0, creates profile, and configures skills and preferences</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <h4>Platform Connection</h4>
+                        <p>Connect Facebook, Instagram, LinkedIn, and TikTok accounts via OAuth flows</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <h4>AI Configuration</h4>
+                        <p>Set up AI provider preferences, API keys, and content generation settings</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">4</div>
+                        <h4>Content Creation</h4>
+                        <p>Create posts manually or with AI assistance, target multiple platforms</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">5</div>
+                        <h4>Publishing & Tracking</h4>
+                        <p>Publish to selected platforms, track status, and monitor performance</p>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">6</div>
+                        <h4>Analytics & Insights</h4>
+                        <p>View comprehensive analytics, AI usage costs, and performance metrics</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Current Status -->
+            <div class="feature-section">
+                <h2>
+                    <div class="feature-icon">🎯</div>
+                    Current Development Status
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><div class="card-icon">✅</div>Completed Milestones</h3>
+                        <ul class="feature-list">
+                            <li>M1: Auth + Infrastructure</li>
+                            <li>M2: Profile Management</li>
+                            <li>M2b: Notifications & Email System</li>
+                            <li>M2c: UI/UX Enhancements</li>
+                            <li>M2d: Brand Consistency</li>
+                            <li>M3: Social Media API Integration</li>
+                            <li>M4: Smart Analytics Implementation</li>
+                            <li>M4.5: Multi-Provider AI System</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h3><div class="card-icon">🚧</div>Ready for Implementation</h3>
+                        <ul class="feature-list">
+                            <li>M5: Post Scheduling & Management</li>
+                            <li>M6: Analytics Export & Advanced Insights</li>
+                            <li>M7: Content Templates & Advanced AI Features</li>
+                            <li>M8: Advanced User Experience</li>
+                            <li>M9: Production Polish & Scale</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Made with ❤️ for small businesses</p>
+            <p><a href="https://no-illusion.com" target="_blank">Designed, created, and property of No iLLusion Software</a></p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">
+                Running locally at <strong>http://localhost:3000</strong> • 
+                Generated: <%= new Date().toLocaleDateString() %>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

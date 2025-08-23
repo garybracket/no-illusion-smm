@@ -1,0 +1,187 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">LinkedIn Profile Export</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">Copy and paste this formatted content to update your LinkedIn profile</p>
+      </div>
+      <%= link_to dashboard_path, class: "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" do %>
+        ← Back to Dashboard
+      <% end %>
+    </div>
+  </div>
+
+  <% if @formatted_profile.present? %>
+    <!-- Professional Headline -->
+    <% if @formatted_profile[:headline].present? %>
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+            <svg class="w-5 h-5 mr-2 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+            </svg>
+            Professional Headline
+          </h2>
+          <button onclick="copyToClipboard('headline-content')" class="bg-blue-600 text-white px-3 py-1 rounded text-sm hover:bg-blue-700 transition-colors">
+            Copy
+          </button>
+        </div>
+        <div id="headline-content" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm text-gray-800 dark:text-gray-200">
+          <%= @formatted_profile[:headline] %>
+        </div>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          Paste this into your LinkedIn headline/title field
+        </p>
+      </div>
+    <% end %>
+
+    <!-- About Section -->
+    <% if @formatted_profile[:about].present? %>
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+            <svg class="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            About Section
+          </h2>
+          <button onclick="copyToClipboard('about-content')" class="bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition-colors">
+            Copy
+          </button>
+        </div>
+        <div id="about-content" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm text-gray-800 dark:text-gray-200 whitespace-pre-line">
+<%= @formatted_profile[:about] %></div>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          Paste this into your LinkedIn "About" section
+        </p>
+      </div>
+    <% end %>
+
+    <!-- Skills -->
+    <% if @formatted_profile[:skills].present? %>
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+            <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364-.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+            Skills List
+          </h2>
+          <button onclick="copyToClipboard('skills-content')" class="bg-purple-600 text-white px-3 py-1 rounded text-sm hover:bg-purple-700 transition-colors">
+            Copy
+          </button>
+        </div>
+        <div id="skills-content" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <% @formatted_profile[:skills].each do |skill| %>
+              <span class="inline-block bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 text-xs px-2 py-1 rounded font-medium">
+                <%= skill %>
+              </span>
+            <% end %>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          Add these skills to your LinkedIn Skills section (search for each skill and add individually)
+        </p>
+      </div>
+    <% end %>
+
+    <!-- Experience Templates -->
+    <% if @formatted_profile[:experience_template].present? %>
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
+            <svg class="w-5 h-5 mr-2 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+            Experience Templates
+          </h2>
+        </div>
+        
+        <div class="space-y-4">
+          <% @formatted_profile[:experience_template].each do |key, template| %>
+            <div class="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+              <h3 class="font-medium text-gray-900 dark:text-white mb-2"><%= template[:title] %></h3>
+              <div class="bg-gray-50 dark:bg-gray-700 rounded p-3 font-mono text-sm text-gray-700 dark:text-gray-300">
+                <%= template[:description] %>
+              </div>
+              <button onclick="copyToClipboard('exp-<%= key %>')" class="mt-2 bg-orange-600 text-white px-3 py-1 rounded text-xs hover:bg-orange-700 transition-colors">
+                Copy Description
+              </button>
+              <script>
+                document.getElementById('exp-<%= key %>').innerHTML = '<%= escape_javascript(template[:description]) %>';
+              </script>
+            </div>
+          <% end %>
+        </div>
+        
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-4">
+          Use these as templates when adding work experience to your LinkedIn profile
+        </p>
+      </div>
+    <% end %>
+
+    <!-- Instructions -->
+    <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-xl p-6">
+      <h3 class="text-lg font-semibold text-blue-800 dark:text-blue-300 mb-4">📋 How to Update Your LinkedIn Profile</h3>
+      <ol class="list-decimal list-inside space-y-2 text-blue-700 dark:text-blue-300 text-sm">
+        <li>Go to your <a href="https://www.linkedin.com/in/me/" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-600">LinkedIn profile page</a></li>
+        <li>Click the "Edit" pencil icon on each section you want to update</li>
+        <li>Copy the content from the boxes above and paste into the corresponding LinkedIn fields</li>
+        <li>For skills: Go to the Skills section and add each skill individually using LinkedIn's search</li>
+        <li>Save your changes and review how your profile looks</li>
+      </ol>
+      
+      <div class="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700 rounded">
+        <p class="text-yellow-800 dark:text-yellow-300 text-xs">
+          <strong>Note:</strong> LinkedIn doesn't allow automatic profile updates via API. You'll need to manually copy and paste this content.
+        </p>
+      </div>
+    </div>
+
+  <% else %>
+    <!-- No data available -->
+    <div class="text-center py-12">
+      <div class="mx-auto w-24 h-24 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-4">
+        <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No export data available</h3>
+      <p class="text-gray-600 dark:text-gray-400 mb-6">Complete your app profile first, then try exporting again.</p>
+      <%= link_to edit_user_profile_path, 
+                 class: "bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium inline-flex items-center" do %>
+        Edit Profile
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Copy to clipboard functionality -->
+<script>
+function copyToClipboard(elementId) {
+  const element = document.getElementById(elementId);
+  const text = element.textContent || element.innerText;
+  
+  navigator.clipboard.writeText(text).then(function() {
+    // Show success feedback
+    const button = event.target;
+    const originalText = button.textContent;
+    button.textContent = 'Copied!';
+    button.classList.add('bg-green-600');
+    button.classList.remove('bg-blue-600', 'bg-green-600', 'bg-purple-600', 'bg-orange-600');
+    
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.className = button.className.replace('bg-green-600', '');
+      if (originalText === 'Copy') {
+        button.classList.add('bg-blue-600');
+      }
+    }, 2000);
+  }).catch(function(err) {
+    console.error('Could not copy text: ', err);
+    alert('Copy failed. Please select and copy the text manually.');
+  });
+}
+</script>

@@ -1,0 +1,11 @@
+<%# Auth0-only authentication - most Devise features disabled %>
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%- if provider == :auth0 %>
+      <%= button_to "Sign in with Auth0", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+    <%- elsif provider == :linkedin %>
+      <%# LinkedIn is for platform connection, not user authentication %>
+      <%= button_to "Connect LinkedIn", omniauth_authorize_path(resource_name, provider), data: { turbo: false } %><br />
+    <% end %>
+  <% end %>
+<% end %>

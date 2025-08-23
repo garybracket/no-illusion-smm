@@ -1,0 +1,459 @@
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
+  <div class="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+    <!-- Header Section -->
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold text-gray-900 dark:text-white mb-4">Privacy Policy</h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+        Your privacy is our priority. We believe in transparency and honest communication about how your data is used.
+      </p>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden">
+      <div class="p-12">
+        <div class="prose prose-lg max-w-none">
+        <!-- Date Banner -->
+        <div class="bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 p-6 mb-8 rounded-r-lg">
+          <div class="flex items-center">
+            <div class="flex-shrink-0">
+              <svg class="h-4 w-4 text-blue-500 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <p class="text-sm font-medium text-blue-800 dark:text-blue-200">
+                <strong>Effective Date:</strong> <%= Date.current.strftime("%B %d, %Y") %> &nbsp;•&nbsp; 
+                <strong>Last Updated:</strong> <%= Date.current.strftime("%B %d, %Y") %>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Philosophy Highlight -->
+        <div class="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/30 dark:to-blue-900/30 border border-green-200 dark:border-green-700 rounded-xl p-8 mb-10">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <svg class="h-5 w-5 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="ml-4">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Our Privacy Philosophy</h3>
+              <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                Unlike big corporations, we don't take advantage of people who don't understand technology. 
+                We believe in transparency, honest communication, and user empowerment over predatory practices.
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-12 mb-6 border-b border-gray-200 dark:border-gray-600 pb-3">1. Introduction</h2>
+        <div class="text-gray-700 dark:text-gray-300 leading-relaxed space-y-4">
+          <p>
+            No iLLusion Software ("we," "our," or "us") operates the No iLLusion SMM social media management platform (the "Service"). 
+            This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our Service.
+          </p>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-12 mb-6 border-b border-gray-200 dark:border-gray-600 pb-3">2. Information We Collect</h2>
+      
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
+            <svg class="h-4 w-4 text-blue-600 dark:text-blue-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            2.1 Authentication Data (via Auth0)
+          </h3>
+          <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full mr-3"></span>Email address</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full mr-3"></span>Name</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full mr-3"></span>Auth0 user identifier</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-blue-500 dark:bg-blue-400 rounded-full mr-3"></span>Sign-in timestamps and IP addresses (for security)</li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
+            <svg class="h-4 w-4 text-green-600 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            2.2 Profile Information
+          </h3>
+          <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full mr-3"></span>Bio and mission statement</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full mr-3"></span>Skills and expertise areas</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full mr-3"></span>Content mode preferences (business/influencer/personal)</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full mr-3"></span>AI feature preferences and settings</li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-6">
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
+            <svg class="h-4 w-4 text-purple-600 dark:text-purple-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+            2.3 Social Media Platform Data
+          </h3>
+          <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-3"></span><strong>LinkedIn:</strong> Access tokens, profile ID, name, email, profile URL</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-3"></span><strong>Platform Content:</strong> Posts you create and publish through our Service</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-3"></span><strong>Publishing Logs:</strong> Success/failure status of posts, platform responses</li>
+          </ul>
+        </div>
+
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
+            <svg class="h-4 w-4 text-indigo-600 dark:text-indigo-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            2.4 AI Usage Data
+          </h3>
+          <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-indigo-500 dark:bg-indigo-400 rounded-full mr-3"></span>Content generation requests and responses</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-indigo-500 dark:bg-indigo-400 rounded-full mr-3"></span>Multiple AI service providers (OpenAI, Anthropic, Google, etc.) for content generation</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-indigo-500 dark:bg-indigo-400 rounded-full mr-3"></span>Token usage and API costs (for transparency)</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-indigo-500 dark:bg-indigo-400 rounded-full mr-3"></span>Generated content (temporarily stored for delivery)</li>
+          </ul>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-12 mb-6 border-b border-gray-200 dark:border-gray-600 pb-3">3. How We Use Your Information</h2>
+        
+        <div class="grid md:grid-cols-1 gap-6 mb-8">
+          <div class="bg-blue-50 rounded-lg p-6 border border-blue-200">
+            <h3 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+              <svg class="h-4 w-4 text-blue-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              3.1 Service Provision
+            </h3>
+            <ul class="space-y-2 text-blue-700">
+              <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Authenticate and manage your account</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Generate AI-powered social media content</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Publish content to your connected social media platforms</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Provide personalized content suggestions based on your profile</li>
+            </ul>
+          </div>
+          
+          <div class="bg-green-50 rounded-lg p-6 border border-green-200">
+            <h3 class="text-xl font-semibold text-green-800 mb-4 flex items-center">
+              <svg class="h-4 w-4 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+              3.2 Platform Integration
+            </h3>
+            <ul class="space-y-2 text-green-700">
+              <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Connect and maintain connections to LinkedIn and other platforms</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Post content on your behalf with your explicit authorization</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Retrieve profile information to enhance content personalization</li>
+            </ul>
+          </div>
+          
+          <div class="bg-purple-50 rounded-lg p-6 border border-purple-200">
+            <h3 class="text-xl font-semibold text-purple-800 mb-4 flex items-center">
+              <svg class="h-4 w-4 text-purple-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+              3.3 AI Content Generation
+            </h3>
+            <ul class="space-y-2 text-purple-700">
+              <li class="flex items-start"><span class="w-2 h-2 bg-purple-500 rounded-full mr-3 mt-2"></span>Process your prompts through multiple AI providers (OpenAI, Anthropic, Google AI, etc.)</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-purple-500 rounded-full mr-3 mt-2"></span>Customize content based on your content mode and profile</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-purple-500 rounded-full mr-3 mt-2"></span>Track AI usage for cost transparency and service improvement</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-12 mb-6 border-b border-gray-200 dark:border-gray-600 pb-3">4. Data Sharing and Disclosure</h2>
+      
+        <div class="bg-yellow-50 rounded-lg p-6 border border-yellow-200 mb-6">
+          <h3 class="text-xl font-semibold text-yellow-800 mb-4 flex items-center">
+            <svg class="h-4 w-4 text-yellow-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+            </svg>
+            4.1 Third-Party Services
+          </h3>
+          <p class="text-yellow-800 font-medium mb-4">We share data with the following trusted services for specific purposes:</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-white rounded-lg p-4 border border-yellow-300">
+              <h4 class="font-semibold text-yellow-800 mb-2">🔐 Auth0</h4>
+              <p class="text-sm text-yellow-700">Authentication and user identity management</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-yellow-300">
+              <h4 class="font-semibold text-yellow-800 mb-2">🤖 AI Service Providers</h4>
+              <p class="text-sm text-yellow-700">Multiple AI providers (OpenAI, Anthropic, Google AI, etc.) for content generation (prompts and responses)</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-yellow-300">
+              <h4 class="font-semibold text-yellow-800 mb-2">💼 LinkedIn</h4>
+              <p class="text-sm text-yellow-700">Profile information and content posting (with your authorization)</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-yellow-300">
+              <h4 class="font-semibold text-yellow-800 mb-2">☁️ Heroku/PostgreSQL</h4>
+              <p class="text-sm text-yellow-700">Secure data hosting and storage</p>
+            </div>
+          </div>
+        </div>
+
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">4.2 Legal Requirements</h3>
+      <p>We may disclose information if required by law or to:</p>
+      <ul class="list-disc pl-6 mb-4">
+        <li>Comply with legal process or government requests</li>
+        <li>Protect our rights, property, or safety</li>
+        <li>Investigate potential violations of our terms</li>
+      </ul>
+
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">4.3 No Sale of Personal Data</h3>
+        <div class="bg-gradient-to-r from-green-100 to-emerald-100 border-l-4 border-green-500 p-6 rounded-r-xl my-8">
+          <div class="flex items-center">
+            <svg class="h-5 w-5 text-green-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.818-4.954A9 9 0 1112 21a9 9 0 01-9-9 9 9 0 019-9z" />
+            </svg>
+            <div>
+              <h4 class="text-lg font-bold text-green-800 mb-1">No Data Sales - Ever</h4>
+              <p class="text-green-700 font-medium">
+                We do NOT sell, rent, or trade your personal information to third parties. 
+                This is a core principle of our anti-predatory business philosophy.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-12 mb-6 border-b border-gray-200 dark:border-gray-600 pb-3">5. Data Security</h2>
+      
+      <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 border border-blue-200 dark:border-blue-700 rounded-xl p-8 mb-8">
+        <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-6 flex items-center">
+          <svg class="h-6 w-6 text-blue-600 dark:text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.818-4.954A9 9 0 1112 21a9 9 0 01-9-9 9 9 0 019-9z" />
+          </svg>
+          5.1 Enterprise-Grade Security Measures
+        </h3>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h4 class="font-semibold text-gray-900 dark:text-white">Encryption at Rest</h4>
+                <p class="text-gray-700 dark:text-gray-300 text-sm">All social media access tokens and sensitive data encrypted using industry-standard AES-256 encryption</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h4 class="font-semibold text-gray-900 dark:text-white">Encryption in Transit</h4>
+                <p class="text-gray-700 dark:text-gray-300 text-sm">All data transmission protected by TLS 1.3 encryption via HTTPS. No unencrypted communications, ever.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h4 class="font-semibold text-gray-900 dark:text-white">Zero-Storage Processing</h4>
+                <p class="text-gray-700 dark:text-gray-300 text-sm">Content processed in-memory only, immediately flushed after publishing. We literally cannot access your posts.</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="space-y-4">
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h4 class="font-semibold text-gray-900 dark:text-white">Auth0 Enterprise Security</h4>
+                <p class="text-gray-700 dark:text-gray-300 text-sm">Industry-standard authentication with multi-factor authentication (MFA) support and OAuth 2.0</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h4 class="font-semibold text-gray-900 dark:text-white">Access Controls & Auditing</h4>
+                <p class="text-gray-700 dark:text-gray-300 text-sm">Strict role-based access controls with comprehensive audit logging and security monitoring</p>
+              </div>
+            </div>
+            
+            <div class="flex items-start">
+              <div class="flex-shrink-0">
+                <svg class="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div class="ml-3">
+                <h4 class="font-semibold text-gray-900 dark:text-white">Regular Security Updates</h4>
+                <p class="text-gray-700 dark:text-gray-300 text-sm">Proactive security patches, dependency updates, and vulnerability assessments</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">5.2 Data Retention</h3>
+      <ul class="list-disc pl-6 mb-4">
+        <li><strong>Account Data:</strong> Retained while your account is active</li>
+        <li><strong>Generated Content:</strong> Stored only as long as necessary for service delivery</li>
+        <li><strong>Access Tokens:</strong> Automatically expire and are refreshed as needed</li>
+        <li><strong>Logs:</strong> Security and error logs retained for 90 days maximum</li>
+      </ul>
+
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">6. Your Rights and Choices</h2>
+      
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">6.1 Account Control</h3>
+      <ul class="list-disc pl-6 mb-4">
+        <li><strong>Profile Management:</strong> Update your profile information at any time</li>
+        <li><strong>Platform Connections:</strong> Disconnect social media accounts whenever you want</li>
+        <li><strong>AI Settings:</strong> Enable/disable AI features or modify preferences</li>
+        <li><strong>Account Deletion:</strong> Delete your account and all associated data</li>
+      </ul>
+
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">6.2 GDPR Rights (EU Residents)</h3>
+      <ul class="list-disc pl-6 mb-4">
+        <li><strong>Access:</strong> Request a copy of your personal data</li>
+        <li><strong>Rectification:</strong> Correct inaccurate personal data</li>
+        <li><strong>Erasure:</strong> Request deletion of your personal data</li>
+        <li><strong>Portability:</strong> Export your data in a machine-readable format</li>
+        <li><strong>Objection:</strong> Object to processing of your personal data</li>
+      </ul>
+
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">6.3 CCPA Rights (California Residents)</h3>
+      <ul class="list-disc pl-6 mb-4">
+        <li>Right to know what personal information is collected</li>
+        <li>Right to delete personal information</li>
+        <li>Right to opt-out of sale (though we don't sell data)</li>
+        <li>Right to non-discrimination for exercising these rights</li>
+      </ul>
+
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">7. AI and Content Generation</h2>
+      
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">7.1 AI Processing</h3>
+      <div class="bg-yellow-50 dark:bg-yellow-900/30 border border-yellow-200 dark:border-yellow-700 rounded-lg p-6 mb-6">
+        <h4 class="font-semibold text-yellow-800 dark:text-yellow-200 mb-3 flex items-center">
+          <svg class="h-5 w-5 text-yellow-600 dark:text-yellow-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Multiple AI Service Providers
+        </h4>
+        <p class="text-yellow-800 dark:text-yellow-200 mb-4">
+          We use a combination of AI providers to offer the best content generation experience. Your prompts may be processed by:
+        </p>
+        <ul class="space-y-2 text-yellow-700 dark:text-yellow-300">
+          <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 dark:bg-yellow-400 rounded-full mr-3"></span><strong>OpenAI:</strong> GPT models for versatile content generation</li>
+          <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 dark:bg-yellow-400 rounded-full mr-3"></span><strong>Anthropic:</strong> Claude models for thoughtful, nuanced content</li>
+          <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 dark:bg-yellow-400 rounded-full mr-3"></span><strong>Google AI:</strong> Gemini models for research and factual content</li>
+          <li class="flex items-center"><span class="w-2 h-2 bg-yellow-500 dark:bg-yellow-400 rounded-full mr-3"></span><strong>Other providers:</strong> Additional specialized AI services as we expand</li>
+        </ul>
+        <p class="text-yellow-700 dark:text-yellow-300 mt-4 text-sm">
+          <strong>Important:</strong> Each AI provider may process your data according to their respective privacy policies. 
+          We select providers based on their privacy standards and data handling practices.
+        </p>
+      </div>
+      <ul class="list-disc pl-6 mb-4 text-gray-700 dark:text-gray-300">
+        <li>Generated content is returned to you and may be temporarily stored for delivery</li>
+        <li>You retain ownership of all content you create or generate</li>
+        <li>You can opt out of AI features entirely if you prefer manual content creation</li>
+      </ul>
+
+      <h3 class="text-xl font-medium text-gray-800 dark:text-gray-200 mt-6 mb-3">7.2 Content Ownership</h3>
+        <div class="bg-gradient-to-r from-blue-100 to-indigo-100 border-l-4 border-blue-500 p-6 rounded-r-xl my-8">
+          <div class="flex items-center">
+            <svg class="h-5 w-5 text-blue-600 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.818-4.954A9 9 0 1112 21a9 9 0 01-9-9 9 9 0 019-9z" />
+            </svg>
+            <div>
+              <h4 class="text-lg font-bold text-blue-800 mb-1">Your Content, Your Ownership</h4>
+              <p class="text-blue-700 font-medium">
+                You own all content you create or generate through our Service. 
+                We do not claim ownership of your posts, ideas, or generated content.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">8. Children's Privacy</h2>
+      <p>
+        Our Service is not intended for children under 13 years of age. We do not knowingly collect 
+        personal information from children under 13. If you become aware that a child has provided 
+        us with personal information, please contact us, and we will take steps to remove such information.
+      </p>
+
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">9. International Data Transfers</h2>
+      <p>
+        Your information may be transferred to and processed in countries other than your country of residence. 
+        These countries may have data protection laws that are different from the laws of your country. 
+        We ensure appropriate safeguards are in place to protect your personal information.
+      </p>
+
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">10. Changes to This Privacy Policy</h2>
+      <p>
+        We may update our Privacy Policy from time to time. We will notify you of any changes by:
+      </p>
+      <ul class="list-disc pl-6 mb-4">
+        <li>Posting the new Privacy Policy on this page</li>
+        <li>Updating the "Last Updated" date</li>
+        <li>Sending email notification for significant changes</li>
+      </ul>
+
+      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">11. Contact Information</h2>
+      <p>
+        If you have questions about this Privacy Policy or our data practices, please contact us:
+      </p>
+      <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 mt-4">
+        <p><strong>No iLLusion Software</strong></p>
+        <p>Email: privacy@no-illusion.com</p>
+        <p>Website: <%= link_to "https://no-illusion.com", "https://no-illusion.com", class: "text-blue-600 hover:text-blue-800" %></p>
+      </div>
+
+      <div class="mt-8 pt-8 border-t border-gray-200">
+        <p class="text-sm text-gray-600">
+          This privacy policy is designed to comply with GDPR, CCPA, and other applicable privacy laws. 
+          We believe in transparency and honest communication about how your data is used.
+        </p>
+      </div>
+        </div>
+      </div>
+      
+      <!-- Footer Section -->
+      <div class="bg-gray-50 dark:bg-gray-700 px-12 py-8 border-t border-gray-100 dark:border-gray-600">
+        <div class="flex items-center justify-center space-x-6 text-sm text-gray-600 dark:text-gray-300">
+          <div class="flex items-center">
+            <svg class="h-4 w-4 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            GDPR Compliant
+          </div>
+          <div class="flex items-center">
+            <svg class="h-4 w-4 text-green-500 dark:text-green-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            CCPA Compliant
+          </div>
+          <div class="flex items-center">
+            <svg class="h-4 w-4 text-blue-500 dark:text-blue-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            Enterprise Security
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

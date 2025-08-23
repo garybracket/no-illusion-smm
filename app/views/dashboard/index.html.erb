@@ -1,0 +1,213 @@
+<div class="space-y-8">
+  <!-- Welcome Header -->
+  <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 border border-blue-100">
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="text-4xl font-bold text-gray-900 mb-2">
+          Welcome back, <%= @user.name %>! 👋
+        </h1>
+        <p class="text-xl text-gray-600 mb-4">
+          Ready to manage your social media the honest way?
+        </p>
+        <div class="flex items-center space-x-4">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+            <%= @user.content_mode.humanize %> Mode
+          </span>
+          <% if @user.ai_enabled? %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+              ⚡ AI Enabled
+            </span>
+          <% end %>
+        </div>
+      </div>
+      <div class="text-6xl opacity-20">🚀</div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-xl">
+          <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+        </div>
+        <span class="text-sm text-green-600 dark:text-green-400 font-medium">✓ Ready</span>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Create Post</h3>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Write and publish to your connected platforms</p>
+      <%= link_to new_post_path, 
+                  class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+        Create New Post
+      <% end %>
+    </div>
+
+    <div class="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
+      <div class="flex items-center justify-between mb-4">
+        <div class="bg-green-100 p-3 rounded-xl">
+          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+          </svg>
+        </div>
+        <% if @user.linkedin_connected? %>
+          <span class="text-sm text-green-600 font-medium">✓ Connected</span>
+        <% else %>
+          <span class="text-sm text-gray-500">Ready</span>
+        <% end %>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 mb-2">Connect LinkedIn</h3>
+      <p class="text-gray-600 text-sm mb-4">Connect your LinkedIn account to start posting</p>
+      <% if @user.linkedin_connected? %>
+        <div class="space-y-2">
+          <p class="text-sm text-green-600 dark:text-green-400 font-medium">
+            Connected as <%= @user.linkedin_connection.settings['name'] %>
+          </p>
+          <%= link_to new_post_path(platform: 'linkedin'), 
+                      class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors mb-2" do %>
+            📝 Create LinkedIn Post
+          <% end %>
+          <%= button_to "🔄 Sync FROM LinkedIn", linkedin_import_profile_path, 
+                        method: :post,
+                        class: "w-full bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors mb-1",
+                        data: { confirm: "Import your LinkedIn profile data to enhance AI content generation?" } %>
+          <%= button_to "📤 Export TO LinkedIn", linkedin_export_profile_path, 
+                        method: :post,
+                        class: "w-full bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors mb-2",
+                        data: { confirm: "Generate formatted profile content to copy to LinkedIn?" } %>
+          <%= link_to "Disconnect", disconnect_platform_connections_path('linkedin'), 
+                      method: :delete, 
+                      class: "block w-full text-center bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors",
+                      data: { confirm: "Are you sure?" } %>
+        </div>
+      <% else %>
+        <%= link_to linkedin_authorize_path, 
+                    class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+          Connect LinkedIn Account
+        <% end %>
+      <% end %>
+    </div>
+
+    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
+      <div class="flex items-center justify-between mb-4">
+        <div class="bg-purple-100 dark:bg-purple-900/20 p-3 rounded-xl">
+          <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+        </div>
+        <span class="text-sm text-green-600 dark:text-green-400 font-medium">✓ Ready</span>
+      </div>
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Manage Posts</h3>
+      <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">View and manage your published content</p>
+      <%= link_to posts_path, 
+                  class: "block w-full text-center bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors" do %>
+        View All Posts
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Profile Overview -->
+  <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-bold text-gray-900">Your Profile</h2>
+      <%= link_to "Edit Profile", edit_user_profile_path, 
+                  class: "bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" %>
+    </div>
+    
+    <div class="grid md:grid-cols-2 gap-8">
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-sm font-medium text-gray-500">Name</span>
+            <p class="text-gray-900"><%= @user.name %></p>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Email</span>
+            <p class="text-gray-900"><%= @user.email %></p>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Content Style</span>
+            <p class="text-gray-900"><%= @user.content_mode.humanize %></p>
+          </div>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">Profile Details</h3>
+        <div class="space-y-3">
+          <div>
+            <span class="text-sm font-medium text-gray-500">Bio</span>
+            <p class="text-gray-900 dark:text-white"><%= @user.bio.present? ? truncate(@user.bio, length: 150) : "Not set yet" %></p>
+          </div>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Mission Statement</span>
+            <p class="text-gray-900 dark:text-white"><%= @user.mission_statement.present? ? @user.mission_statement : "Not set yet" %></p>
+          </div>
+          
+          <!-- Quick Profile Setup -->
+          <% if @user.bio.blank? || @user.skills.blank? || @user.mission_statement.blank? %>
+            <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
+              <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-300 mb-2">Quick Profile Setup</h4>
+              <p class="text-xs text-blue-600 dark:text-blue-400 mb-3">Populate your profile with Gary's professional data from the docs folder</p>
+              <%= button_to "🚀 Setup Gary's Profile", setup_gary_profile_path, 
+                            method: :post,
+                            class: "bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors",
+                            data: { confirm: "This will populate your profile with Gary's bio, skills, and mission statement. Continue?" } %>
+            </div>
+          <% end %>
+          <div>
+            <span class="text-sm font-medium text-gray-500">Skills</span>
+            <% if @user.skills.present? && @user.skills.any? %>
+              <div class="flex flex-wrap gap-2 mt-1">
+                <% @user.skills.each do |skill| %>
+                  <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
+                    <%= skill %>
+                  </span>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="text-gray-900">No skills added yet</p>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Getting Started -->
+  <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-8 border border-yellow-200">
+    <div class="flex items-start space-x-4">
+      <div class="text-4xl">🎯</div>
+      <div class="flex-1">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">Getting Started</h2>
+        <p class="text-gray-700 mb-6">
+          Welcome to No iLLusion SMM! We're currently building the core features. 
+          Here's what's coming next in our Rails rebuild:
+        </p>
+        
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <h3 class="font-semibold text-gray-900">Phase 2: Core Features</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Post creation and management</li>
+              <li>• LinkedIn OAuth integration</li>
+              <li>• Simple content publishing</li>
+              <li>• Basic error handling</li>
+            </ul>
+          </div>
+          
+          <div class="space-y-2">
+            <h3 class="font-semibold text-gray-900">Phase 3: AI Integration</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Custom prompt templates</li>
+              <li>• AI content generation</li>
+              <li>• Template management UI</li>
+              <li>• OpenAI integration</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
