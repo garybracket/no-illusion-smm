@@ -80,7 +80,7 @@ class AiController < ApplicationController
         post = current_user.posts.create!(
           content: ai_result[:content],
           platforms: [platform],
-          status: 'posted',
+          status: 'published',
           content_mode: current_user.content_mode,
           ai_generated: true
         )

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_21_005219) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_23_005452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -31,8 +31,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_21_005219) do
     t.bigint "user_id", null: false
     t.text "content"
     t.text "platforms"
-    t.string "status"
-    t.string "content_mode"
+    t.integer "status", default: 0, null: false
+    t.integer "content_mode", default: 0, null: false
     t.boolean "ai_generated"
     t.datetime "scheduled_for"
     t.datetime "created_at", null: false
