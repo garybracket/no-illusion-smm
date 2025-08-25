@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: {
-    omniauth_callbacks: 'auth/omniauth'
-  }
+  # Simplified Devise routes for initial deployment
+  devise_for :users
   
   # SECURITY: Auth0 callback routes (matches Auth0 configuration)
   get '/auth/callback', to: 'auth/omniauth#auth0'
