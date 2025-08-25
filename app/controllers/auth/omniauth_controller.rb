@@ -30,11 +30,18 @@ class Auth::OmniauthController < ApplicationController
 
   # SECURITY: Handle Auth0 logout
   def logout
-    # Sign out from Devise session
-    sign_out(current_user) if current_user
+    # Clear the Rails session
+    reset_session
     
     # Redirect to Auth0 logout URL to clear Auth0 session
-    auth0_logout_url = "https://#{ENV['AUTH0_DOMAIN']}/v2/logout?returnTo=#{CGI.escape(root_url)}"
-    redirect_to auth0_logout_url, allow_other_host: true
+    auth0_domain = Rails.application.credentials.dig(:auth0, :domain) || ENV['AUTH0_DOMAIN']
+    
+    if auth0_domain
+      auth0_logout_url = "https://#{auth0_domain}/v2/logout?returnTo=#{CGI.escape(root_url)}"
+      redirect_to auth0_logout_url, allow_other_host: true
+    else
+      # Fallback if Auth0 domain not configured - just redirect to home
+      redirect_to root_path, notice: 'You have been logged out.'
+    end
   end
 end

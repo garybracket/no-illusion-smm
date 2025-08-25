@@ -10,11 +10,16 @@ class AiContentService
     def generate_post(user:, prompt:, platform: nil, content_mode: nil)
       content_mode ||= user.content_mode
       
-      # Build the system prompt based on user's profile
-      system_prompt = build_system_prompt(user, content_mode, platform)
+      # Build the prompt using new prompt builder service
+      prompt_data = AiPromptBuilderService.build_content_generation_prompt(
+        user: user,
+        user_prompt: prompt,
+        content_mode: content_mode,
+        platform: platform
+      )
       
       # Make API call to Claude
-      response = call_claude_api(system_prompt, prompt)
+      response = call_claude_api(prompt_data[:system], prompt_data[:user])
       
       if response[:success]
         {
@@ -42,50 +47,42 @@ class AiContentService
     end
     
     def generate_suggestions(user:, context:)
-      prompt = "Based on this context: #{context}\n\nSuggest 3 different social media posts."
-      generate_post(user: user, prompt: prompt)
+      prompt_data = AiPromptBuilderService.build_suggestion_prompt(user: user, context: context)
+      response = call_claude_api(prompt_data[:system], prompt_data[:user])
+      
+      if response[:success]
+        {
+          success: true,
+          content: response[:content],
+          ai_generated: true,
+          provider: 'anthropic',
+          model: MODEL,
+          tokens_used: response[:usage][:output_tokens]
+        }
+      else
+        {
+          success: false,
+          error: response[:error],
+          fallback_content: "Here are some general post ideas: 1) Share a recent business insight 2) Ask your audience a question 3) Share a tip from your expertise"
+        }
+      end
+    rescue => e
+      Rails.logger.error "AI Suggestions Error: #{e.message}"
+      {
+        success: false,
+        error: e.message,
+        fallback_content: "Unable to generate suggestions at this time. Try sharing recent experiences or insights from your work."
+      }
     end
     
     def optimize_content(content:, platform:)
-      prompt = "Optimize this content for #{platform}: #{content}\n\nMake it more engaging while keeping the core message."
-      
-      response = call_claude_api(
-        "You are a social media optimization expert. Keep responses concise and platform-appropriate.",
-        prompt
-      )
+      prompt_data = AiPromptBuilderService.build_optimization_prompt(content: content, platform: platform)
+      response = call_claude_api(prompt_data[:system], prompt_data[:user])
       
       response[:success] ? response[:content] : content
     end
     
     private
-    
-    def build_system_prompt(user, content_mode, platform)
-      base_prompt = case content_mode
-      when 'business'
-        "You are a professional content creator for business social media. Create posts that are informative, value-driven, and professional."
-      when 'influencer'
-        "You are a social media influencer. Create engaging, trendy, and relatable content that encourages interaction."
-      when 'personal'
-        "You are helping create personal social media posts. Keep it authentic, casual, and genuine."
-      else
-        "You are a social media content creator. Create appropriate and engaging posts."
-      end
-      
-      # Add user context if available
-      if user.mission_statement.present?
-        base_prompt += "\n\nBusiness Mission: #{user.mission_statement}"
-      end
-      
-      if user.skills.present? && user.skills.any?
-        base_prompt += "\n\nExpertise areas: #{user.skills.join(', ')}"
-      end
-      
-      if platform.present?
-        base_prompt += "\n\nOptimize specifically for #{platform}."
-      end
-      
-      base_prompt + "\n\nImportant: Create natural, authentic content without corporate buzzwords or excessive skill-listing."
-    end
     
     def call_claude_api(system_prompt, user_prompt)
       api_key = ENV['ANTHROPIC_API_KEY'] || Rails.application.credentials.dig(:ai, :anthropic, :api_key)

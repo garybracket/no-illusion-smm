@@ -14,39 +14,57 @@ class PostsController < ApplicationController
   end
   
   def create
-    @post = current_user.posts.build(post_params)
-    @post.content_mode = current_user.content_mode
+    # PRIVACY FIRST: Never save content to database
+    content = post_params[:content] # Get content but don't persist it
+    
+    # Validate content exists
+    if content.blank?
+      flash.now[:alert] = "Content cannot be empty"
+      @post = current_user.posts.build
+      render :new, status: :unprocessable_entity
+      return
+    end
     
     # Handle AI generation if requested
     if params[:generate_with_ai].present?
       ai_result = AiContentService.generate_post(
         user: current_user,
-        prompt: @post.content,
+        prompt: content,
         platform: selected_platforms.first
       )
       
       if ai_result[:success]
-        @post.content = ai_result[:content]
-        @post.ai_generated = true
+        content = ai_result[:content] # Use AI generated content but don't save
+        ai_generated = true
       else
         flash.now[:alert] = "AI generation failed: #{ai_result[:error]}"
+        @post = current_user.posts.build
         render :new, status: :unprocessable_entity
         return
       end
     end
     
-    # Set platforms and handle publishing
+    # Create post with metadata only (NO content storage)
+    @post = current_user.posts.build
+    @post.content = content # This sets content_length and content_hash only
+    @post.content_mode = current_user.content_mode
     @post.platforms = selected_platforms
+    @post.ai_generated = ai_generated || false
+    @post.scheduled_for = post_params[:scheduled_for]
     
     if @post.save
       # Handle immediate publishing
       if params[:publish_now] == '1' && @post.scheduled_for.blank?
-        publish_to_platforms(@post)
+        publish_result = publish_to_platforms(@post, content) # Pass content to publish method
+        if publish_result[:success]
+          redirect_to posts_path, notice: "Post published successfully! Content was processed and discarded for privacy."
+        else
+          redirect_to posts_path, alert: "Publishing failed: #{publish_result[:error]}"
+        end
       else
         @post.update(status: 'scheduled') if @post.scheduled_for.present?
+        redirect_to posts_path, notice: "Post metadata saved. Content will be generated and published when scheduled (content not stored for privacy)."
       end
-      
-      redirect_to posts_path, notice: post_success_message
     else
       render :new, status: :unprocessable_entity
     end
@@ -109,6 +127,7 @@ class PostsController < ApplicationController
   end
   
   def post_params
+    # PRIVACY: Content is permitted for processing but never persisted
     params.require(:post).permit(:content, :scheduled_for, platforms: [])
   end
   
@@ -130,17 +149,19 @@ class PostsController < ApplicationController
     platforms
   end
   
-  def publish_to_platforms(post)
+  def publish_to_platforms(post, content)
     published_count = 0
     failed_platforms = []
+    platform_post_ids = {}
     
     post.platforms.each do |platform|
       case platform
       when 'linkedin'
         if current_user.linkedin_connected?
-          result = LinkedinApiService.create_post(current_user.linkedin_connection, post.content)
+          result = LinkedinApiService.create_post(current_user.linkedin_connection, content)
           if result[:success]
             published_count += 1
+            platform_post_ids['linkedin'] = result[:post_id] if result[:post_id]
           else
             failed_platforms << "LinkedIn: #{result[:error]}"
           end
@@ -152,16 +173,20 @@ class PostsController < ApplicationController
       end
     end
     
+    # Update post status and save platform IDs (but never content)
     if published_count > 0
-      post.update(status: 'published')
+      post.update(status: 'published', platform_post_ids: platform_post_ids)
     else
       post.update(status: 'failed')
     end
     
-    # Set flash messages based on results
-    if failed_platforms.any?
-      flash[:alert] = "Publishing failed for: #{failed_platforms.join(', ')}"
-    end
+    # Return result instead of setting flash (let caller handle messaging)
+    {
+      success: published_count > 0,
+      published_count: published_count,
+      failed_platforms: failed_platforms,
+      error: failed_platforms.any? ? "Failed: #{failed_platforms.join(', ')}" : nil
+    }
   end
   
   def post_success_message

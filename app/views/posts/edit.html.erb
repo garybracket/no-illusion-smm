@@ -1,0 +1,116 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Edit Post</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">Update your post content and settings</p>
+      </div>
+      <%= link_to posts_path, class: "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" do %>
+        ← Back to Posts
+      <% end %>
+    </div>
+  </div>
+
+  <%= form_with model: @post, local: true, class: "space-y-6" do |form| %>
+    <% if @post.errors.any? %>
+      <div class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+        <h3 class="text-red-800 dark:text-red-400 font-medium mb-2">Please fix the following errors:</h3>
+        <ul class="text-red-700 dark:text-red-300 space-y-1">
+          <% @post.errors.full_messages.each do |message| %>
+            <li>• <%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Privacy Notice -->
+    <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 mb-6">
+      <div class="text-yellow-800 dark:text-yellow-400">
+        <h3 class="text-lg font-semibold mb-2">🔒 Privacy-First Editing</h3>
+        <p class="text-sm"><%= @post.display_content %></p>
+        <p class="text-xs mt-2 text-yellow-600 dark:text-yellow-500">
+          Original content was not stored for privacy. You can only update platform settings and scheduling.
+          To modify content, create a new post instead.
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Settings Area -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+      <!-- Settings Only -->
+      <div class="p-6">
+
+        <!-- Platform Selection -->
+        <div class="border-t border-gray-200 dark:border-gray-600 pt-6">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Publishing Options</h3>
+          
+          <div class="grid md:grid-cols-2 gap-6">
+            <!-- Platform Selection -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Platforms</label>
+              <div class="space-y-2">
+                <% if current_user.linkedin_connected? %>
+                  <label class="flex items-center p-3 bg-gray-50 dark:bg-gray-700/50 border border-gray-200 dark:border-gray-600 rounded-lg cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <%= check_box_tag "post[platforms][]", "linkedin", @post.platforms.include?("linkedin"),
+                                     id: "platform_linkedin", 
+                                     class: "h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded" %>
+                    <div class="ml-3">
+                      <span class="text-sm font-medium text-gray-900 dark:text-gray-100">💼 LinkedIn</span>
+                      <p class="text-xs text-gray-600 dark:text-gray-400">Professional network • Connected</p>
+                    </div>
+                  </label>
+                <% end %>
+
+                <!-- Future Platforms (disabled) -->
+                <div class="p-3 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg opacity-60">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-500 dark:text-gray-400">📘 Facebook • 📸 Instagram • 🎵 TikTok</span>
+                    <span class="text-xs text-gray-400 dark:text-gray-500">Coming Soon</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Status and Scheduling -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Status</label>
+              
+              <!-- Current Status Display -->
+              <div class="mb-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                <span class="text-sm text-gray-600 dark:text-gray-400">Current Status: </span>
+                <span class="font-medium text-gray-900 dark:text-white"><%= @post.status.humanize %></span>
+              </div>
+
+              <!-- Scheduled Date if applicable -->
+              <% if @post.scheduled_for.present? %>
+                <div class="mb-3">
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Scheduled For</label>
+                  <%= form.datetime_local_field :scheduled_for, 
+                                               class: "px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white text-sm w-full" %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+          <span class="text-sm text-gray-600 dark:text-gray-400">
+            <span class="font-medium"><%= @post.content_mode.humanize %> Mode</span>
+          </span>
+        </div>
+        
+        <div class="flex space-x-3">
+          <%= link_to "Cancel", @post, 
+                     class: "px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" %>
+          
+          <%= form.submit "Update Post", 
+                         class: "bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

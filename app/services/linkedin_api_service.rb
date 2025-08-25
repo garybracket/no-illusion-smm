@@ -84,7 +84,7 @@ class LinkedinApiService
       result = make_api_request(
         connection,
         'GET',
-        '/people/~:(id,firstName,lastName,profilePicture(displayImage~:playableStreams))',
+        '/people/~:(id,firstName,lastName,headline,summary,positions,educations,profilePicture(displayImage~:playableStreams))',
         nil
       )
       
@@ -92,6 +92,29 @@ class LinkedinApiService
         {
           success: true,
           profile: result[:data]
+        }
+      else
+        {
+          success: false,
+          error: result[:error]
+        }
+      end
+    end
+
+    def get_skills(connection)
+      return { success: false, error: "Invalid connection" } unless connection&.valid_connection?
+      
+      result = make_api_request(
+        connection,
+        'GET',
+        '/people/~/skills',
+        nil
+      )
+      
+      if result[:success]
+        {
+          success: true,
+          skills: result[:data]
         }
       else
         {

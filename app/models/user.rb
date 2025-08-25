@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   # SECURE AUTH0 + DEVISE CONFIGURATION
   # Remove password authentication - Auth0 handles this securely
-  devise :rememberable, :trackable, :omniauthable, omniauth_providers: [:auth0]
+  # Note: :rememberable removed since Auth0 handles session persistence
+  devise :trackable, :omniauthable, omniauth_providers: [:auth0]
   
   # SECURITY: Auth0 user identifier - this is our source of truth for authenticated users
   validates :auth0_id, uniqueness: true, allow_nil: true

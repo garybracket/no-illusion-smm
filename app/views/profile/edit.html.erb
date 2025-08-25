@@ -1,103 +1,244 @@
-<div class="space-y-8">
-  <!-- Header -->
-  <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 border border-blue-100">
-    <h1 class="text-4xl font-bold text-gray-900 mb-2">Edit Profile</h1>
-    <p class="text-xl text-gray-600">Update your information and preferences</p>
-  </div>
-
-  <!-- Profile Form -->
-  <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-    <%= form_with model: @user, url: user_profile_path, local: true, class: "space-y-6" do |form| %>
-      <% if @user.errors.any? %>
-        <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-          <h3 class="text-red-800 font-medium">Please fix the following errors:</h3>
-          <ul class="text-red-700 text-sm mt-2 space-y-1">
-            <% @user.errors.full_messages.each do |message| %>
-              <li>• <%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-
-      <div class="grid md:grid-cols-2 gap-6">
-        <!-- Basic Information -->
-        <div class="space-y-4">
-          <h3 class="text-lg font-semibold text-gray-900">Basic Information</h3>
-          
-          <div>
-            <%= form.label :name, class: "block text-sm font-medium text-gray-700 mb-1" %>
-            <%= form.text_field :name, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
+<!-- Professional Profile Editor -->
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:to-indigo-900 -m-6 p-6">
+  <div class="max-w-4xl mx-auto">
+    <!-- Header Section -->
+    <div class="relative mb-8">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-3xl blur-3xl"></div>
+      <div class="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-3xl p-8 border border-white/20 dark:border-slate-700/50 shadow-xl">
+        <div class="flex items-center space-x-4 mb-4">
+          <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+            <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
           </div>
-
           <div>
-            <%= form.label :content_mode, "Content Style", class: "block text-sm font-medium text-gray-700 mb-1" %>
-            <%= form.select :content_mode, 
-                           options_for_select([
-                             ['Business Professional', 'business'],
-                             ['Influencer/Creator', 'influencer'], 
-                             ['Personal Brand', 'personal']
-                           ], @user.content_mode),
-                           {},
-                           { class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" } %>
-          </div>
-
-          <div>
-            <%= form.label :bio, class: "block text-sm font-medium text-gray-700 mb-1" %>
-            <%= form.text_area :bio, rows: 3, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
-          </div>
-        </div>
-
-        <!-- Mission & Preferences -->
-        <div class="space-y-4">
-          <h3 class="text-lg font-semibold text-gray-900">Mission & AI</h3>
-          
-          <div>
-            <%= form.label :mission_statement, class: "block text-sm font-medium text-gray-700 mb-1" %>
-            <%= form.text_area :mission_statement, rows: 3, class: "w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" %>
-            <p class="text-sm text-gray-500 mt-1">What drives your business or content?</p>
-          </div>
-
-          <div>
-            <label class="flex items-center">
-              <%= form.check_box :ai_enabled, class: "rounded border-gray-300 text-blue-600 focus:ring-blue-500" %>
-              <span class="ml-2 text-sm font-medium text-gray-700">Enable AI features</span>
-            </label>
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+              Profile Settings
+            </h1>
+            <p class="text-slate-600 dark:text-slate-400">Configure your professional presence</p>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Skills -->
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Skills & Expertise</h3>
-        <div id="skills-container">
-          <% if @user.skills.any? %>
-            <% @user.skills.each_with_index do |skill, index| %>
-              <div class="flex items-center space-x-2 mb-2">
-                <input type="text" name="user[skills][]" value="<%= skill %>" 
-                       class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <button type="button" onclick="this.parentElement.remove()" 
-                        class="text-red-600 hover:text-red-800 px-2 py-1">Remove</button>
+    <!-- Main Form Container -->
+    <div class="relative">
+      <div class="absolute inset-0 bg-gradient-to-r from-white/60 to-slate-100/60 dark:from-slate-800/60 dark:to-slate-900/60 rounded-3xl blur-xl"></div>
+      <div class="relative bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/50 overflow-hidden">
+        <%= form_with model: @user, url: user_profile_path, local: true, class: "p-8", data: { toggle_target: "form" } do |form| %>
+          <% if @user.errors.any? %>
+            <div class="mb-6 bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 border border-red-200 dark:border-red-800/50 rounded-2xl p-6">
+              <div class="flex items-start space-x-3">
+                <div class="flex-shrink-0">
+                  <svg class="w-6 h-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="text-red-800 dark:text-red-300 font-semibold">Please fix the following errors:</h3>
+                  <ul class="text-red-700 dark:text-red-400 text-sm mt-2 space-y-1">
+                    <% @user.errors.full_messages.each do |message| %>
+                      <li class="flex items-center space-x-2">
+                        <span class="w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                        <span><%= message %></span>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
               </div>
-            <% end %>
-          <% else %>
-            <div class="flex items-center space-x-2 mb-2">
-              <input type="text" name="user[skills][]" placeholder="e.g., Marketing, Design, Writing" 
-                     class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-              <button type="button" onclick="this.parentElement.remove()" 
-                      class="text-red-600 hover:text-red-800 px-2 py-1">Remove</button>
             </div>
           <% end %>
-        </div>
-        <button type="button" onclick="addSkillField()" 
-                class="text-blue-600 hover:text-blue-800 text-sm font-medium">+ Add Skill</button>
-      </div>
 
-      <!-- Actions -->
-      <div class="flex items-center space-x-4 pt-6 border-t border-gray-200">
-        <%= form.submit "Save Changes", class: "bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors" %>
-        <%= link_to "Cancel", dashboard_path, class: "text-gray-600 hover:text-gray-800 px-6 py-3" %>
+          <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Personal Information Section -->
+            <div class="space-y-6">
+              <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-200">Personal Information</h2>
+              </div>
+
+              <!-- Name Field -->
+              <div class="space-y-2">
+                <%= form.label :name, class: "text-sm font-semibold text-slate-700 dark:text-slate-300 tracking-wide" %>
+                <div class="relative">
+                  <%= form.text_field :name, 
+                      class: "w-full px-4 py-3 bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-2xl text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200",
+                      placeholder: "Your full name" %>
+                  <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
+                </div>
+              </div>
+
+              <!-- Content Style Field -->
+              <div class="space-y-2">
+                <%= form.label :content_mode, "Content Style", class: "text-sm font-semibold text-slate-700 dark:text-slate-300 tracking-wide" %>
+                <div class="relative">
+                  <%= form.select :content_mode, 
+                                 options_for_select([
+                                   ['🏢 Business Professional', 'business'],
+                                   ['✨ Influencer/Creator', 'influencer'], 
+                                   ['👤 Personal Brand', 'personal']
+                                 ], @user.content_mode),
+                                 {},
+                                 { class: "w-full px-4 py-3 bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-2xl text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200" } %>
+                  <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
+                </div>
+              </div>
+
+              <!-- Bio Field -->
+              <div class="space-y-2">
+                <%= form.label :bio, class: "text-sm font-semibold text-slate-700 dark:text-slate-300 tracking-wide" %>
+                <div class="relative">
+                  <%= form.text_area :bio, rows: 4, 
+                      class: "w-full px-4 py-3 bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-2xl text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-200 resize-none",
+                      placeholder: "Tell us about yourself..." %>
+                  <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/5 to-purple-500/5 pointer-events-none"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Professional Settings Section -->
+            <div class="space-y-6">
+              <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                  <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 7.172V5L8 4z" />
+                  </svg>
+                </div>
+                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-200">Professional Settings</h2>
+              </div>
+
+              <!-- Mission Statement -->
+              <div class="space-y-2">
+                <%= form.label :mission_statement, class: "text-sm font-semibold text-slate-700 dark:text-slate-300 tracking-wide" %>
+                <div class="relative">
+                  <%= form.text_area :mission_statement, rows: 4, 
+                      class: "w-full px-4 py-3 bg-white/50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 rounded-2xl text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500 transition-all duration-200 resize-none",
+                      placeholder: "What drives your business or content?" %>
+                  <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/5 to-pink-500/5 pointer-events-none"></div>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Your mission helps AI generate more relevant content</p>
+              </div>
+
+              <!-- AI Features Toggle -->
+              <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800/50 dark:to-blue-900/30 rounded-2xl p-6 border border-slate-200/50 dark:border-slate-700/50" 
+                   data-controller="toggle" 
+                   data-toggle-form-target="form">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center">
+                      <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <label for="ai_enabled_toggle" class="text-sm font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">AI Features</label>
+                      <p class="text-xs text-slate-500 dark:text-slate-400">
+                        Enable intelligent content generation
+                        <span class="text-emerald-600 dark:text-emerald-400 font-medium">
+                          <%= @user.ai_enabled? ? "• Enabled" : "• Disabled" %>
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="relative">
+                    <%= form.check_box :ai_enabled, 
+                        class: "sr-only peer",
+                        id: "ai_enabled_toggle",
+                        data: { 
+                          toggle_target: "checkbox",
+                          action: "change->toggle#toggle"
+                        } %>
+                    <label for="ai_enabled_toggle" class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-200 px-0.5 outline-none transition-colors peer-checked:bg-emerald-500 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-emerald-500 dark:bg-slate-700 dark:peer-checked:bg-emerald-600">
+                      <span class="size-5 rounded-full bg-white shadow-sm transition-all peer-checked:translate-x-5 dark:bg-slate-100"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Skills & Expertise Section -->
+          <div class="mt-8 space-y-6">
+            <div class="flex items-center space-x-3 mb-6">
+              <div class="w-10 h-10 bg-gradient-to-br from-amber-500 to-orange-500 rounded-xl flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364-.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <div>
+                <h2 class="text-xl font-bold text-slate-800 dark:text-slate-200">Skills & Expertise</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400">Add your professional skills and areas of expertise</p>
+              </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border border-amber-200/50 dark:border-amber-800/50">
+              <div id="skills-container" class="space-y-3">
+                <% if @user.skills.any? %>
+                  <% @user.skills.each_with_index do |skill, index| %>
+                    <div class="flex items-center space-x-3 group">
+                      <div class="relative flex-1">
+                        <input type="text" name="user[skills][]" value="<%= skill %>" 
+                               class="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/70 border border-slate-200 dark:border-slate-600 rounded-2xl text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all duration-200"
+                               placeholder="e.g., Marketing, Design, Writing">
+                        <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500/5 to-orange-500/5 pointer-events-none"></div>
+                      </div>
+                      <button type="button" onclick="this.parentElement.remove()" 
+                              class="w-10 h-10 flex items-center justify-center text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200 opacity-0 group-hover:opacity-100">
+                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                      </button>
+                    </div>
+                  <% end %>
+                <% else %>
+                  <div class="flex items-center space-x-3 group">
+                    <div class="relative flex-1">
+                      <input type="text" name="user[skills][]" placeholder="e.g., Marketing, Design, Writing" 
+                             class="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/70 border border-slate-200 dark:border-slate-600 rounded-2xl text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all duration-200">
+                      <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500/5 to-orange-500/5 pointer-events-none"></div>
+                    </div>
+                    <button type="button" onclick="this.parentElement.remove()" 
+                            class="w-10 h-10 flex items-center justify-center text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200 opacity-0 group-hover:opacity-100">
+                      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </div>
+                <% end %>
+              </div>
+              
+              <button type="button" onclick="addSkillField()" 
+                      class="mt-4 flex items-center space-x-2 text-amber-600 hover:text-amber-800 dark:text-amber-400 dark:hover:text-amber-300 text-sm font-semibold transition-colors group">
+                <svg class="w-4 h-4 transition-transform group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                <span>Add Another Skill</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="mt-8 flex items-center justify-between pt-6 border-t border-slate-200 dark:border-slate-600">
+            <div class="text-sm text-slate-500 dark:text-slate-400">
+              Changes are saved automatically to your profile
+            </div>
+            <div class="flex items-center space-x-4">
+              <%= link_to dashboard_path, 
+                          class: "px-6 py-3 text-slate-600 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 font-medium transition-colors" do %>
+                Cancel
+              <% end %>
+              
+              <%= form.submit "Save Changes", 
+                             class: "relative px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 dark:focus:ring-offset-slate-800" %>
+            </div>
+          </div>
+        <% end %>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>
 
@@ -105,12 +246,19 @@
 function addSkillField() {
   const container = document.getElementById('skills-container');
   const div = document.createElement('div');
-  div.className = 'flex items-center space-x-2 mb-2';
+  div.className = 'flex items-center space-x-3 group';
   div.innerHTML = `
-    <input type="text" name="user[skills][]" placeholder="e.g., Marketing, Design, Writing" 
-           class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+    <div class="relative flex-1">
+      <input type="text" name="user[skills][]" placeholder="e.g., Marketing, Design, Writing" 
+             class="w-full px-4 py-3 bg-white/70 dark:bg-slate-700/70 border border-slate-200 dark:border-slate-600 rounded-2xl text-slate-800 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500 transition-all duration-200">
+      <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-amber-500/5 to-orange-500/5 pointer-events-none"></div>
+    </div>
     <button type="button" onclick="this.parentElement.remove()" 
-            class="text-red-600 hover:text-red-800 px-2 py-1">Remove</button>
+            class="w-10 h-10 flex items-center justify-center text-red-500 hover:text-red-700 hover:bg-red-100 dark:hover:bg-red-900/30 rounded-xl transition-all duration-200 opacity-0 group-hover:opacity-100">
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+    </button>
   `;
   container.appendChild(div);
 }

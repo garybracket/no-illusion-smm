@@ -38,16 +38,11 @@ class LinkedinProfileImportService
     end
     
     def get_profile(connection)
-      # Get detailed profile information
-      result = LinkedinApiService.send(:make_api_request, 
-        connection, 
-        'GET', 
-        '/people/~:(id,firstName,lastName,headline,summary,positions,educations,skills,profilePicture(displayImage~:playableStreams))',
-        nil
-      )
+      # Get detailed profile information using the public API method
+      result = LinkedinApiService.get_profile(connection)
       
       if result[:success]
-        profile_data = result[:data]
+        profile_data = result[:profile]
         
         {
           success: true,
@@ -71,16 +66,11 @@ class LinkedinProfileImportService
     end
     
     def get_skills(connection)
-      # LinkedIn Skills API (may require additional permissions)
-      result = LinkedinApiService.send(:make_api_request,
-        connection,
-        'GET',
-        '/people/~/skills',
-        nil
-      )
+      # LinkedIn Skills API (may require additional permissions) - using public API method
+      result = LinkedinApiService.get_skills(connection)
       
       if result[:success]
-        skills_data = result[:data]
+        skills_data = result[:skills]
         skills = skills_data.dig('elements')&.map do |skill|
           skill.dig('skill', 'name', 'localized', 'en_US') || skill.dig('skill', 'name')
         end&.compact || []

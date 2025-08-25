@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     post 'generate_post', to: 'ai#generate_post'
     post 'generate_suggestions', to: 'ai#generate_suggestions'
     post 'optimize_content', to: 'ai#optimize_content'
+    post 'generate_and_post', to: 'ai#generate_and_post'
   end
   
   # Posts Management
@@ -37,8 +38,6 @@ Rails.application.routes.draw do
     end
   end
 
-  # AI + Platform Integration
-  post '/ai/generate_and_post', to: 'ai#generate_and_post'
   
   # Platform Connections
   resources :platform_connections, only: [:index] do
@@ -54,6 +53,15 @@ Rails.application.routes.draw do
   post '/linkedin/import_profile', to: 'linkedin_oauth#import_profile', as: :linkedin_import_profile
   post '/linkedin/export_profile', to: 'linkedin_oauth#export_profile', as: :linkedin_export_profile
   get '/linkedin/export_preview', to: 'linkedin_oauth#export_preview', as: :linkedin_export_preview
+  
+  # Resume Builder
+  get '/resume', to: 'resume#show', as: :resume
+  get '/resume/edit', to: 'resume#edit', as: :edit_resume
+  patch '/resume', to: 'resume#update', as: :update_resume
+  post '/resume/import', to: 'resume#import', as: :import_resume
+  get '/resume/preview', to: 'resume#preview', as: :preview_resume
+  get '/resume/download', to: 'resume#download', as: :download_resume
+  post '/resume/sync_from_linkedin', to: 'resume#sync_from_linkedin', as: :sync_resume_from_linkedin
   
   # Legal pages
   get '/privacy', to: 'pages#privacy'

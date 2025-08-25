@@ -1,0 +1,148 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Post Details</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">
+          Created <%= @post.created_at.strftime("%B %d, %Y at %I:%M %p") %>
+        </p>
+      </div>
+      
+      <div class="flex space-x-3">
+        <%= link_to edit_post_path(@post), 
+                   class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" do %>
+          Edit Post
+        <% end %>
+        
+        <%= link_to posts_path, 
+                   class: "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" do %>
+          ← Back to Posts
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Content Card -->
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <!-- Status and Metadata -->
+    <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <!-- Status Badge -->
+          <% case @post.status %>
+          <% when 'published' %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400">
+              ✓ Published
+            </span>
+          <% when 'scheduled' %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
+              ⏰ Scheduled
+            </span>
+          <% when 'draft' %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+              📝 Draft
+            </span>
+          <% when 'failed' %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400">
+              ❌ Failed
+            </span>
+          <% end %>
+          
+          <!-- AI Generated Badge -->
+          <% if @post.ai_generated? %>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400">
+              ⚡ AI Generated
+            </span>
+          <% end %>
+          
+          <!-- Content Mode -->
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400">
+            <%= @post.content_mode.humanize %> Mode
+          </span>
+        </div>
+        
+        <!-- Character Count -->
+        <span class="text-sm text-gray-500 dark:text-gray-400">
+          <%= @post.content_length || 0 %> characters
+        </span>
+      </div>
+    </div>
+
+    <!-- Content (Privacy-Safe Display) -->
+    <div class="p-6">
+      <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-6 text-center">
+        <div class="text-yellow-800 dark:text-yellow-400">
+          <h3 class="text-lg font-semibold mb-2">🔒 Privacy-First Design</h3>
+          <p class="text-sm"><%= @post.display_content %></p>
+          <p class="text-xs mt-2 text-yellow-600 dark:text-yellow-500">
+            Content is never stored in our database for your privacy and security.
+            <% if @post.published_to_platforms? %>
+              <br>✅ Successfully published to selected platforms.
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Platforms -->
+    <div class="px-6 pb-6">
+      <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Published Platforms</h3>
+      <div class="flex flex-wrap gap-3">
+        <% @post.platforms.each do |platform| %>
+          <div class="flex items-center space-x-2 bg-gray-100 dark:bg-gray-700 px-4 py-2 rounded-lg">
+            <% case platform %>
+            <% when 'linkedin' %>
+              <span class="text-blue-600 dark:text-blue-400 text-xl">💼</span>
+              <span class="font-medium text-gray-900 dark:text-white">LinkedIn</span>
+            <% when 'facebook' %>
+              <span class="text-blue-500 dark:text-blue-400 text-xl">📘</span>
+              <span class="font-medium text-gray-900 dark:text-white">Facebook</span>
+            <% when 'instagram' %>
+              <span class="text-pink-500 dark:text-pink-400 text-xl">📸</span>
+              <span class="font-medium text-gray-900 dark:text-white">Instagram</span>
+            <% when 'tiktok' %>
+              <span class="text-black dark:text-white text-xl">🎵</span>
+              <span class="font-medium text-gray-900 dark:text-white">TikTok</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Scheduling Info -->
+    <% if @post.scheduled_for.present? %>
+      <div class="px-6 pb-6">
+        <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
+          <p class="text-yellow-800 dark:text-yellow-400">
+            ⏰ Scheduled for <%= @post.scheduled_for.strftime("%B %d, %Y at %I:%M %p") %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Actions -->
+  <div class="mt-6 flex items-center justify-between">
+    <div class="flex space-x-3">
+      <% if @post.status == 'draft' %>
+        <%= button_to "Publish Now", post_path(@post), 
+                     method: :patch,
+                     params: { publish_now: '1' },
+                     class: "bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors",
+                     data: { confirm: "Publish this post now?" } %>
+      <% end %>
+      
+      <%= link_to "Edit", edit_post_path(@post), 
+                 class: "bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors" %>
+    </div>
+    
+    <%= button_to "Delete Post", post_path(@post), 
+                 method: :delete,
+                 class: "bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors",
+                 data: { 
+                   confirm: "Are you sure you want to delete this post?",
+                   turbo_confirm: "Are you sure you want to delete this post?"
+                 } %>
+  </div>
+</div>

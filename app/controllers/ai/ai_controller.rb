@@ -1,4 +1,4 @@
-class AiController < ApplicationController
+class Ai::AiController < ApplicationController
   before_action :authenticate_user!
   
   def generate_post

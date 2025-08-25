@@ -47,7 +47,7 @@ After working with small businesses and corporations, the founder realized that 
 - No games, no gimmicks, no tricks, no manipulation
 - Transparent pricing and honest communication
 - Fight against companies that exploit tech-ignorant clients
-- 50% less cost than typical agencies
+- Efficient solo development eliminates traditional agency overhead
 
 #### 2. **Patient Education**
 - Bridge the gap between tech complexity and user understanding
@@ -115,7 +115,7 @@ After working with small businesses and corporations, the founder realized that 
 5. **Optional Training**: Teach clients to maintain/host their own solutions
 
 ### Pricing Philosophy
-- Typically 50% less than traditional agencies
+- Efficient solo development eliminates traditional agency overhead
 - No hidden fees or surprise costs
 - Transparent pricing based on actual work required
 - Value-focused rather than hour-based billing when possible
@@ -152,7 +152,7 @@ After working with small businesses and corporations, the founder realized that 
 
 ### Messaging Themes
 - "No games, no gimmicks, no tricks, no manipulation"
-- "50% less cost than agencies"
+- "Efficient solo development eliminates agency overhead"
 - "Function over form"
 - "We don't take advantage of people who don't understand tech"
 - "Patient education and transparent communication"

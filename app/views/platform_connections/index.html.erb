@@ -1,0 +1,132 @@
+<div class="max-w-4xl mx-auto">
+  <!-- Header -->
+  <div class="mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Platform Connections</h1>
+        <p class="text-gray-600 dark:text-gray-400 mt-1">Manage your social media platform connections</p>
+      </div>
+      <%= link_to dashboard_path, class: "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" do %>
+        ← Back to Dashboard
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Connections Grid -->
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- LinkedIn -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+          <div class="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-xl">
+            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">LinkedIn</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Professional network</p>
+          </div>
+        </div>
+        <% if current_user.linkedin_connected? %>
+          <span class="text-sm text-green-600 dark:text-green-400 font-medium">✓ Connected</span>
+        <% else %>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Not connected</span>
+        <% end %>
+      </div>
+      
+      <% if current_user.linkedin_connected? %>
+        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 mb-4">
+          <p class="text-sm text-gray-700 dark:text-gray-300">
+            <span class="font-medium">Connected as:</span> <%= current_user.linkedin_connection.settings['name'] %>
+          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            Last updated: <%= current_user.linkedin_connection.updated_at.strftime("%B %d, %Y") %>
+          </p>
+        </div>
+        
+        <div class="space-y-2">
+          <%= link_to new_post_path(platform: 'linkedin'), 
+                      class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+            📝 Create LinkedIn Post
+          <% end %>
+          
+          <%= button_to "🔄 Sync FROM LinkedIn", linkedin_import_profile_path, 
+                        method: :post,
+                        class: "w-full bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors" %>
+          
+          <%= button_to "📤 Export TO LinkedIn", linkedin_export_profile_path, 
+                        method: :post,
+                        class: "w-full bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors" %>
+          
+          <%= link_to "Disconnect", disconnect_platform_connections_path('linkedin'), 
+                      method: :delete, 
+                      class: "block w-full text-center bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors",
+                      data: { confirm: "Are you sure you want to disconnect LinkedIn?" } %>
+        </div>
+      <% else %>
+        <%= link_to linkedin_authorize_path, 
+                    class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+          Connect LinkedIn Account
+        <% end %>
+      <% end %>
+    </div>
+
+    <!-- Facebook (Coming Soon) -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 opacity-60">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+          <div class="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-xl">
+            <span class="text-2xl">📘</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Facebook</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Social network</p>
+          </div>
+        </div>
+        <span class="text-sm text-gray-400 dark:text-gray-500">Coming Soon</span>
+      </div>
+      <button disabled class="w-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+        Connect Facebook
+      </button>
+    </div>
+
+    <!-- Instagram (Coming Soon) -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 opacity-60">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+          <div class="bg-pink-100 dark:bg-pink-900/20 p-3 rounded-xl">
+            <span class="text-2xl">📸</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Instagram</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Photo sharing</p>
+          </div>
+        </div>
+        <span class="text-sm text-gray-400 dark:text-gray-500">Coming Soon</span>
+      </div>
+      <button disabled class="w-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+        Connect Instagram
+      </button>
+    </div>
+
+    <!-- TikTok (Coming Soon) -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 opacity-60">
+      <div class="flex items-center justify-between mb-4">
+        <div class="flex items-center space-x-3">
+          <div class="bg-gray-100 dark:bg-gray-900/20 p-3 rounded-xl">
+            <span class="text-2xl">🎵</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">TikTok</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Video platform</p>
+          </div>
+        </div>
+        <span class="text-sm text-gray-400 dark:text-gray-500">Coming Soon</span>
+      </div>
+      <button disabled class="w-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+        Connect TikTok
+      </button>
+    </div>
+  </div>
+</div>

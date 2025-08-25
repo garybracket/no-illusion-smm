@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_23_005452) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_23_131926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,7 +29,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_23_005452) do
 
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.text "content"
     t.text "platforms"
     t.integer "status", default: 0, null: false
     t.integer "content_mode", default: 0, null: false
@@ -37,6 +36,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_23_005452) do
     t.datetime "scheduled_for"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "content_length"
+    t.string "content_hash"
+    t.json "platform_post_ids", default: {}
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -69,6 +71,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_23_005452) do
     t.datetime "last_sign_in_at"
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
+    t.text "professional_summary"
+    t.json "work_experience", default: []
+    t.json "education", default: []
+    t.json "certifications", default: []
+    t.string "phone"
+    t.string "linkedin_url"
+    t.string "github_url"
+    t.string "portfolio_url"
+    t.string "location"
+    t.string "resume_template", default: "modern"
+    t.string "resume_color_scheme", default: "professional"
+    t.datetime "last_resume_generated_at"
+    t.integer "resume_version", default: 1
     t.index ["auth0_id"], name: "index_users_on_auth0_id", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end

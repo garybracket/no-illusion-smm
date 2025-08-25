@@ -1,0 +1,193 @@
+<!-- Resume Builder Dashboard -->
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-blue-900 dark:to-indigo-900 -m-6 p-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="relative mb-8">
+      <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 rounded-3xl blur-3xl"></div>
+      <div class="relative bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-3xl p-8 border border-white/20 dark:border-slate-700/50 shadow-xl">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h1 class="text-3xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">
+                Resume Builder
+              </h1>
+              <p class="text-slate-600 dark:text-slate-400">Create professional resumes from your profile</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8">
+      <!-- Left Column: Actions -->
+      <div class="space-y-6">
+        
+        <!-- LinkedIn Sync -->
+        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/50 p-6">
+          <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-4 flex items-center">
+            <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/50 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"/>
+              </svg>
+            </div>
+            LinkedIn Integration
+          </h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">
+            Import your LinkedIn profile data to populate resume fields automatically.
+          </p>
+          <% if current_user.linkedin_connected? %>
+            <%= form_tag sync_resume_from_linkedin_path, method: :post, class: "space-y-3" do %>
+              <button type="submit" class="w-full bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700 transition-colors font-medium">
+                📥 Sync from LinkedIn
+              </button>
+            <% end %>
+            <p class="text-xs text-green-600 dark:text-green-400 mt-2">✓ LinkedIn Connected</p>
+          <% else %>
+            <%= link_to linkedin_authorize_path, class: "inline-block w-full bg-gray-400 text-white px-4 py-3 rounded-xl text-center font-medium" do %>
+              🔗 Connect LinkedIn First
+            <% end %>
+          <% end %>
+        </div>
+
+        <!-- Resume Upload -->
+        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/50 p-6">
+          <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-4 flex items-center">
+            <div class="w-8 h-8 bg-green-100 dark:bg-green-900/50 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-4 h-4 text-green-600 dark:text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+            </div>
+            Import Resume
+          </h3>
+          <%= form_tag import_resume_path, method: :post, multipart: true, class: "space-y-4" do %>
+            <div>
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Upload Resume File (PDF, Word, TXT)</label>
+              <%= file_field_tag :resume_file, 
+                                accept: ".pdf,.docx,.doc,.txt",
+                                class: "w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white" %>
+            </div>
+            <button type="submit" class="w-full bg-green-600 text-white px-4 py-3 rounded-xl hover:bg-green-700 transition-colors font-medium">
+              📄 Import Resume
+            </button>
+          <% end %>
+          
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+            <%= form_tag import_resume_path, method: :post, class: "space-y-3" do %>
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Or Paste Resume Text</label>
+              <%= text_area_tag :resume_text, "", 
+                               placeholder: "Paste your resume text here...",
+                               rows: 4,
+                               class: "w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white resize-none" %>
+              <button type="submit" class="w-full bg-green-600 text-white px-4 py-3 rounded-xl hover:bg-green-700 transition-colors font-medium">
+                📝 Import Text
+              </button>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Generation -->
+      <div class="space-y-6">
+        
+        <!-- Resume Generation -->
+        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/50 p-6">
+          <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-4 flex items-center">
+            <div class="w-8 h-8 bg-purple-100 dark:bg-purple-900/50 rounded-lg flex items-center justify-center mr-3">
+              <svg class="w-4 h-4 text-purple-600 dark:text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+              </svg>
+            </div>
+            Generate Resume
+          </h3>
+          
+          <%= form_tag preview_resume_path, method: :get, target: "_blank", class: "space-y-4" do %>
+            <div>
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Template</label>
+              <%= select_tag :template, 
+                            options_for_select([
+                              ['Modern', 'modern'],
+                              ['Classic', 'classic'],
+                              ['Minimal', 'minimal']
+                            ], current_user.resume_template),
+                            class: "w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white" %>
+            </div>
+            
+            <div>
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Color Scheme</label>
+              <%= select_tag :color_scheme,
+                            options_for_select([
+                              ['Professional', 'professional'],
+                              ['Modern', 'modern'],
+                              ['Creative', 'creative']
+                            ], current_user.resume_color_scheme),
+                            class: "w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-slate-700 dark:text-white" %>
+            </div>
+            
+            <div class="flex space-x-3">
+              <button type="submit" class="flex-1 bg-purple-600 text-white px-4 py-3 rounded-xl hover:bg-purple-700 transition-colors font-medium">
+                👁️ Preview
+              </button>
+              <%= link_to download_resume_path, 
+                         class: "flex-1 bg-indigo-600 text-white px-4 py-3 rounded-xl hover:bg-indigo-700 transition-colors font-medium text-center" do %>
+                💾 Download
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <!-- Current Data Summary -->
+        <div class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl shadow-xl border border-white/20 dark:border-slate-700/50 p-6">
+          <h3 class="text-xl font-semibold text-slate-800 dark:text-white mb-4">Current Resume Data</h3>
+          
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between">
+              <span class="text-slate-600 dark:text-slate-400">Professional Summary:</span>
+              <span class="<%= current_user.professional_summary.present? ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400' %>">
+                <%= current_user.professional_summary.present? ? '✓ Complete' : '✗ Missing' %>
+              </span>
+            </div>
+            
+            <div class="flex justify-between">
+              <span class="text-slate-600 dark:text-slate-400">Work Experience:</span>
+              <span class="<%= current_user.work_experience.present? && current_user.work_experience.any? ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400' %>">
+                <%= current_user.work_experience.present? && current_user.work_experience.any? ? "#{current_user.work_experience.count} positions" : '✗ Missing' %>
+              </span>
+            </div>
+            
+            <div class="flex justify-between">
+              <span class="text-slate-600 dark:text-slate-400">Education:</span>
+              <span class="<%= current_user.education.present? && current_user.education.any? ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400' %>">
+                <%= current_user.education.present? && current_user.education.any? ? "#{current_user.education.count} entries" : '✗ Missing' %>
+              </span>
+            </div>
+            
+            <div class="flex justify-between">
+              <span class="text-slate-600 dark:text-slate-400">Skills:</span>
+              <span class="<%= current_user.skills.present? && current_user.skills.any? ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400' %>">
+                <%= current_user.skills.present? && current_user.skills.any? ? "#{current_user.skills.count} skills" : '✗ Missing' %>
+              </span>
+            </div>
+            
+            <div class="flex justify-between">
+              <span class="text-slate-600 dark:text-slate-400">Contact Info:</span>
+              <span class="<%= current_user.phone.present? ? 'text-green-600 dark:text-green-400' : 'text-red-500 dark:text-red-400' %>">
+                <%= current_user.phone.present? ? '✓ Complete' : '✗ Missing Phone' %>
+              </span>
+            </div>
+          </div>
+          
+          <div class="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+            <%= link_to edit_resume_path, class: "w-full inline-block bg-slate-600 text-white px-4 py-3 rounded-xl hover:bg-slate-700 transition-colors font-medium text-center" do %>
+              ✏️ Edit Resume Data
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,52 +1,70 @@
-# 📄 Requirements Document
-## Project Title: **Small Business Social Media Manager**
+# 📄 Requirements Document (Rails Implementation)
+## Project Title: **No iLLusion SMM - Rails Social Media Manager**
 
 ### 1. Overview
-This application helps small business owners manage social media presence across multiple platforms (Facebook, Instagram, LinkedIn, TikTok) from a single interface. It allows users to connect their accounts, create and publish posts, and generate AI-powered marketing content based on their profile skills.
+A Ruby on Rails freemium SaaS platform for social media management. Complete rebuild from Next.js/Supabase to Rails for better maintainability, deployment simplicity, and monolithic architecture. **Current focus: LinkedIn integration with full OAuth, content publishing, and profile synchronization.**
 
 ---
 
-### 2. Goals
-- Provide an easy-to-use dashboard for managing social media.
-- Support posting to multiple platforms simultaneously.
-- Use AI to generate marketing content based on user skill profiles.
-- Allow users to manage platform settings (e.g., API keys).
-- Build with scalable, modern technologies (Next.js + Supabase).
+### 2. Goals - **✅ ACHIEVED**
+- ✅ Provide an easy-to-use Rails dashboard for managing social media
+- ✅ Complete LinkedIn integration with OAuth, posting, and profile sync
+- ✅ AI-powered content generation based on user profiles and skills
+- ✅ Professional resume builder with LinkedIn data import
+- ✅ Build with Rails conventions and PostgreSQL for production reliability
 
 ---
 
-### 3. Tech Stack
+### 3. Tech Stack - **RAILS IMPLEMENTATION**
 
-| Layer             | Tool/Framework        | Notes                                                      |
+| Layer             | Tool/Framework        | Status & Notes                                                      |
 |------------------|------------------------|------------------------------------------------------------| 
-| Frontend         | **Next.js 15 (React)**  | App Router, TypeScript, Tailwind CSS - Hosted on Vercel  |
-| Authentication   | **Auth0 v4.9.0**        | OAuth, session management, user identity - **✅ COMPLETE (v4 Migration)**    |
-| Database         | **Supabase**            | PostgreSQL database only (no auth features) - **✅ COMPLETE**   |
-| AI Integration   | **Multi-Provider AI**   | OpenAI, Anthropic, Google - Smart fallback cycling - **✅ COMPLETE**        |
-| Social APIs      | **All 4 Platforms**     | Facebook, Instagram, LinkedIn, TikTok - **✅ COMPLETE**             |
-| Hosting          | **Vercel**              | Frontend deployment and hosting - **✅ COMPLETE**               |
+| **Backend**      | **Ruby on Rails 7.1**  | Complete MVC architecture, PostgreSQL - **✅ COMPLETE**  |
+| **Frontend**     | **Rails Views + Stimulus** | Tailwind CSS, mobile-first responsive - **✅ COMPLETE**  |
+| **Authentication** | **Devise + Auth0**    | Secure user management and OAuth - **✅ COMPLETE**    |
+| **Database**     | **PostgreSQL**        | Production-ready with Rails migrations - **✅ COMPLETE**   |
+| **AI Integration** | **Claude API (Anthropic)** | Profile-based content generation - **✅ COMPLETE**        |
+| **LinkedIn API** | **LinkedIn v2 OAuth** | Complete integration with posting + profiles - **✅ COMPLETE**             |
+| **Deployment**   | **Heroku Ready**      | Single app deployment with PostgreSQL - **✅ READY**               |
 
 ---
 
 ### 4. Functional Requirements
 
-#### 4.1 User Authentication
-- ✅ User signup & login (Auth0) - **COMPLETE**
-- ✅ OAuth with Google via Auth0 - **COMPLETE**
-- ✅ Store basic user metadata (name, email, avatar, etc.) in Supabase - **COMPLETE**
-- ✅ Auth0 user ID (sub claim) used as foreign key in database - **COMPLETE**
-- ✅ Session management via Auth0 SDK middleware - **COMPLETE**
-- ✅ Dynamic UI based on authentication state - **COMPLETE**
+#### 4.1 User Authentication & Management - **✅ RAILS COMPLETE**
+- ✅ **Devise + Auth0 Integration**: Secure user authentication with OAuth
+- ✅ **User Model**: Complete profile system with skills, bio, mission statement  
+- ✅ **Session Management**: Rails session handling with Auth0 user identification
+- ✅ **Profile Validation**: Active Record validations for user data integrity
+- ✅ **Content Mode Support**: Business, influencer, personal content preferences
 
-#### 4.2 Profile Page
-- ✅ Editable user profile - **COMPLETE**
-- ✅ Skill list (predefined and selectable) - **COMPLETE**
-  - Example skills: Marketing, Graphic Design, SEO, Copywriting, Content Creation, etc.
-- ✅ Option to update profile information and skillset - **COMPLETE**
-- ✅ Mission statement integration - **COMPLETE**
-  - Template: "We help [target audience] [achieve what] through [your approach/values]"
-  - Industry-specific examples and guidance
-  - Integration with AI content generation
+#### 4.2 LinkedIn Integration - **✅ COMPLETE**
+- ✅ **OAuth 2.0 Flow**: Full LinkedIn authentication with CSRF protection
+- ✅ **Profile Import**: LinkedIn data → app profile synchronization
+  - Name, headline, summary, work history, education
+  - Skills extraction with business/technical categorization
+  - Profile picture import with URL handling
+- ✅ **Profile Export**: App profile → formatted LinkedIn content
+  - Professional headline generation
+  - Formatted About section with skills
+  - Experience templates for LinkedIn
+  - Copy-to-clipboard functionality
+- ✅ **Content Publishing**: LinkedIn posts with text + images
+- ✅ **Connection Management**: Token storage, expiration, status tracking
+
+#### 4.3 Content Management - **✅ COMPLETE**
+- ✅ **Posts System**: Create, edit, publish posts with Rails CRUD
+- ✅ **AI Content Generation**: Claude API integration with profile context
+- ✅ **Content Modes**: Business/influencer/personal content strategies
+- ✅ **Prompt Templates**: User-specific AI prompt management
+- ✅ **Status Tracking**: Draft, scheduled, published, failed states
+
+#### 4.4 Resume Builder - **✅ COMPLETE**  
+- ✅ **LinkedIn Integration**: Auto-import work history and education
+- ✅ **Professional Formatting**: Clean, professional resume layout
+- ✅ **Skills Integration**: Technical/business skills categorization
+- ✅ **Mission Statement**: Professional branding incorporation
+- ✅ **Preview & Download**: Resume generation and export
 
 #### 4.3 Tools Page
 A central page containing:

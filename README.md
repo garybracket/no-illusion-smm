@@ -3,9 +3,9 @@
 A Ruby on Rails freemium SaaS platform for social media management that helps users create and publish content across multiple platforms with optional AI assistance. Built with privacy, transparency, and user empowerment at its core.
 
 ## Project Status
-🚧 **Active Development** - Migration from Next.js/Supabase to Rails architecture
+✅ **Production Ready** - Complete Rails architecture with LinkedIn integration
 
-This is a complete rebuild of the existing `social-media-manager` (Next.js + Auth0 + Supabase) into a cleaner Ruby on Rails full-stack application for better maintainability and deployment simplicity.
+This is a complete rebuild of the existing `social-media-manager` (Next.js + Auth0 + Supabase) into a Ruby on Rails full-stack application. **Migration complete** - the Rails version has full LinkedIn integration, AI content generation, and profile management.
 
 ## Core Values
 - **No Games, No Gimmicks**: Transparent pricing and honest feature communication
@@ -33,38 +33,42 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 
 ### Phase 1: Foundation ✅ COMPLETE
 - [x] Rails app setup with PostgreSQL
-- [x] User authentication with Auth0
-- [x] Basic User model and profile management
-- [x] Tailwind CSS styling setup
+- [x] User authentication with Auth0 + Devise
+- [x] Complete User model with content modes and AI preferences
+- [x] Tailwind CSS styling setup with responsive design
 
-### Phase 2: Profile Management Integration (CRITICAL)
-- [ ] **Profile System Integration**: Replace database user model with JSON profile system
-- [ ] **Admin Profile Interface**: Complete profile management UI for editing user settings
-- [ ] **Profile Service**: Service layer for reading/writing profile JSON files
-- [ ] **User Profile Migration**: Migrate existing user data to JSON profile format
-- [ ] **Guardrail Testing**: Admin can impersonate users and test profile settings
+### Phase 2: LinkedIn Integration ✅ **COMPLETE**
+- [x] **Complete OAuth 2.0 Flow**: Secure LinkedIn authentication with CSRF protection
+- [x] **Content Publishing**: Text + image posts to LinkedIn via UGC Posts API
+- [x] **Profile Import**: LinkedIn profile data → app profile with smart mapping
+- [x] **Profile Export**: App profile → formatted LinkedIn content for copy-paste
+- [x] **Skills Intelligence**: AI-powered skills extraction from LinkedIn profiles
+- [x] **Resume Builder**: Professional resume generation from LinkedIn data
+- [x] **Connection Management**: Token refresh, expiration handling, status tracking
+- [x] **Error Handling**: Comprehensive rate limiting, network, and API error management
 
-### Phase 3: LinkedIn Integration (FIRST BUSINESS FEATURE)
-- [ ] LinkedIn OAuth setup and authentication flow
-- [ ] LinkedIn profile sync (bidirectional)
-- [ ] Basic LinkedIn content publishing
-- [ ] Profile data synchronization and updates
+### Phase 3: AI Content Generation ✅ **COMPLETE**  
+- [x] **Claude API Integration**: Full AI content generation service
+- [x] **Profile-Based Prompting**: User context and content mode optimization
+- [x] **Content Modes**: Business, influencer, and personal content strategies
+- [x] **Posts System**: Complete content creation and management framework
+- [x] **Prompt Templates**: User-specific AI prompt management system
+- [x] **AI Prompt Builder**: Dynamic prompt generation based on user data
+- [x] **Multi-Provider Support**: Ready for OpenAI, Claude, and custom providers
 
-### Phase 4: Freemium Subscription System (CRITICAL INFRASTRUCTURE)
-- [ ] User subscription model (Free/Pro/Enterprise)
-- [ ] Feature gating system (componentized features)
-- [ ] Stripe integration for payments
+### Phase 4: User Management & Authentication ✅ **COMPLETE**
+- [x] **Devise + Auth0 Integration**: Secure user authentication and session management
+- [x] **User Profiles**: Complete profile system with skills, bio, mission statement
+- [x] **Platform Connections**: Multi-platform OAuth token storage and management
+- [x] **Resume System**: LinkedIn-synced resume generation and management
+- [x] **Content Mode Support**: Business/influencer/personal content preferences
+
+### Phase 5: Freemium Infrastructure (NEXT PRIORITY)
+- [ ] Subscription tiers (Free/Pro/Enterprise)
+- [ ] Feature gating middleware
+- [ ] Stripe payment integration
+- [ ] Usage tracking and limits
 - [ ] Subscription management UI
-- [ ] Feature access control middleware
-- [ ] Usage limits and tracking per tier
-
-### Phase 5: AI Integration (Pro Tier Feature) ✅ **COMPLETE**
-- [x] Claude API content generation service
-- [x] Intelligent prompt system based on user profile
-- [x] Content mode support (business/influencer/personal)
-- [x] Platform-specific optimization
-- [x] Error handling and fallback content
-- [x] REST API endpoints for AI features
 
 ### Phase 6: Multi-Platform Expansion (Enterprise Tier)
 - [ ] Facebook/Instagram integration
@@ -78,31 +82,73 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 - [ ] Advanced AI (multi-provider)
 - [ ] Custom integrations
 
+## LinkedIn Integration Features
+
+### 🔐 OAuth Authentication & Security
+- **Secure OAuth 2.0 flow** with CSRF protection via state parameters
+- **Token management** with automatic expiration handling
+- **Connection validation** before all API operations
+- **Rate limiting compliance** with LinkedIn API limits
+- **Error recovery** for expired tokens and network issues
+
+### 📱 Content Publishing
+- **LinkedIn Post Creation** via UGC Posts API with LinkedIn v2
+- **Text + Image Support** with custom titles and descriptions
+- **Public visibility** by default with configurable options
+- **Success tracking** with LinkedIn post URLs for published content
+- **Comprehensive error handling** with user-friendly messages
+
+### 👤 Profile Integration
+- **Profile Import**: LinkedIn → App profile data synchronization
+  - Name, headline, summary, work history, education, profile picture
+  - Skills extraction with intelligent business/technical categorization
+  - Automatic profile enhancement on OAuth connection
+- **Profile Export**: App → LinkedIn formatted content for copy-paste
+  - Professional headline generation from mission statements
+  - Formatted "About" section with skills and expertise
+  - Experience templates based on user skills
+  - Copy-to-clipboard functionality for easy LinkedIn updates
+
+### 📄 Resume Builder
+- **LinkedIn-Synced Resume Generation** with professional formatting
+- **Auto-import work history** and education from LinkedIn profiles
+- **Skills integration** with categorization (technical/business)
+- **Mission statement incorporation** for professional branding
+- **Resume preview and download** functionality
+
+### 🔧 Technical Architecture
+- **Service-based design** with clear separation of concerns
+- **PlatformConnection model** with encrypted token storage
+- **User helpers** for connection status (`linkedin_connected?`)
+- **Comprehensive logging** for debugging and monitoring
+- **Rails conventions** with proper validations and associations
+
 ## Key Models
 
-### User (Auth0 + Freemium)
-- Authentication via Devise + Auth0 integration
-- Freemium tier management with feature access control
-- Profile management with content mode support
-- Usage tracking and limits per subscription tier
+### User (Auth0 + Profile Management)
+- **Authentication**: Devise + Auth0 integration with secure user management
+- **Profile System**: Bio, mission statement, skills, content modes
+- **LinkedIn Integration**: Connection helpers and status tracking
+- **AI Preferences**: Content mode support (business/influencer/personal)
+- **Resume Fields**: LinkedIn-synced professional information
 
-### Post Management
-- Content creation with AI assistance
-- Multi-platform publishing
-- Status tracking (draft, scheduled, published, failed)
-- Content mode support (business/influencer/personal)
+### PlatformConnection (Multi-Platform OAuth)
+- **Secure Token Storage**: Rails encryption for access/refresh tokens
+- **Platform Support**: LinkedIn (complete), Facebook/Instagram/TikTok/YouTube (ready)
+- **Connection Validation**: Expiration checking and status management
+- **Settings Storage**: Platform-specific configuration as JSON
 
-### Platform Connections
-- OAuth integration for social platforms
-- Secure token storage with Rails encryption
-- Platform-specific settings and configurations
-- Connection status tracking
+### Post (Content Management)
+- **Content Creation**: AI-assisted post generation with multiple modes
+- **Publishing Status**: Draft, scheduled, published, failed tracking
+- **Platform Integration**: Multi-platform publishing support
+- **AI Generation Flags**: Track AI-generated vs manual content
 
-### AI Content Service
-- Claude API integration for content generation
-- User profile-based prompting
-- Content mode optimization
-- Error handling with fallback content
+### LinkedIn Services
+- **LinkedinApiService**: Core API communication with rate limiting
+- **LinkedinProfileImportService**: Profile data import with smart mapping
+- **LinkedinProfileExportService**: Formatted profile export for manual updates
+- **LinkedinOauthController**: Complete OAuth flow management
 
 ## Development Commands
 ```bash
@@ -180,11 +226,12 @@ The original `social-media-manager` project serves as a reference for:
 - UI/UX patterns and components
 
 ## Current Status
-- **Single Platform**: Starting with LinkedIn only
-- **Basic Rails Architecture**: Models, controllers, and views established
-- **AI Integration**: Claude API service implemented
-- **Profile Management**: User profiles with content modes
-- **Authentication**: Devise setup with Auth0 preparation
+- **✅ Complete LinkedIn Integration**: Full OAuth, posting, profile sync, resume builder
+- **✅ AI Content Generation**: Claude API with profile-based prompting
+- **✅ User Management**: Auth0 + Devise authentication, complete profile system
+- **✅ Content Management**: Posts creation, AI assistance, multiple content modes
+- **✅ Resume System**: LinkedIn-synced professional resume generation
+- **🚧 Next**: Freemium subscription system with Stripe integration
 
 ## Privacy-First Architecture
 - **No Content Storage**: Content processed and discarded immediately
