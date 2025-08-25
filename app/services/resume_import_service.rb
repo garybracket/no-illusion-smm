@@ -1,5 +1,6 @@
-require 'pdf-reader' # We'll need to add this gem
-require 'docx' # For Word docs
+# TODO: Add pdf-reader and docx gems for file import functionality
+# require 'pdf-reader' # We'll need to add this gem
+# require 'docx' # For Word docs
 
 class ResumeImportService
   class << self
