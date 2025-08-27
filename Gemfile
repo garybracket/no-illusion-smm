@@ -36,9 +36,11 @@ gem "httparty"
 # Environment variables
 gem "dotenv-rails", groups: [:development, :test]
 
-# OAuth integrations
+# Auth0 integration (official SDK)
+gem "auth0"
+
+# OAuth integrations (keep LinkedIn for now)
 gem "omniauth"
-gem "omniauth-auth0"
 gem "omniauth-linkedin-oauth2", "~> 1.0"  # LinkedIn OAuth integration
 gem "omniauth-rails_csrf_protection"  # CRITICAL: Prevents CSRF attacks
 
