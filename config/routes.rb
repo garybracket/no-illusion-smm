@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   
   # SECURITY: Auth0 callback routes (omniauth handles authorization)
   # Note: /auth/auth0 is handled by omniauth middleware, not a route
-  get '/auth/callback', to: 'auth/omniauth#auth0'
+  get '/auth/auth0/callback', to: 'auth/omniauth#auth0'
   get '/auth/failure', to: 'auth/omniauth#failure'
   
   # Root route
