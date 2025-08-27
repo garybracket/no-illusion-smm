@@ -18,13 +18,9 @@ class Auth0Service
       client_id: @client_id,
       redirect_uri: callback_url,
       scope: 'openid profile email',
-      state: state
+      state: state,
+      connection: ENV['AUTH0_CONNECTION_ID'] || 'con_ddNa7ToSKHpDerr0'  # Force specific connection to avoid username-password-authentication
     }
-    
-    # Only add connection if specifically configured and needed
-    if ENV['AUTH0_CONNECTION_ID'].present?
-      params[:connection] = ENV['AUTH0_CONNECTION_ID']
-    end
     
     # Add screen_hint for signup vs login
     params[:screen_hint] = screen_hint if screen_hint
