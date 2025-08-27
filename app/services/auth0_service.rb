@@ -78,16 +78,23 @@ class Auth0Service
 
     request = Net::HTTP::Post.new(uri)
     request['Content-Type'] = 'application/x-www-form-urlencoded'
-    request.body = {
+    
+    body = {
       grant_type: 'authorization_code',
       client_id: @client_id,
       client_secret: @client_secret,
       code: code,
       redirect_uri: callback_url
-    }.to_query
+    }
+    
+    request.body = body.to_query
 
     Rails.logger.info "Auth0 token exchange request to: #{uri}"
     Rails.logger.info "Auth0 token exchange redirect_uri: #{callback_url}"
+    Rails.logger.info "Auth0 client_id: #{@client_id}"
+    Rails.logger.info "Auth0 client_secret length: #{@client_secret.length}"
+    Rails.logger.info "Auth0 client_secret first/last 5: #{@client_secret[0..4]}...#{@client_secret[-5..-1]}"
+    Rails.logger.info "Request body being sent: #{request.body}"
     
     response = http.request(request)
     response_body = JSON.parse(response.body)
@@ -97,6 +104,7 @@ class Auth0Service
     
     unless response.code == '200'
       Rails.logger.error "Auth0 token exchange failed with status #{response.code}: #{response_body.inspect}"
+      Rails.logger.error "Full request body was: #{request.body}"
     end
     
     response_body
