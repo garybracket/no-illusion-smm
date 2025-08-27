@@ -64,7 +64,11 @@ class Auth0Service
   private
 
   def callback_url
-    "https://smm.no-illusion.com/auth/auth0/callback"
+    if Rails.env.production?
+      "https://smm.no-illusion.com/auth/auth0/callback"
+    else
+      "http://localhost:3000/auth/auth0/callback"
+    end
   end
 
   def exchange_code_for_tokens(code)
@@ -82,8 +86,20 @@ class Auth0Service
       redirect_uri: callback_url
     }.to_query
 
+    Rails.logger.info "Auth0 token exchange request to: #{uri}"
+    Rails.logger.info "Auth0 token exchange redirect_uri: #{callback_url}"
+    
     response = http.request(request)
-    JSON.parse(response.body)
+    response_body = JSON.parse(response.body)
+    
+    Rails.logger.info "Auth0 token exchange response code: #{response.code}"
+    Rails.logger.info "Auth0 token exchange response: #{response_body.inspect}"
+    
+    unless response.code == '200'
+      Rails.logger.error "Auth0 token exchange failed with status #{response.code}: #{response_body.inspect}"
+    end
+    
+    response_body
   end
 
   def get_user_info(access_token)
