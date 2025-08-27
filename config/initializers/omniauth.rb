@@ -16,3 +16,8 @@ end
 # SECURITY: Allow GET requests for Auth0 (required for omniauth)
 OmniAuth.config.allowed_request_methods = [:post, :get]
 OmniAuth.config.silence_get_warning = true
+
+# Set failure endpoint
+OmniAuth.config.on_failure = Proc.new do |env|
+  Auth::OmniauthController.action(:failure).call(env)
+end

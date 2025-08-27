@@ -3,22 +3,36 @@ class Auth::OmniauthController < ApplicationController
   
   # SECURITY: Handle Auth0 callback securely
   def auth0
+    # Debug logging
+    Rails.logger.info "Auth0 callback initiated"
+    Rails.logger.info "Omniauth env present: #{request.env.key?('omniauth.auth')}"
     
     # SECURITY: Validate the omniauth response
     auth = request.env['omniauth.auth']
-    unless auth&.provider == 'auth0'
-      redirect_to root_path, alert: 'Authentication failed'
+    
+    unless auth
+      Rails.logger.error "No auth data in request.env['omniauth.auth']"
+      Rails.logger.error "Request params: #{params.inspect}"
+      redirect_to root_path, alert: 'Authentication failed - no auth data received'
+      return
+    end
+    
+    unless auth.provider == 'auth0'
+      Rails.logger.error "Wrong provider: #{auth.provider}"
+      redirect_to root_path, alert: 'Authentication failed - wrong provider'
       return
     end
 
+    Rails.logger.info "Auth0 user info: #{auth.info.inspect}"
     user = User.from_omniauth(auth)
     
     if user&.persisted?
+      Rails.logger.info "User authenticated: #{user.email}"
       # SECURITY: Sign in user through Devise (maintains security checks)
       sign_in_and_redirect user, event: :authentication
     else
       # SECURITY: Log failed authentication attempts
-      Rails.logger.warn "Auth0 authentication failed for #{auth&.info&.email}"
+      Rails.logger.error "Auth0 user creation/lookup failed for #{auth&.info&.email}"
       redirect_to root_path, alert: 'Authentication failed. Please try again.'
     end
   end
