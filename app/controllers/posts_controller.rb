@@ -47,7 +47,7 @@ class PostsController < ApplicationController
     # Create post with metadata only (NO content storage)
     @post = current_user.posts.build
     @post.content = content # This sets content_length and content_hash only
-    @post.content_mode = current_user.content_mode
+    @post.content_mode = post_params[:content_mode] || current_user.content_mode
     @post.platforms = selected_platforms
     @post.ai_generated = ai_generated || false
     @post.scheduled_for = post_params[:scheduled_for]
@@ -128,7 +128,7 @@ class PostsController < ApplicationController
   
   def post_params
     # PRIVACY: Content is permitted for processing but never persisted
-    params.require(:post).permit(:content, :scheduled_for, platforms: [])
+    params.require(:post).permit(:content, :content_mode, :scheduled_for, platforms: [])
   end
   
   def selected_platforms

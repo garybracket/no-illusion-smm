@@ -39,9 +39,23 @@
         </div>
       <% end %>
 
-      <div class="mt-6 text-center">
-        <%= link_to "Don't have an account? Sign up", new_registration_path(resource_name),
-                    class: "text-blue-600 hover:text-blue-800" %>
+      <div class="mt-6 text-center space-y-4">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">Or continue with</span>
+          </div>
+        </div>
+
+        <%= link_to "Sign in with Auth0", user_auth0_omniauth_authorize_path, method: :post,
+                    class: "w-full bg-gray-800 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors font-semibold flex items-center justify-center" %>
+
+        <div class="text-center">
+          <%= link_to "Don't have an account? Sign up", new_registration_path(resource_name),
+                      class: "text-blue-600 hover:text-blue-800" %>
+        </div>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  # TEMPORARY: Simple database authentication for beta testing
-  # TODO: Re-implement Auth0 integration after basic deployment
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
+  # Auth0 + Devise integration with database fallback
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable, 
+         :omniauthable, omniauth_providers: [:auth0]
   
   # SECURITY: Auth0 user identifier - this is our source of truth for authenticated users
   validates :auth0_id, uniqueness: true, allow_nil: true

@@ -1,7 +1,7 @@
 class Auth::OmniauthController < ApplicationController
   skip_before_action :authenticate_user!
   
-  # SECURITY: Handle Auth0 callback securely
+  # SECURITY: Handle Auth0 callback securely (Devise naming convention)
   def auth0
     # SECURITY: Validate the omniauth response
     auth = request.env['omniauth.auth']
