@@ -37,6 +37,10 @@ class User < ApplicationRecord
     info = auth.respond_to?(:info) ? auth.info : auth['info']
     uid = auth.respond_to?(:uid) ? auth.uid : auth['uid']
     
+    # Enhanced debugging for production
+    Rails.logger.info "Auth0 omniauth info: #{info.inspect}"
+    Rails.logger.info "Auth0 omniauth uid: #{uid.inspect}"
+    
     return nil unless info&.[]('email') && uid
     
     # Find or create user by Auth0 ID (most secure approach)
@@ -44,22 +48,43 @@ class User < ApplicationRecord
     
     if user
       # Update Auth0 ID if user was found by email (for existing users)
+      Rails.logger.info "Existing user found: #{user.email}"
       user.update!(auth0_id: uid) if user.auth0_id != uid
     else
       # SECURITY: Create new user with required validations
-      user = create!(
+      Rails.logger.info "Creating new user for Auth0 ID: #{uid}"
+      
+      # Build user attributes
+      user_attrs = {
         auth0_id: uid,
         email: info['email'],
         name: info['name'] || info['email'].split('@').first,
         content_mode: :business,  # Safe default
         password: Devise.friendly_token[0, 20]  # Random password for Auth0 users
-      )
+      }
+      
+      Rails.logger.info "User attributes to create: #{user_attrs.inspect}"
+      
+      # Use create instead of create! to handle validation errors gracefully
+      user = create(user_attrs)
+      
+      unless user.persisted?
+        Rails.logger.error "User creation failed with errors: #{user.errors.full_messages}"
+        return nil
+      end
+      
+      Rails.logger.info "User created successfully: #{user.id}"
     end
     
     user
   rescue ActiveRecord::RecordInvalid => e
     # SECURITY: Log authentication failures for monitoring
     Rails.logger.error "Auth0 user creation failed: #{e.message}"
+    Rails.logger.error "Auth0 user creation backtrace: #{e.backtrace.join("\n")}"
+    nil
+  rescue => e
+    Rails.logger.error "Unexpected error in from_omniauth: #{e.message}"
+    Rails.logger.error "Unexpected error backtrace: #{e.backtrace.join("\n")}"
     nil
   end
 
