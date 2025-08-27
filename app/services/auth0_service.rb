@@ -19,7 +19,7 @@ class Auth0Service
       redirect_uri: callback_url,
       scope: 'openid profile email',
       state: state,
-      connection: 'social-media-manager'  # Force use of specific connection
+      connection: ENV['AUTH0_CONNECTION_ID'] || 'con_social-media-manager'  # Force use of specific connection ID
     }
     
     # Add screen_hint for signup vs login
@@ -68,7 +68,8 @@ class Auth0Service
     if Rails.env.production?
       "https://smm.no-illusion.com/auth/auth0/callback"
     else
-      "http://localhost:3000/auth/auth0/callback"
+      port = ENV['PORT'] || 3000
+      "http://localhost:#{port}/auth/auth0/callback"
     end
   end
 
