@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   # Auth0 + Devise integration with database fallback
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable, 
-         :omniauthable, omniauth_providers: [:auth0]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
   
   # SECURITY: Auth0 user identifier - this is our source of truth for authenticated users
   validates :auth0_id, uniqueness: true, allow_nil: true
