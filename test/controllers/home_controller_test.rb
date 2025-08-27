@@ -9,7 +9,7 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
 
   test "should show sign up link when not authenticated" do
     get root_url
-    assert_select "a[href=?]", user_auth0_omniauth_authorize_path, text: "Get Started Free →"
+    assert_select "a[href=?]", "/auth/auth0", text: "Get Started Free →"
   end
 
   test "should include branding footer" do

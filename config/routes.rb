@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   # Devise routes (skip omniauth callbacks - we handle Auth0 manually)
   devise_for :users, skip: [:omniauth_callbacks]
   
-  # SECURITY: Auth0 callback routes (custom paths to match Auth0 config)
+  # SECURITY: Auth0 routes (custom paths to match Auth0 config)
+  get '/auth/auth0', to: 'auth/omniauth#authorize'
   get '/auth/callback', to: 'auth/omniauth#auth0'
   get '/auth/failure', to: 'auth/omniauth#failure'
   
