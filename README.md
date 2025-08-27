@@ -3,9 +3,19 @@
 A Ruby on Rails freemium SaaS platform for social media management that helps users create and publish content across multiple platforms with optional AI assistance. Built with privacy, transparency, and user empowerment at its core.
 
 ## Project Status
-✅ **Production Ready** - Complete Rails architecture with LinkedIn integration
+✅ **LIVE IN PRODUCTION** - Complete Rails architecture with LinkedIn integration
 
-This is a complete rebuild of the existing `social-media-manager` (Next.js + Auth0 + Supabase) into a Ruby on Rails full-stack application. **Migration complete** - the Rails version has full LinkedIn integration, AI content generation, and profile management.
+**Live URL**: [https://smm.no-illusion.com](https://smm.no-illusion.com)
+
+This is a complete rebuild of the existing `social-media-manager` (Next.js + Auth0 + Supabase) into a Ruby on Rails full-stack application. **Migration complete** - the Rails version has full LinkedIn integration, AI content generation, per-post content mode selection, and comprehensive profile management.
+
+### Current Features (Phase 1-4 Complete)
+- ✅ **Auth0 + Database Authentication**: Dual sign-in options
+- ✅ **LinkedIn Integration**: Full OAuth, posting, profile sync
+- ✅ **AI Content Generation**: Claude API with content mode optimization  
+- ✅ **Per-Post Content Modes**: Business, Influencer, Personal selection
+- ✅ **Profile Management**: Skills, experience, resume generation
+- ✅ **Live Production Deployment**: Custom domain with SSL
 
 ## Core Values
 - **No Games, No Gimmicks**: Transparent pricing and honest feature communication
@@ -21,13 +31,14 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 - **Enterprise Tier**: Multi-platform, advanced AI, white-label
 
 ## Tech Stack
-- **Framework**: Ruby on Rails 7.1
-- **Database**: PostgreSQL (Heroku Postgres)
-- **Authentication**: Devise + Auth0 integration
-- **Frontend**: Rails Views + Stimulus + Tailwind CSS
+- **Framework**: Ruby on Rails 7.2.2
+- **Database**: PostgreSQL (local development + Heroku Postgres)
+- **Authentication**: Devise + Auth0 OAuth integration
+- **Frontend**: Rails Views + Stimulus + Tailwind CSS 4
 - **AI Integration**: Claude API for content generation
-- **Deployment**: Heroku (single app deployment)
-- **Background Jobs**: Sidekiq (when needed)
+- **Platform APIs**: LinkedIn OAuth2, YouTube API (planned), Facebook Graph API (planned)
+- **Deployment**: Heroku with custom domain (smm.no-illusion.com)
+- **Background Jobs**: Sidekiq ready for scheduled posts
 
 ## Development Roadmap
 
@@ -71,6 +82,7 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 - [ ] Subscription management UI
 
 ### Phase 6: Multi-Platform Expansion (Enterprise Tier)
+- [ ] YouTube integration (Community posts, video descriptions)
 - [ ] Facebook/Instagram integration
 - [ ] TikTok integration
 - [ ] Multi-platform publishing
@@ -227,10 +239,12 @@ The original `social-media-manager` project serves as a reference for:
 
 ## Current Status
 - **✅ Complete LinkedIn Integration**: Full OAuth, posting, profile sync, resume builder
-- **✅ AI Content Generation**: Claude API with profile-based prompting
-- **✅ User Management**: Auth0 + Devise authentication, complete profile system
-- **✅ Content Management**: Posts creation, AI assistance, multiple content modes
+- **✅ AI Content Generation**: Claude API with profile-based prompting and per-post content modes
+- **✅ User Management**: Auth0 + Devise dual authentication, complete profile system
+- **✅ Content Management**: Posts creation, AI assistance, Business/Influencer/Personal mode toggle
 - **✅ Resume System**: LinkedIn-synced professional resume generation
+- **✅ Platform Preparation**: YouTube, Facebook, Instagram, TikTok UI ready for future integration
+- **✅ Documentation Cleanup**: Archived unused docs, kept only active files
 - **🚧 Next**: Freemium subscription system with Stripe integration
 
 ## Privacy-First Architecture

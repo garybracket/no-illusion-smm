@@ -6,7 +6,7 @@ class PlatformConnection < ApplicationRecord
   
   # Validations
   validates :platform_name, presence: true, 
-            inclusion: { in: %w[linkedin facebook instagram tiktok] }
+            inclusion: { in: %w[linkedin facebook instagram tiktok youtube] }
   validates :platform_name, uniqueness: { scope: :user_id }
   validates :access_token, presence: true
   
