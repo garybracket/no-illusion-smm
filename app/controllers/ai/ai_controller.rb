@@ -43,7 +43,7 @@ class Ai::AiController < ApplicationController
     
     render json: {
       success: true,
-      optimized_content: result
+      content: result
     }
   end
   

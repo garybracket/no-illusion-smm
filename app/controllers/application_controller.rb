@@ -17,6 +17,17 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:name, :bio, :skills, :mission_statement, :content_mode, :ai_enabled, :ai_preferences])
   end
 
+  # Helper method for Auth0 authentication URLs using OmniAuth
+  def auth0_login_url(mode = 'login')
+    # Use OmniAuth's built-in Auth0 path with screen_hint parameter
+    if mode == 'signup'
+      "/auth/auth0?screen_hint=signup"
+    else
+      "/auth/auth0"
+    end
+  end
+  helper_method :auth0_login_url
+
   private
 
   def skip_authentication?

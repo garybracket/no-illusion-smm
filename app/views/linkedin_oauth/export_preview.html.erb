@@ -37,7 +37,7 @@
     <% end %>
 
     <!-- About Section -->
-    <% if @formatted_profile[:about].present? %>
+    <% if @formatted_profile[:about_section].present? %>
       <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-xl font-semibold text-gray-900 dark:text-white flex items-center">
@@ -51,7 +51,7 @@
           </button>
         </div>
         <div id="about-content" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 font-mono text-sm text-gray-800 dark:text-gray-200 whitespace-pre-line">
-<%= @formatted_profile[:about] %></div>
+<%= @formatted_profile[:about_section] %></div>
         <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
           Paste this into your LinkedIn "About" section
         </p>

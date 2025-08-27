@@ -48,13 +48,11 @@ class LinkedinProfileImportService
           success: true,
           profile: {
             id: profile_data['id'],
-            first_name: profile_data.dig('firstName', 'localized', 'en_US'),
-            last_name: profile_data.dig('lastName', 'localized', 'en_US'),
-            headline: profile_data['headline'],
-            summary: profile_data['summary'],
-            positions: profile_data['positions']&.dig('elements') || [],
-            educations: profile_data['educations']&.dig('elements') || [],
-            picture_url: extract_picture_url(profile_data['profilePicture'])
+            first_name: profile_data['firstName'],
+            last_name: profile_data['lastName'], 
+            name: profile_data['name'],
+            email: profile_data['email'],
+            picture_url: profile_data['picture']
           }
         }
       else
@@ -89,38 +87,32 @@ class LinkedinProfileImportService
       imported_data = {}
       
       begin
-        # Build full name
-        full_name = [linkedin_profile[:first_name], linkedin_profile[:last_name]].compact.join(' ')
+        # Build full name (LinkedIn /userinfo provides 'name' directly)
+        full_name = linkedin_profile[:name] || [linkedin_profile[:firstName], linkedin_profile[:lastName]].compact.join(' ')
         if full_name.present? && full_name != user.name
           user.name = full_name
           imported_data[:name] = full_name
         end
         
-        # Import bio from headline and/or summary
-        bio_parts = []
-        bio_parts << linkedin_profile[:headline] if linkedin_profile[:headline].present?
-        bio_parts << linkedin_profile[:summary] if linkedin_profile[:summary].present?
-        
-        if bio_parts.any?
-          new_bio = bio_parts.join("\n\n").strip
-          if new_bio.length > 500
-            # Truncate if too long, prioritizing headline
-            new_bio = linkedin_profile[:headline].present? ? linkedin_profile[:headline] : linkedin_profile[:summary][0..497] + "..."
-          end
-          
-          if new_bio != user.bio
-            user.bio = new_bio
-            imported_data[:bio] = new_bio
-          end
+        # Update email if provided and different
+        if linkedin_profile[:email].present? && linkedin_profile[:email] != user.email
+          # Note: We typically don't update email as it's used for auth, but store it in settings
+          imported_data[:linkedin_email] = linkedin_profile[:email]
         end
         
-        # Extract skills from positions and LinkedIn skills
-        extracted_skills = extract_skills_from_profile(linkedin_profile, linkedin_skills)
+        # Since LinkedIn /userinfo doesn't provide headline/summary, we'll need to be creative
+        # We can use the name to create a professional presence indicator
+        if user.bio.blank?
+          # Only set a basic bio if user doesn't have one
+          user.bio = "Professional on LinkedIn"
+          imported_data[:bio] = user.bio
+        end
         
-        if extracted_skills.any?
-          # Merge with existing skills, avoiding duplicates
+        # LinkedIn /userinfo doesn't provide detailed profile data
+        # We'll merge LinkedIn skills if available (from get_skills API call)
+        if linkedin_skills.any?
           current_skills = user.skills || []
-          new_skills = (current_skills + extracted_skills).uniq.sort
+          new_skills = (current_skills + linkedin_skills).uniq.sort
           
           if new_skills != current_skills
             user.skills = new_skills
@@ -128,14 +120,8 @@ class LinkedinProfileImportService
           end
         end
         
-        # Generate or enhance mission statement based on profile
-        if user.mission_statement.blank? || user.mission_statement.length < 50
-          mission = generate_mission_statement(linkedin_profile)
-          if mission.present?
-            user.mission_statement = mission
-            imported_data[:mission_statement] = mission
-          end
-        end
+        # Since LinkedIn /userinfo doesn't provide detailed profile info,
+        # we'll skip automatic mission statement generation for now
         
         if user.save
           {

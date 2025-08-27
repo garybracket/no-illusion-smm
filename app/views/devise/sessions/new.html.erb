@@ -24,11 +24,11 @@
         </div>
 
         <!-- Sign In Button -->
-        <%= link_to "Sign In", "/auth/auth0", 
+        <%= link_to "Sign In", auth0_login_url('login'), 
                     class: "block w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-center" %>
 
         <div class="text-center">
-          <%= link_to "Don't have an account? Sign up", "/auth/auth0",
+          <%= link_to "Don't have an account? Sign up", auth0_login_url('signup'),
                       class: "text-blue-600 hover:text-blue-800" %>
         </div>
       </div>

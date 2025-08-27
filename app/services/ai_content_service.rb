@@ -7,8 +7,13 @@ class AiContentService
   MAX_TOKENS = 1024
   
   class << self
-    def generate_post(user:, prompt:, platform: nil, content_mode: nil)
+    def generate_post(user:, prompt: nil, platform: nil, content_mode: nil)
       content_mode ||= user.content_mode
+      
+      # Auto-generate topic if no prompt provided
+      if prompt.blank?
+        prompt = generate_automatic_topic(user: user, content_mode: content_mode, platform: platform)
+      end
       
       # Build the prompt using new prompt builder service
       prompt_data = AiPromptBuilderService.build_content_generation_prompt(
@@ -139,6 +144,50 @@ class AiContentService
       platform_text = platform ? " for #{platform}" : ""
       
       "Here's your post#{platform_text}: #{prompt[0..100]}... [Please customize this message to match your voice and add relevant details]"
+    end
+    
+    def generate_automatic_topic(user:, content_mode:, platform:)
+      # Create topic ideas based on user's profile and content mode
+      topics = []
+      
+      # Add topics based on content mode
+      case content_mode.to_s
+      when 'business'
+        topics += [
+          "Share a lesson learned from a recent project challenge",
+          "Discuss the importance of transparent business practices in your industry",
+          "Explain a technical concept in simple terms for non-technical business owners",
+          "Share insights about process optimization or automation",
+          "Discuss industry trends and their impact on small businesses"
+        ]
+      when 'influencer'
+        topics += [
+          "Share behind-the-scenes of your work process",
+          "Give advice to someone starting in your field",
+          "Share a success story from your experience",
+          "Discuss current industry trends and your perspective",
+          "Share productivity tips or tools you use daily"
+        ]
+      when 'personal'
+        topics += [
+          "Share a personal insight from your professional journey",
+          "Discuss work-life balance in your field",
+          "Share learning experiences or growth moments",
+          "Discuss challenges you've overcome in your career",
+          "Share appreciation for your team or community"
+        ]
+      end
+      
+      # Add skill-based topics if user has skills
+      if user.skills.present? && user.skills.any?
+        user.skills.first(3).each do |skill|
+          topics << "Share practical tips about #{skill}"
+          topics << "Discuss recent developments in #{skill}"
+        end
+      end
+      
+      # Select random topic
+      topics.sample
     end
   end
 end

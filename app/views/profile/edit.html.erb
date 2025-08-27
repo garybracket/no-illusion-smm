@@ -25,7 +25,7 @@
     <div class="relative">
       <div class="absolute inset-0 bg-gradient-to-r from-white/60 to-slate-100/60 dark:from-slate-800/60 dark:to-slate-900/60 rounded-3xl blur-xl"></div>
       <div class="relative bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 dark:border-slate-700/50 overflow-hidden">
-        <%= form_with model: @user, url: user_profile_path, local: true, class: "p-8", data: { toggle_target: "form" } do |form| %>
+        <%= form_with model: @user, url: user_profile_path, local: true, class: "p-8" do |form| %>
           <% if @user.errors.any? %>
             <div class="mb-6 bg-gradient-to-r from-red-50 to-rose-50 dark:from-red-900/20 dark:to-rose-900/20 border border-red-200 dark:border-red-800/50 rounded-2xl p-6">
               <div class="flex items-start space-x-3">
@@ -124,9 +124,7 @@
               </div>
 
               <!-- AI Features Toggle -->
-              <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800/50 dark:to-blue-900/30 rounded-2xl p-6 border border-slate-200/50 dark:border-slate-700/50" 
-                   data-controller="toggle" 
-                   data-toggle-form-target="form">
+              <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-slate-800/50 dark:to-blue-900/30 rounded-2xl p-6 border border-slate-200/50 dark:border-slate-700/50">
                 <div class="flex items-center justify-between">
                   <div class="flex items-center space-x-3">
                     <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center">
@@ -148,10 +146,7 @@
                     <%= form.check_box :ai_enabled, 
                         class: "sr-only peer",
                         id: "ai_enabled_toggle",
-                        data: { 
-                          toggle_target: "checkbox",
-                          action: "change->toggle#toggle"
-                        } %>
+                        onchange: "this.closest('form').requestSubmit()" %>
                     <label for="ai_enabled_toggle" class="relative flex h-6 w-11 cursor-pointer items-center rounded-full bg-slate-200 px-0.5 outline-none transition-colors peer-checked:bg-emerald-500 peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-emerald-500 dark:bg-slate-700 dark:peer-checked:bg-emerald-600">
                       <span class="size-5 rounded-full bg-white shadow-sm transition-all peer-checked:translate-x-5 dark:bg-slate-100"></span>
                     </label>

@@ -81,22 +81,40 @@ class LinkedinApiService
     def get_profile(connection)
       return { success: false, error: "Invalid connection" } unless connection&.valid_connection?
       
-      result = make_api_request(
-        connection,
-        'GET',
-        '/people/~:(id,firstName,lastName,headline,summary,positions,educations,profilePicture(displayImage~:playableStreams))',
-        nil
-      )
-      
-      if result[:success]
-        {
-          success: true,
-          profile: result[:data]
-        }
-      else
+      # Use the modern LinkedIn OpenID Connect endpoint
+      begin
+        response = HTTParty.get(
+          'https://api.linkedin.com/v2/userinfo',
+          headers: {
+            'Authorization' => "Bearer #{connection.access_token}",
+            'Content-Type' => 'application/json'
+          }
+        )
+        
+        if response.success?
+          profile_data = response.parsed_response
+          {
+            success: true,
+            profile: {
+              'id' => profile_data['sub'],
+              'firstName' => profile_data['given_name'],
+              'lastName' => profile_data['family_name'],
+              'name' => profile_data['name'],
+              'email' => profile_data['email'],
+              'picture' => profile_data['picture'],
+              'locale' => profile_data['locale']
+            }
+          }
+        else
+          {
+            success: false,
+            error: "Failed to fetch profile: #{response.code} - #{response.message}"
+          }
+        end
+      rescue => e
         {
           success: false,
-          error: result[:error]
+          error: "API request failed: #{e.message}"
         }
       end
     end

@@ -24,10 +24,13 @@ class Auth::OmniauthController < ApplicationController
     end
 
     Rails.logger.info "Auth0 user info: #{auth.info.inspect}"
+    
     user = User.from_omniauth(auth)
     
     if user&.persisted?
       Rails.logger.info "User authenticated: #{user.email}"
+      
+      
       # SECURITY: Sign in user through Devise (maintains security checks)
       sign_in_and_redirect user, event: :authentication
     else
@@ -42,6 +45,7 @@ class Auth::OmniauthController < ApplicationController
     Rails.logger.warn "Auth0 authentication error: #{params[:message]}"
     redirect_to root_path, alert: 'Authentication failed. Please try again.'
   end
+
 
   # SECURITY: Handle Auth0 logout
   def logout
@@ -59,4 +63,5 @@ class Auth::OmniauthController < ApplicationController
       redirect_to root_path, notice: 'You have been logged out.'
     end
   end
+  
 end

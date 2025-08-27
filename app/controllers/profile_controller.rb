@@ -9,7 +9,7 @@ class ProfileController < ApplicationController
     @user = current_user
     
     if @user.update(user_params)
-      redirect_to dashboard_path, notice: 'Profile updated successfully!'
+      redirect_to edit_user_profile_path, notice: 'Profile updated successfully!'
     else
       render :edit, status: :unprocessable_entity
     end

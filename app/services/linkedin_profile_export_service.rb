@@ -10,28 +10,42 @@ class LinkedinProfileExportService
         return { success: false, error: "No valid LinkedIn connection found" }
       end
       
-      # Check what we can update on LinkedIn (most profile fields are read-only)
-      # LinkedIn API typically only allows updating headline and summary
-      updates_made = []
-      
-      # Update headline (if app has mission statement or bio)
-      if user.mission_statement.present?
-        headline_result = update_headline(connection, user.mission_statement)
-        updates_made << "Headline" if headline_result[:success]
-      end
-      
-      # Note: LinkedIn doesn't allow programmatic updating of most profile fields
-      # But we can provide a formatted summary for manual copy-paste
-      formatted_profile = generate_formatted_profile(user)
+      # LinkedIn API doesn't allow profile updates anymore
+      # Instead, we'll generate an AI-powered LinkedIn bio/summary
+      formatted_profile = generate_ai_powered_bio(user)
       
       {
         success: true,
-        updates_made: updates_made,
         formatted_profile: formatted_profile,
-        message: updates_made.any? ? 
-          "LinkedIn updated: #{updates_made.join(', ')}" : 
-          "Generated formatted profile for manual LinkedIn update"
+        message: "Generated AI-powered LinkedIn bio ready for copy & paste!"
       }
+    end
+    
+    def generate_ai_powered_bio(user)
+      # Use AI to generate a professional LinkedIn bio based on user's profile
+      prompt = build_linkedin_bio_prompt(user)
+      
+      # Generate AI content using the existing AI service
+      ai_result = AiContentService.generate_post(
+        user: user,
+        prompt: prompt,
+        platform: 'linkedin'
+      )
+      
+      if ai_result[:success]
+        bio_content = ai_result[:content]
+        
+        # Format for LinkedIn with sections
+        {
+          headline: extract_headline(bio_content),
+          about_section: format_about_section(bio_content),
+          raw_content: bio_content,
+          copy_paste_ready: format_for_copy_paste(bio_content)
+        }
+      else
+        # Fallback to manual generation if AI fails
+        generate_formatted_profile(user)
+      end
     end
     
     def generate_formatted_profile(user)
@@ -135,6 +149,44 @@ class LinkedinProfileExportService
       ]
       
       business_keywords.any? { |keyword| skill.downcase.include?(keyword.downcase) }
+    end
+    
+    def build_linkedin_bio_prompt(user)
+      "Create a professional LinkedIn bio/summary for #{user.name}. 
+
+User Details:
+- Content Mode: #{user.content_mode.humanize}
+- Mission: #{user.mission_statement.presence || 'Not specified'}
+- Bio: #{user.bio.presence || 'Not specified'}  
+- Skills: #{user.skills&.join(', ').presence || 'Not specified'}
+
+Requirements:
+- Professional tone appropriate for LinkedIn
+- 2-3 paragraphs maximum
+- Highlight key strengths and experience
+- Include relevant skills naturally
+- End with a call-to-action for connection/contact
+- Make it engaging but authentic
+
+Generate only the bio content, no extra formatting or labels."
+    end
+    
+    def extract_headline(bio_content)
+      # Extract a potential headline from the first sentence
+      first_sentence = bio_content.split('.').first&.strip
+      if first_sentence && first_sentence.length <= 120
+        first_sentence
+      else
+        "Professional | #{bio_content.split(' ').take(8).join(' ')}"[0..119]
+      end
+    end
+    
+    def format_about_section(bio_content)
+      bio_content.strip
+    end
+    
+    def format_for_copy_paste(bio_content)
+      "=== LINKEDIN BIO (Copy & Paste Ready) ===\n\n#{bio_content}\n\n=== END BIO ==="
     end
   end
 end

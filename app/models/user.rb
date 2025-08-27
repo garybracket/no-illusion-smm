@@ -47,7 +47,6 @@ class User < ApplicationRecord
       user.update!(auth0_id: uid) if user.auth0_id != uid
     else
       # SECURITY: Create new user with required validations
-      # Generate a secure random password for Auth0 users (they won't use it)
       user = create!(
         auth0_id: uid,
         email: info['email'],
