@@ -18,7 +18,8 @@ class Auth0Service
       client_id: @client_id,
       redirect_uri: callback_url,
       scope: 'openid profile email',
-      state: state
+      state: state,
+      connection: 'social-media-manager'  # Force use of specific connection
     }
     
     # Add screen_hint for signup vs login
