@@ -7,10 +7,11 @@ class LinkedinOauthController < ApplicationController
   LINKEDIN_SCOPE = 'openid profile w_member_social'
   def self.linkedin_redirect_uri
     if Rails.env.production?
-      'https://your-domain.com/users/auth/linkedin/callback'
+      'https://smm.no-illusion.com/users/auth/linkedin/callback'
     else
-      # Use the callback URL that matches LinkedIn app settings
-      'http://localhost:3000/users/auth/linkedin/callback'
+      # Use dynamic port to match current development setup
+      port = ENV['PORT'] || 3000
+      "http://localhost:#{port}/users/auth/linkedin/callback"
     end
   end
   
