@@ -72,23 +72,65 @@
       <% end %>
     </div>
 
-    <!-- Facebook (Coming Soon) -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 opacity-60">
+    <!-- Facebook -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6">
       <div class="flex items-center justify-between mb-4">
         <div class="flex items-center space-x-3">
           <div class="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-xl">
-            <span class="text-2xl">📘</span>
+            <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0C5.374 0 0 5.373 0 12s5.374 12 12 12 12-5.373 12-12S18.626 0 12 0zm5.568 8.16l-.456 1.717H12.9v5.123h-1.8V9.877H9.36V8.16h1.74V6.84c0-1.437.864-2.223 2.172-2.223.621 0 1.155.045 1.311.066v1.518l-.9.001c-.705 0-.843.335-.843.825V8.16h1.728z"/>
+            </svg>
           </div>
           <div>
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Facebook</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Social network</p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">Business pages</p>
           </div>
         </div>
-        <span class="text-sm text-gray-400 dark:text-gray-500">Coming Soon</span>
+        <% if current_user.facebook_connected? %>
+          <span class="text-sm text-green-600 dark:text-green-400 font-medium">✓ Connected</span>
+        <% else %>
+          <span class="text-sm text-gray-500 dark:text-gray-400">Not connected</span>
+        <% end %>
       </div>
-      <button disabled class="w-full bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 px-4 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
-        Connect Facebook
-      </button>
+      
+      <% if current_user.facebook_connected? %>
+        <div class="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-3 mb-4">
+          <p class="text-sm text-gray-700 dark:text-gray-300 font-medium">
+            Connected Pages:
+          </p>
+          <% current_user.facebook_connections.each do |connection| %>
+            <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              📄 <%= connection.facebook_page_name %>
+            </p>
+          <% end %>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+            Last updated: <%= current_user.facebook_connections.maximum(:updated_at)&.strftime("%B %d, %Y") %>
+          </p>
+        </div>
+        
+        <div class="space-y-2">
+          <%= link_to new_post_path(platform: 'facebook'), 
+                      class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+            📝 Create Facebook Post
+          <% end %>
+          
+          <%= link_to "Disconnect", facebook_disconnect_path, 
+                      method: :delete, 
+                      class: "block w-full text-center bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors",
+                      data: { confirm: "Are you sure you want to disconnect all Facebook pages?" } %>
+        </div>
+      <% else %>
+        <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg p-3 mb-4">
+          <p class="text-sm text-amber-800 dark:text-amber-200">
+            <strong>Note:</strong> Facebook integration connects to your business pages. You'll need to create a Facebook business page first if you don't have one.
+          </p>
+        </div>
+        
+        <%= link_to facebook_connect_path, 
+                    class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+          Connect Facebook Business Pages
+        <% end %>
+      <% end %>
     </div>
 
     <!-- Instagram (Coming Soon) -->

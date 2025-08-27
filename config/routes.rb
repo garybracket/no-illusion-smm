@@ -54,6 +54,11 @@ Rails.application.routes.draw do
   post '/linkedin/export_profile', to: 'linkedin_oauth#export_profile', as: :linkedin_export_profile
   get '/linkedin/export_preview', to: 'linkedin_oauth#export_preview', as: :linkedin_export_preview
   
+  # Facebook OAuth (direct implementation)
+  get '/facebook/connect', to: 'facebook_oauth#connect', as: :facebook_connect
+  get '/facebook/callback', to: 'facebook_oauth#callback', as: :facebook_callback
+  delete '/facebook/disconnect', to: 'facebook_oauth#disconnect', as: :facebook_disconnect
+  
   # Resume Builder
   get '/resume', to: 'resume#show', as: :resume
   get '/resume/edit', to: 'resume#edit', as: :edit_resume

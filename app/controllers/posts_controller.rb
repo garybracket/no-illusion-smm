@@ -145,6 +145,7 @@ class PostsController < ApplicationController
   def available_platforms
     platforms = []
     platforms << 'linkedin' if current_user.linkedin_connected?
+    platforms << 'facebook' if current_user.facebook_connected?
     # Add other platforms as they become available
     platforms
   end
@@ -167,6 +168,22 @@ class PostsController < ApplicationController
           end
         else
           failed_platforms << "LinkedIn: Not connected"
+        end
+      when 'facebook'
+        if current_user.facebook_connected?
+          # Post to all connected Facebook pages
+          facebook_service = FacebookApiService.new(current_user)
+          current_user.facebook_connections.each do |connection|
+            result = facebook_service.post_to_page(content, connection.id)
+            if result[:success]
+              published_count += 1
+              platform_post_ids["facebook_#{connection.platform_user_id}"] = result[:post_id]
+            else
+              failed_platforms << "Facebook (#{connection.facebook_page_name}): #{result[:error]}"
+            end
+          end
+        else
+          failed_platforms << "Facebook: Not connected"
         end
       else
         failed_platforms << "#{platform.capitalize}: Not supported yet"

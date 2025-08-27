@@ -20,6 +20,15 @@ class User < ApplicationRecord
     linkedin_connection&.valid_connection? || false
   end
 
+  # Facebook integration helpers
+  def facebook_connections
+    platform_connections.for_platform('facebook').active
+  end
+  
+  def facebook_connected?
+    facebook_connections.any? { |conn| conn.valid_connection? }
+  end
+
   # Validations
   validates :name, presence: true
   validates :content_mode, presence: true

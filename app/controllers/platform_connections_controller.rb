@@ -65,6 +65,9 @@ class PlatformConnectionsController < ApplicationController
     case platform
     when 'linkedin'
       result = LinkedinApiService.test_post(connection)
+    when 'facebook'
+      facebook_service = FacebookApiService.new(current_user)
+      result = facebook_service.test_connection(connection.id)
     else
       result = { success: false, error: "Platform #{platform} not supported yet" }
     end
