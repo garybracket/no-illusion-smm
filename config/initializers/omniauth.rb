@@ -10,15 +10,15 @@ Rails.application.config.middleware.use OmniAuth::Builder do
            authorize_params: {
              scope: 'openid profile email'
            },
-           # Fix for client_id not being sent during token exchange
+           # Fix for client credentials not being properly authenticated
            client_options: {
              site: "https://#{ENV['AUTH0_DOMAIN']}",
-             authorize_url: '/authorize',
-             token_url: '/oauth/token',
-             userinfo_url: '/userinfo',
-             auth_scheme: :request_body  # Send credentials in body, not header
+             authorize_url: "https://#{ENV['AUTH0_DOMAIN']}/authorize",
+             token_url: "https://#{ENV['AUTH0_DOMAIN']}/oauth/token",
+             userinfo_url: "https://#{ENV['AUTH0_DOMAIN']}/userinfo",
+             auth_scheme: :basic_auth  # Try Basic authentication
            },
-           provider_ignores_state: false  # Re-enable state check for security
+           provider_ignores_state: false
   
   # LinkedIn removed - using direct OAuth implementation instead
 end
