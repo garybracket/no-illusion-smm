@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   # Devise routes with Auth0 omniauth integration
   devise_for :users, controllers: { omniauth_callbacks: 'auth/omniauth' }
   
-  # SECURITY: Auth0 callback routes (handled by Devise)
-  # Note: Devise automatically creates /users/auth/auth0 and /users/auth/auth0/callback
+  # SECURITY: Auth0 callback routes (custom paths to match Auth0 config)
+  get '/auth/callback', to: 'auth/omniauth#auth0'
+  get '/auth/failure', to: 'auth/omniauth#failure'
   
   # Root route
   root "home#index"
