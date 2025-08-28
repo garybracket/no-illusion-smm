@@ -9,11 +9,11 @@ class BetaSignupsController < ApplicationController
     @beta_signup = BetaSignup.new(beta_signup_params)
     
     if @beta_signup.save
-      # Send notification email to admin (when SMTP is configured)
-      # BetaSignupMailer.new_signup(@beta_signup).deliver_later rescue nil
+      # Send notification email to admin
+      BetaSignupMailer.new_signup(@beta_signup).deliver_now rescue nil
       
-      # Send confirmation email to user (when SMTP is configured)
-      # BetaSignupMailer.confirmation(@beta_signup).deliver_later rescue nil
+      # Send confirmation email to user
+      BetaSignupMailer.confirmation(@beta_signup).deliver_now rescue nil
       
       redirect_to thank_you_beta_signups_path, notice: 'Thank you for signing up! We\'ll be in touch soon.'
     else

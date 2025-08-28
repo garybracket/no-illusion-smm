@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+      .header { background: #6366f1; color: white; padding: 20px; text-align: center; }
+      .content { padding: 20px; }
+      .info-box { background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #6366f1; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🎉 New Beta Signup!</h1>
+    </div>
+    
+    <div class="content">
+      <p><strong><%= @beta_signup.name %></strong> just signed up for the No iLLusion SMM beta program!</p>
+      
+      <div class="info-box">
+        <h3>Contact Details:</h3>
+        <p><strong>Name:</strong> <%= @beta_signup.name %></p>
+        <p><strong>Email:</strong> <%= @beta_signup.email %></p>
+        <p><strong>Company:</strong> <%= @beta_signup.company %></p>
+        <p><strong>Signup Date:</strong> <%= @beta_signup.signup_date.strftime("%B %d, %Y at %I:%M %p") %></p>
+      </div>
+      
+      <div class="info-box">
+        <h3>Their Requirements:</h3>
+        <p><strong>Current Platforms:</strong> <%= @beta_signup.current_platforms %></p>
+        <p><strong>Challenges:</strong> <%= @beta_signup.challenges %></p>
+        <p><strong>How They Found Us:</strong> <%= @beta_signup.how_heard_about_us %></p>
+      </div>
+      
+      <p style="margin-top: 20px;">
+        <a href="https://smm.no-illusion.com/beta_signups" style="background: #6366f1; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">View All Beta Signups</a>
+      </p>
+    </div>
+  </body>
+</html>
