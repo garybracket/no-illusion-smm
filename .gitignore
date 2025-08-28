@@ -10,6 +10,12 @@
 # Ignore all environment files (except templates).
 /.env*
 !/.env*.erb
+.env
+.env.local
+
+# CRITICAL: Never commit CLAUDE.md files (they contain sensitive info)
+CLAUDE.md
+/CLAUDE.md
 
 # Ignore all logfiles and tempfiles.
 /log/*
