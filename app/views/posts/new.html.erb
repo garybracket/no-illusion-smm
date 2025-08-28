@@ -61,20 +61,17 @@
             <div class="flex flex-wrap gap-2">
               <button type="button" 
                       class="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
-                      data-action="click->post-form#generateWithAI"
-                      onclick="console.log('Button clicked!'); alert('Button works!')">
+                      data-action="click->post-form#generateWithAI">
                 ✨ Generate with AI
               </button>
               <button type="button" 
                       class="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
-                      data-action="click->post-form#optimizeContent"
-                      onclick="window.testAI('optimize'); console.log('Optimize clicked!'); alert('Optimize works!')">
+                      data-action="click->post-form#optimizeContent">
                 🎯 Optimize Content
               </button>
               <button type="button" 
                       class="text-sm text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300"
-                      data-action="click->post-form#autoGeneratePost"
-                      onclick="console.log('Auto-generate clicked!'); alert('Auto-generate works!')">
+                      data-action="click->post-form#autoGeneratePost">
                 🤖 Auto-Generate Post
               </button>
             </div>
@@ -234,14 +231,7 @@
   <% end %>
 </div>
 
-<!-- Debug: Check if JavaScript is loading -->
+<!-- Add the Stimulus controller for interactive functionality -->
 <script>
-console.log("DEBUG: JavaScript is loading on new post page");
-console.log("DEBUG: Stimulus application:", window.Stimulus);
-
-// Test function for AI buttons
-window.testAI = function(action) {
-  console.log("testAI called with action:", action);
-  alert("JavaScript function works for " + action);
-}
+// This will be moved to a proper Stimulus controller file
 </script>

@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["content", "characterCount", "submitButton"]
   
   connect() {
-    console.log("PostFormController connected!")
     this.updateCharacterCount()
   }
   
@@ -20,7 +19,6 @@ export default class extends Controller {
   }
   
   async generateWithAI(event) {
-    console.log("generateWithAI called!")
     event.preventDefault()
     
     const content = this.contentTarget.value.trim()
