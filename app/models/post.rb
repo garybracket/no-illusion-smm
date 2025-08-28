@@ -11,8 +11,8 @@ class Post < ApplicationRecord
   validates :platforms, presence: true
   
   # Enums
-  enum :status, draft: 0, scheduled: 1, published: 2, failed: 3
-  enum :content_mode, business: 0, influencer: 1, personal: 2
+  enum status: { draft: 0, scheduled: 1, published: 2, failed: 3 }
+  enum content_mode: { business: 0, influencer: 1, personal: 2 }
   
   # Scopes
   scope :recent, -> { order(created_at: :desc) }

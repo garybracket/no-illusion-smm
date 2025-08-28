@@ -1,5 +1,6 @@
 class ResumeController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_resume_access
   
   def show
     # Display current resume data (for editing)
@@ -139,5 +140,11 @@ class ResumeController < ApplicationController
     end
     
     user.save
+  end
+  
+  def check_resume_access
+    unless AiConfigService.can_access_feature?(current_user, :can_generate_linkedin_bio)
+      redirect_to dashboard_path, alert: 'Resume features are available in Pro and Ultimate plans.'
+    end
   end
 end

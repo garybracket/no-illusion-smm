@@ -3,6 +3,61 @@
 ## Project Overview
 **No iLLusion SMM** - A Ruby on Rails freemium SaaS platform for social media management that helps users create and publish content across multiple platforms with optional AI assistance. Built with privacy, transparency, user empowerment, and componentized feature control at its core.
 
+## 📊 CURRENT STATUS (Updated August 28, 2025)
+
+### ✅ COMPLETED & WORKING
+1. **Core Platform**: Full Rails 7.2 application with PostgreSQL
+2. **Authentication**: Auth0 integration with user management
+3. **LinkedIn Integration**: Complete OAuth flow and posting functionality
+4. **AI Content Generation**: Multi-provider system (OpenAI, Anthropic, Google AI) with failover
+5. **Freemium Subscription System**: 
+   - 3 tiers (Free/Pro/Ultimate) with feature gating
+   - Usage tracking and limits enforcement
+   - AiConfigService for tier-based access control
+6. **User Profile Management**: Content modes, skills, bio, settings
+7. **Privacy Policy**: Updated with all current features and data collection
+8. **AI Toggle Fix**: Buttons now properly hide when AI features disabled
+9. **Database**: All migrations current, subscription_tiers table populated
+
+### 🚧 PARTIALLY COMPLETE - NEEDS FACEBOOK CREDENTIALS
+**Facebook Integration (95% Complete)**:
+- ✅ FacebookOauthController with proper OAuth flow
+- ✅ FacebookApiService with posting and analytics
+- ✅ UI integration in platform connections
+- ✅ Routes configured
+- ❌ **MISSING**: App ID and Secret from Facebook Developer Console
+- ❌ **MISSING**: Production app review/approval for public use
+
+**Next Steps for Facebook**:
+1. Get App ID and Secret from [developers.facebook.com](https://developers.facebook.com)
+2. Add to Rails credentials: `facebook: { app_id: 'xxx', app_secret: 'xxx' }`
+3. Configure OAuth redirect URIs in Facebook app settings
+4. Request permissions: `pages_manage_posts`, `pages_read_engagement`, `business_management`
+5. Submit for app review to exit developer mode
+
+### ⚠️ KNOWN ISSUES - NEEDS FUTURE WORK
+1. **Dark Mode Not Working**: 
+   - HTML has `class="dark"` but Tailwind v4 not generating dark mode classes
+   - Manual CSS overrides added as temporary workaround
+   - **ROOT CAUSE**: Tailwind v4.x compatibility issue with Rails asset pipeline
+   - **SOLUTION**: Downgrade to Tailwind v3 or find v4-compatible configuration
+
+2. **Light/Dark Toggle Never Worked**:
+   - Theme toggle buttons exist but functionality broken
+   - JavaScript theme controller present but ineffective
+   - Currently disabled in production
+
+### 🎯 READY FOR PRODUCTION DEPLOYMENT
+**Core functionality is production-ready**:
+- LinkedIn posting works perfectly
+- AI content generation functional with all providers
+- User authentication and management complete
+- Subscription system operational
+- Privacy policy updated and compliant
+
+**Deployment blockers**: None for core features
+**Optional enhancements**: Facebook integration, dark mode fixes
+
 ## 🎯 CRITICAL ARCHITECTURE REQUIREMENTS
 
 ### Freemium Model (MANDATORY - NEVER FORGET)

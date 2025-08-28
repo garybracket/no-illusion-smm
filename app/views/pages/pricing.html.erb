@@ -140,11 +140,11 @@
           </div>
           
           <div class="mt-4">
-            <span class="text-5xl font-bold">$15</span>
+            <span class="text-5xl font-bold text-white">$8</span>
             <span class="text-purple-100">/month</span>
           </div>
           
-          <p class="mt-4 text-purple-100">
+          <p class="mt-4 text-white">
             Perfect for businesses and influencers who need more power and flexibility.
           </p>
           
@@ -166,8 +166,8 @@
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
                 <div>
-                  <span class="text-white font-medium">200 AI Posts/Month</span>
-                  <p class="text-sm text-purple-200">20x more AI generations</p>
+                  <span class="text-white font-medium">100 AI Posts/Month</span>
+                  <p class="text-sm text-white/80">10x more AI generations</p>
                 </div>
               </li>
               <li class="flex items-start">
@@ -176,7 +176,7 @@
                 </svg>
                 <div>
                   <span class="text-white font-medium">Custom AI Prompts</span>
-                  <p class="text-sm text-purple-200">Personalize your AI assistant</p>
+                  <p class="text-sm text-white/80">Personalize your AI assistant</p>
                 </div>
               </li>
               <li class="flex items-start">
@@ -185,7 +185,7 @@
                 </svg>
                 <div>
                   <span class="text-white font-medium">Enhanced Images</span>
-                  <p class="text-sm text-purple-200">15MB, 4 per post, GIF/WebP support</p>
+                  <p class="text-sm text-white/80">15MB, 4 per post, GIF/WebP support</p>
                 </div>
               </li>
               <li class="flex items-start">
@@ -194,7 +194,7 @@
                 </svg>
                 <div>
                   <span class="text-white font-medium">Advanced Scheduling</span>
-                  <p class="text-sm text-purple-200">20 posts/day, 5 campaigns</p>
+                  <p class="text-sm text-white/80">20 posts/day, 5 campaigns</p>
                 </div>
               </li>
               <li class="flex items-start">
@@ -203,7 +203,7 @@
                 </svg>
                 <div>
                   <span class="text-white font-medium">Analytics Dashboard</span>
-                  <p class="text-sm text-purple-200">Track performance & engagement</p>
+                  <p class="text-sm text-white/80">Track performance & engagement</p>
                 </div>
               </li>
               <li class="flex items-start">
@@ -212,7 +212,7 @@
                 </svg>
                 <div>
                   <span class="text-blue-200 font-medium">Higher Rate Limits</span>
-                  <p class="text-sm text-purple-200">10 posts/hour (10x faster)</p>
+                  <p class="text-sm text-white/80">10 posts/hour (10x faster)</p>
                 </div>
               </li>
             </ul>
@@ -220,18 +220,18 @@
         </div>
       </div>
 
-      <!-- Enterprise Tier -->
+      <!-- Ultimate Tier -->
       <div class="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden">
         <div class="p-8">
           <div class="flex items-center justify-between">
-            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Enterprise</h3>
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Ultimate</h3>
             <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-200">
               For Teams & Agencies
             </span>
           </div>
           
           <div class="mt-4">
-            <span class="text-5xl font-bold text-gray-900 dark:text-white">$99</span>
+            <span class="text-5xl font-bold text-gray-900 dark:text-white">$49</span>
             <span class="text-gray-500 dark:text-gray-400">/month</span>
           </div>
           
@@ -241,7 +241,7 @@
           
           <div class="mt-8">
             <% if user_signed_in? %>
-              <%= link_to "Upgrade to Enterprise", "#", 
+              <%= link_to "Upgrade to Ultimate", "#", 
                           class: "w-full flex justify-center items-center px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-medium hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors" %>
             <% else %>
               <%= link_to "Contact Sales", "#", 
@@ -266,8 +266,17 @@
                   <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
                 </svg>
                 <div>
-                  <span class="text-gray-900 dark:text-white font-medium">White Label Option</span>
-                  <p class="text-sm text-gray-500 dark:text-gray-400">Brand as your own platform</p>
+                  <span class="text-gray-900 dark:text-white font-medium">AI Autopilot</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">6 posts/day automatically while you sleep</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">Interactive AI Chat</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">Real-time content strategy conversations</p>
                 </div>
               </li>
               <li class="flex items-start">

@@ -97,6 +97,7 @@
           </h3>
           <ul class="space-y-2 text-gray-700 dark:text-gray-300">
             <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-3"></span><strong>LinkedIn:</strong> Access tokens, profile ID, name, email, profile URL</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-3"></span><strong>Facebook:</strong> Business page access tokens, page IDs, page names, and page management permissions</li>
             <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-3"></span><strong>Platform Content:</strong> Posts you create and publish through our Service</li>
             <li class="flex items-center"><span class="w-2 h-2 bg-purple-500 dark:bg-purple-400 rounded-full mr-3"></span><strong>Publishing Logs:</strong> Success/failure status of posts, platform responses</li>
           </ul>
@@ -117,6 +118,21 @@
           </ul>
         </div>
 
+        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6 mb-8">
+          <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4 flex items-center">
+            <svg class="h-4 w-4 text-emerald-600 dark:text-emerald-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            2.5 Subscription and Usage Data
+          </h3>
+          <ul class="space-y-2 text-gray-700 dark:text-gray-300">
+            <li class="flex items-center"><span class="w-2 h-2 bg-emerald-500 dark:bg-emerald-400 rounded-full mr-3"></span>Subscription tier (Free, Pro, Ultimate)</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-emerald-500 dark:bg-emerald-400 rounded-full mr-3"></span>Feature usage tracking for tier limits (AI generations, posts per month)</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-emerald-500 dark:bg-emerald-400 rounded-full mr-3"></span>Payment information (handled securely via Stripe - not stored by us)</li>
+            <li class="flex items-center"><span class="w-2 h-2 bg-emerald-500 dark:bg-emerald-400 rounded-full mr-3"></span>Feature access logs for freemium model enforcement</li>
+          </ul>
+        </div>
+
         <h2 class="text-3xl font-bold text-gray-900 dark:text-white mt-12 mb-6 border-b border-gray-200 dark:border-gray-600 pb-3">3. How We Use Your Information</h2>
         
         <div class="grid md:grid-cols-1 gap-6 mb-8">
@@ -132,6 +148,8 @@
               <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Generate AI-powered social media content</li>
               <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Publish content to your connected social media platforms</li>
               <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Provide personalized content suggestions based on your profile</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Manage subscription tiers and enforce usage limits (freemium model)</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-blue-500 rounded-full mr-3 mt-2"></span>Process payments securely via Stripe for Pro and Ultimate tiers</li>
             </ul>
           </div>
           
@@ -143,9 +161,10 @@
               3.2 Platform Integration
             </h3>
             <ul class="space-y-2 text-green-700">
-              <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Connect and maintain connections to LinkedIn and other platforms</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Connect and maintain connections to LinkedIn, Facebook business pages, and other platforms</li>
               <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Post content on your behalf with your explicit authorization</li>
               <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Retrieve profile information to enhance content personalization</li>
+              <li class="flex items-start"><span class="w-2 h-2 bg-green-500 rounded-full mr-3 mt-2"></span>Manage Facebook business page connections and publishing permissions</li>
             </ul>
           </div>
           
@@ -186,6 +205,14 @@
             <div class="bg-white rounded-lg p-4 border border-yellow-300">
               <h4 class="font-semibold text-yellow-800 mb-2">💼 LinkedIn</h4>
               <p class="text-sm text-yellow-700">Profile information and content posting (with your authorization)</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-yellow-300">
+              <h4 class="font-semibold text-yellow-800 mb-2">📘 Facebook</h4>
+              <p class="text-sm text-yellow-700">Business page management and content posting (with your authorization)</p>
+            </div>
+            <div class="bg-white rounded-lg p-4 border border-yellow-300">
+              <h4 class="font-semibold text-yellow-800 mb-2">💳 Stripe</h4>
+              <p class="text-sm text-yellow-700">Secure payment processing for Pro and Ultimate subscriptions</p>
             </div>
             <div class="bg-white rounded-lg p-4 border border-yellow-300">
               <h4 class="font-semibold text-yellow-800 mb-2">☁️ Heroku/PostgreSQL</h4>

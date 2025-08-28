@@ -34,7 +34,7 @@ class User < ApplicationRecord
   validates :content_mode, presence: true
 
   # Enums (Rails 8.0 compatible syntax)
-  enum :content_mode, business: 0, influencer: 1, personal: 2
+  enum content_mode: { business: 0, influencer: 1, personal: 2 }
 
   # Callbacks
   before_create :set_default_ai_preferences

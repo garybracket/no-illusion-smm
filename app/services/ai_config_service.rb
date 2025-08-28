@@ -22,7 +22,8 @@ class AiConfigService
           max_image_size_mb: 8,
           max_images_per_post: 1,
           allowed_image_formats: ['jpg', 'jpeg', 'png'],
-          can_upload_images: true
+          can_upload_images: true,
+          can_generate_linkedin_bio: false
         },
         'pro' => {
           name: 'Pro',
@@ -43,7 +44,8 @@ class AiConfigService
           max_image_size_mb: 15,
           max_images_per_post: 4,
           allowed_image_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
-          can_upload_images: true
+          can_upload_images: true,
+          can_generate_linkedin_bio: true
         },
         'ultimate' => {
           name: 'Ultimate', # $49/month - AI Autopilot justifies premium pricing
@@ -60,6 +62,7 @@ class AiConfigService
           # Ultimate features
           can_use_ai_autopilot: true,  # AI automatically creates and schedules posts
           can_generate_platform_variants: true,  # Different content per platform
+          can_use_interactive_ai_chat: true,  # Interactive content strategy conversations
           # AI Autopilot rate limits (prevent API spam)
           ai_autopilot_posts_per_day: 6,  # Max 6 auto-posts per day
           ai_autopilot_min_interval_hours: 2,  # Minimum 2 hours between auto-posts
@@ -68,7 +71,8 @@ class AiConfigService
           max_image_size_mb: 50,
           max_images_per_post: 20,
           allowed_image_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff'],
-          can_upload_images: true
+          can_upload_images: true,
+          can_generate_linkedin_bio: true
         }
       }
     end

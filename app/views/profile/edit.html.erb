@@ -136,7 +136,7 @@
                       <label for="ai_enabled_toggle" class="text-sm font-semibold text-slate-700 dark:text-slate-300 cursor-pointer">AI Features</label>
                       <p class="text-xs text-slate-500 dark:text-slate-400">
                         Enable intelligent content generation
-                        <span class="text-emerald-600 dark:text-emerald-400 font-medium">
+                        <span class="<%= @user.ai_enabled? ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400' %> font-medium">
                           <%= @user.ai_enabled? ? "• Enabled" : "• Disabled" %>
                         </span>
                       </p>

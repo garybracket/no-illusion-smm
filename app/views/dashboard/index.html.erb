@@ -71,10 +71,16 @@
                         method: :post,
                         class: "w-full bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors mb-1",
                         data: { confirm: "Import your LinkedIn profile data to enhance AI content generation?" } %>
-          <%= button_to "🤖 Generate LinkedIn Bio", linkedin_export_profile_path, 
-                        method: :post,
-                        class: "w-full bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors mb-2",
-                        data: { confirm: "Generate AI-powered LinkedIn bio for copy & paste?" } %>
+          <% if AiConfigService.can_access_feature?(current_user, :can_generate_linkedin_bio) %>
+            <%= button_to "🤖 Generate LinkedIn Bio", linkedin_export_profile_path, 
+                          method: :post,
+                          class: "w-full bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors mb-2",
+                          data: { confirm: "Generate AI-powered LinkedIn bio for copy & paste?" } %>
+          <% else %>
+            <div class="w-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-4 py-2 rounded-lg text-sm font-medium text-center mb-2">
+              🤖 LinkedIn Bio Generation (Pro Feature)
+            </div>
+          <% end %>
           <%= link_to "Disconnect", disconnect_platform_connections_path('linkedin'), 
                       method: :delete, 
                       class: "block w-full text-center bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors",

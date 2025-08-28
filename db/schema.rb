@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_28_022039) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_28_030208) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,6 +67,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_08_28_022039) do
     t.boolean "is_active", default: false
     t.index ["user_id", "content_mode", "is_active"], name: "idx_on_user_id_content_mode_is_active_085dae4055"
     t.index ["user_id"], name: "index_prompt_templates_on_user_id"
+  end
+
+  create_table "subscription_tiers", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.integer "price_cents"
+    t.string "billing_interval"
+    t.json "features"
+    t.json "limits"
+    t.boolean "is_active"
+    t.integer "sort_order"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
