@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["content", "characterCount", "submitButton"]
   
   connect() {
+    console.log("PostFormController connected successfully!")
     this.updateCharacterCount()
   }
   
@@ -18,9 +19,15 @@ export default class extends Controller {
     }
   }
   
+  testButton() {
+    alert("PostFormController is working!")
+    console.log("Test button clicked - controller is connected")
+  }
+
   async generateWithAI(event) {
     event.preventDefault()
     
+    console.log("Generate with AI clicked")
     const content = this.contentTarget.value.trim()
     if (!content) {
       alert("Please enter a topic or prompt for AI generation")
