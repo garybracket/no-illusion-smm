@@ -9,11 +9,21 @@ class BetaSignupsController < ApplicationController
     @beta_signup = BetaSignup.new(beta_signup_params)
     
     if @beta_signup.save
-      # Send notification email to admin
-      BetaSignupMailer.new_signup(@beta_signup).deliver_now rescue nil
+      # Send notification email to admin (use deliver_later for better performance)
+      begin
+        BetaSignupMailer.new_signup(@beta_signup).deliver_later
+        Rails.logger.info "Beta signup admin email queued for #{@beta_signup.email}"
+      rescue => e
+        Rails.logger.error "Failed to queue admin email: #{e.message}"
+      end
       
       # Send confirmation email to user
-      BetaSignupMailer.confirmation(@beta_signup).deliver_now rescue nil
+      begin
+        BetaSignupMailer.confirmation(@beta_signup).deliver_later
+        Rails.logger.info "Beta signup confirmation email queued for #{@beta_signup.email}"
+      rescue => e
+        Rails.logger.error "Failed to queue confirmation email: #{e.message}"
+      end
       
       redirect_to thank_you_beta_signups_path, notice: 'Thank you for signing up! We\'ll be in touch soon.'
     else

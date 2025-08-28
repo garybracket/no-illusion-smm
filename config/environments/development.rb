@@ -48,7 +48,9 @@ Rails.application.configure do
     password: ENV['SMTP_PASSWORD'],
     authentication: :plain,
     enable_starttls_auto: true,
-    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE
+    openssl_verify_mode: OpenSSL::SSL::VERIFY_NONE,
+    read_timeout: 60,
+    open_timeout: 30
   }
 
   # Print deprecation notices to the Rails logger.
