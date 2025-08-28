@@ -41,23 +41,31 @@ class ResumeImportService
     private
     
     def parse_pdf(content)
-      # PRIVACY: Process PDF in memory, never save to disk
-      text = ""
+      # PDF parsing requires pdf-reader gem - currently disabled
+      # TODO: Add pdf-reader gem to Gemfile and uncomment below code
       
-      # Create StringIO from content for PDF::Reader
-      io = StringIO.new(content)
-      reader = PDF::Reader.new(io)
-      reader.pages.each do |page|
-        text += page.text + "\n"
-      end
+      # # PRIVACY: Process PDF in memory, never save to disk
+      # text = ""
+      # 
+      # # Create StringIO from content for PDF::Reader
+      # io = StringIO.new(content)
+      # reader = PDF::Reader.new(io)
+      # reader.pages.each do |page|
+      #   text += page.text + "\n"
+      # end
+      # 
+      # extract_resume_sections(text)
       
-      extract_resume_sections(text)
+      # For now, return error encouraging text upload instead
+      raise "PDF upload not currently supported. Please copy and paste your resume text instead, or upload as .txt file."
     end
     
     def parse_word(content)
-      # For now, return basic parsing
-      # Would need python-docx2txt or similar gem
-      extract_resume_sections(content.force_encoding('UTF-8'))
+      # Word document parsing requires docx gem - currently disabled
+      # TODO: Add docx gem to Gemfile and implement proper parsing
+      
+      # For now, return error encouraging text upload instead
+      raise "Word document upload not currently supported. Please copy and paste your resume text instead, or upload as .txt file."
     end
     
     def parse_text(text)
