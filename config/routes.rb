@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   post "profile/setup_gary", to: "profile#setup_gary_profile", as: :setup_gary_profile
   post "profile/add_skill", to: "profile#add_skill", as: :add_skill
   delete "profile/remove_skill/:skill_name", to: "profile#remove_skill", as: :remove_skill
+  delete "profile", to: "profile#destroy", as: :destroy_user_profile
   
   # TODO: Re-implement Auth0 logout after Auth0 integration is restored
   # delete "logout", to: "auth/omniauth#logout", as: :destroy_user_session
