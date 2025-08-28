@@ -17,6 +17,7 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 - ✅ **AI Content Generation**: Claude API with content mode optimization  
 - ✅ **Per-Post Content Modes**: Business, Influencer, Personal selection
 - ✅ **Profile Management**: Skills, experience, resume generation
+- ✅ **Complete Data Deletion**: Facebook-compliant user data deletion system
 - ✅ **Live Production Deployment**: Custom domain with SSL
 
 ## Core Values
