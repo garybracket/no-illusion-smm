@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   # Allow public access to legal pages and pricing for LinkedIn/Facebook app review
-  skip_before_action :authenticate_user!, only: [:privacy, :terms, :pricing, :data_deletion]
+  skip_before_action :authenticate_user!, only: [:privacy, :terms, :pricing, :data_deletion, :coming_soon]
   
   def privacy
     # Privacy policy page - public access required for LinkedIn app review
@@ -16,5 +16,9 @@ class PagesController < ApplicationController
   
   def data_deletion
     # User data deletion instructions - required for Facebook app approval
+  end
+  
+  def coming_soon
+    # Coming soon page with beta tester information
   end
 end

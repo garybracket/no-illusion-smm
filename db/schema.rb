@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_08_28_030208) do
+ActiveRecord::Schema[7.2].define(version: 2025_08_28_143032) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "beta_signups", force: :cascade do |t|
+    t.string "email", null: false
+    t.string "name"
+    t.string "company"
+    t.text "current_platforms"
+    t.text "challenges"
+    t.string "how_heard_about_us"
+    t.integer "status", default: 0
+    t.datetime "signup_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_beta_signups_on_email", unique: true
+    t.index ["signup_date"], name: "index_beta_signups_on_signup_date"
+    t.index ["status"], name: "index_beta_signups_on_status"
+  end
 
   create_table "platform_connections", force: :cascade do |t|
     t.bigint "user_id", null: false

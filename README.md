@@ -11,13 +11,15 @@ A Ruby on Rails freemium SaaS platform for social media management with MANDATOR
 
 This is a complete rebuild of the existing `social-media-manager` (Next.js + Auth0 + Supabase) into a Ruby on Rails full-stack application. **Migration complete** - the Rails version has full LinkedIn integration, AI content generation, per-post content mode selection, and comprehensive profile management.
 
-### Current Features (Phase 1-4 Complete)
+### Current Features (Phase 1-5 Complete)
 - ✅ **Auth0 + Database Authentication**: Dual sign-in options
 - ✅ **LinkedIn Integration**: Full OAuth, posting, profile sync
 - ✅ **AI Content Generation**: Claude API with content mode optimization  
 - ✅ **Per-Post Content Modes**: Business, Influencer, Personal selection
 - ✅ **Profile Management**: Skills, experience, resume generation
 - ✅ **Complete Data Deletion**: Facebook-compliant user data deletion system
+- ✅ **Beta/Waitlist System**: Priority-scored signup system with admin dashboard
+- ✅ **Email Configuration**: MXRoutes SMTP with professional noreply@no-illusion.com
 - ✅ **Live Production Deployment**: Custom domain with SSL
 
 ## Core Values
@@ -114,6 +116,7 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 - [x] **Professional Pricing Page**: Three-tier comparison with correct pricing
 - [x] **Dynamic Platform System**: Future-proof platform registry
 - [x] **PostVariant Model**: Platform-specific content storage architecture
+- [x] **Beta/Waitlist System**: Comprehensive beta signup system with priority scoring
 - [ ] **Stripe Integration**: Payment processing and subscription management
 - [ ] **Usage Tracking**: Real-time feature usage monitoring and limits enforcement
 - [ ] **Subscription Management UI**: User upgrade/downgrade interface
@@ -230,6 +233,28 @@ rails test
 rails generate migration MigrationName
 ```
 
+## Beta/Waitlist System Features
+
+### 🎯 Priority-Based Signup System
+- **Smart Priority Scoring**: Automatic scoring based on company size, platforms, engagement level
+- **Admin Dashboard**: Complete management interface for beta testers at `/beta_signups`
+- **Status Management**: Pending → Accepted → Invited → Active workflow
+- **Professional Coming Soon Page**: Company branding with comprehensive signup form
+- **Email Integration**: Ready for beta invitation and onboarding emails
+
+### 📊 Admin Management Features
+- **Stats Dashboard**: Total signups, weekly/monthly metrics, status breakdown
+- **Priority Sorting**: High/Medium/Low priority automatic classification
+- **Bulk Actions**: Accept/reject multiple applicants (planned)
+- **Export Functionality**: CSV export of beta signups (planned)
+- **Email Templates**: Professional beta invitation emails (planned)
+
+### 🔐 Security & Access Control
+- **Admin-Only Access**: Only real.ener.g@gmail.com can access beta dashboard
+- **CSRF Protection**: All form submissions secured
+- **Input Validation**: Professional form validation with proper error handling
+- **Spam Prevention**: Rate limiting and honeypot fields (planned)
+
 ## Environment Configuration
 
 ### Development
@@ -298,7 +323,9 @@ The original `social-media-manager` project serves as a reference for:
 - **✅ Content Mode Safeguards**: Custom prompts enhance but cannot override base modes
 - **✅ Professional Pricing Page**: Three-tier comparison with all features
 - **✅ AI Autopilot Design**: Ultimate tier with 6 posts/day, 2-hour intervals, token budgets
-- **🚧 Next**: Stripe integration and background job implementation
+- **✅ Beta/Waitlist System**: Priority-based signup system with admin management dashboard
+- **✅ Email Infrastructure**: MXRoutes SMTP configuration with professional email handling
+- **🚧 Next**: Facebook integration testing and Stripe payment processing
 
 ## Privacy-First Architecture
 - **No Content Storage**: Content processed and discarded immediately

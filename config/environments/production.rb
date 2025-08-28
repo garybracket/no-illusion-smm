@@ -78,9 +78,21 @@ Rails.application.configure do
   # caching is enabled.
   config.action_mailer.perform_caching = false
 
-  # Ignore bad email addresses and do not raise email delivery errors.
-  # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  # Action Mailer SMTP configuration for MXRoutes
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { host: 'no-illusion-smm-8e8b8e3b5b82.herokuapp.com' }
+  
+  config.action_mailer.smtp_settings = {
+    address: ENV['SMTP_SERVER'] || 'heracles.mxrouting.net',
+    port: 465,
+    domain: ENV['SMTP_DOMAIN'] || 'no-illusion.com',
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    authentication: :plain,
+    ssl: true,
+    openssl_verify_mode: 'none'
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

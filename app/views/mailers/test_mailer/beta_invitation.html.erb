@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta Invitation - <%= @app_name %></title>
+    <style>
+      body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+      .container { max-width: 600px; margin: 0 auto; background-color: white; }
+      .header { background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%); color: white; padding: 30px; text-align: center; }
+      .content { padding: 30px; }
+      .footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 14px; color: #666; }
+      .button { display: inline-block; padding: 15px 30px; background-color: #ff6b6b; color: white; text-decoration: none; border-radius: 8px; margin: 20px 0; font-weight: bold; font-size: 16px; }
+      .highlight { background-color: #fff3e0; padding: 20px; border-left: 4px solid #ff9800; margin: 20px 0; border-radius: 4px; }
+      .features { background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🎉 You're Invited!</h1>
+        <p><%= @app_name %> Beta Access</p>
+      </div>
+      
+      <div class="content">
+        <h2>Hi <%= @name %>,</h2>
+        
+        <p>Congratulations! After reviewing your application, we're excited to invite you to join the <strong>No iLLusion SMM Beta Program</strong>.</p>
+        
+        <div class="highlight">
+          <strong>🚀 Why you were selected:</strong><br>
+          Your application showed exactly the kind of user we built this platform for - someone who values honest tools, transparent pricing, and actually wants to improve their social media presence without gimmicks.
+        </div>
+        
+        <div class="features">
+          <h3>As a Beta Tester, You Get:</h3>
+          <ul>
+            <li>✨ <strong>Free Pro Access</strong> during the entire beta period</li>
+            <li>🔗 <strong>LinkedIn Integration</strong> with seamless posting</li>
+            <li>🤖 <strong>AI Content Generation</strong> (Claude-powered, completely optional)</li>
+            <li>📊 <strong>Content Management Dashboard</strong> with post tracking</li>
+            <li>📄 <strong>LinkedIn Resume Builder</strong> with profile sync</li>
+            <li>🎯 <strong>Direct Input</strong> on features and improvements</li>
+            <li>🔐 <strong>Lifetime Discount</strong> when we launch publicly</li>
+          </ul>
+        </div>
+        
+        <p>We're not like other social media tools. No hidden fees, no predatory practices, no exploitation of small business owners who don't understand tech. Just honest tools that work.</p>
+        
+        <p style="text-align: center;">
+          <a href="https://smm.no-illusion.com" class="button">Access Your Beta Account</a>
+        </p>
+        
+        <p><strong>What happens next?</strong></p>
+        <ol>
+          <li>Click the button above to access your account</li>
+          <li>Connect your LinkedIn account (takes 30 seconds)</li>
+          <li>Try creating your first post with optional AI assistance</li>
+          <li>Share your feedback with us - we're listening!</li>
+        </ol>
+        
+        <p>Thank you for believing in our mission. Let's build something honest together.</p>
+        
+        <p>Best regards,<br>
+        <strong>Gary Bracken</strong><br>
+        <em>Founder, No iLLusion Software</em></p>
+      </div>
+      
+      <div class="footer">
+        <p>Made with ❤️<br>
+        <a href="https://no-illusion.com" style="color: #ff6b6b;">Designed, created, and property of No iLLusion Software</a></p>
+        <p>Beta invitation sent on <%= @timestamp.strftime('%B %d, %Y at %I:%M %p %Z') %></p>
+        <p><small>You received this because you signed up for our beta program. Questions? Just reply to this email.</small></p>
+      </div>
+    </div>
+  </body>
+</html>

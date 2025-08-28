@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Test Email - <%= @app_name %></title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 8px; margin-bottom: 30px; }
+    .content { background: #f8f9fa; padding: 30px; border-radius: 8px; margin-bottom: 20px; }
+    .footer { text-align: center; color: #666; font-size: 14px; }
+    .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 15px; border-radius: 4px; margin: 20px 0; }
+    .info { background: #e7f3ff; border: 1px solid #b3d9ff; color: #004085; padding: 15px; border-radius: 4px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎉 Email Test Successful!</h1>
+    <p>No iLLusion SMM - Email System Working</p>
+  </div>
+
+  <div class="content">
+    <div class="success">
+      <strong>✅ Success!</strong> Your MXRoutes SMTP configuration is working perfectly.
+    </div>
+
+    <h2>Test Details:</h2>
+    <ul>
+      <li><strong>Sent At:</strong> <%= @timestamp.strftime('%A, %B %d, %Y at %I:%M %p %Z') %></li>
+      <li><strong>From:</strong> noreply@no-illusion.com</li>
+      <li><strong>SMTP Server:</strong> heracles.mxrouting.net</li>
+      <li><strong>Application:</strong> <%= @app_name %></li>
+    </ul>
+
+    <div class="info">
+      <strong>🚀 Ready for Production!</strong><br>
+      Your email system is now configured and ready for:
+      <ul style="margin: 10px 0;">
+        <li>Beta signup notifications</li>
+        <li>User confirmation emails</li>
+        <li>System notifications</li>
+        <li>Contact form submissions</li>
+      </ul>
+    </div>
+
+    <h3>Next Steps:</h3>
+    <ol>
+      <li>Configure Auth0 email provider with the same MXRoutes settings</li>
+      <li>Test beta signup form functionality</li>
+      <li>Enable email notifications in BetaSignupsController</li>
+    </ol>
+  </div>
+
+  <div class="footer">
+    <p>Made with ❤️<br>
+    <strong>Designed, created, and property of <a href="https://no-illusion.com" style="color: #667eea;">No iLLusion Software</a></strong></p>
+  </div>
+</body>
+</html>

@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  # Beta signup routes
+  resources :beta_signups, only: [:create, :show, :index] do
+    collection do
+      get :thank_you
+    end
+  end
   # Devise routes (skip registrations and omniauth callbacks - we handle Auth0 manually)
   devise_for :users, skip: [:registrations, :omniauth_callbacks]
   
@@ -74,6 +80,7 @@ Rails.application.routes.draw do
   get '/terms', to: 'pages#terms'
   get '/pricing', to: 'pages#pricing'
   get '/data-deletion', to: 'pages#data_deletion', as: :data_deletion
+  get '/coming-soon', to: 'pages#coming_soon', as: :coming_soon
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
