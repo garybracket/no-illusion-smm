@@ -29,6 +29,42 @@ class User < ApplicationRecord
     facebook_connections.any? { |conn| conn.valid_connection? }
   end
 
+  # Instagram integration helpers (uses Facebook infrastructure)
+  def instagram_connections
+    platform_connections.for_platform('instagram').active
+  end
+  
+  def instagram_connected?
+    instagram_connections.any? { |conn| conn.valid_connection? }
+  end
+
+  # TikTok integration helpers
+  def tiktok_connection
+    platform_connections.for_platform('tiktok').active.first
+  end
+  
+  def tiktok_connected?
+    tiktok_connection&.valid_connection? || false
+  end
+
+  # Twitter/X integration helpers  
+  def twitter_connection
+    platform_connections.for_platform('twitter').active.first
+  end
+  
+  def twitter_connected?
+    twitter_connection&.valid_connection? || false
+  end
+
+  # YouTube integration helpers
+  def youtube_connection
+    platform_connections.for_platform('youtube').active.first
+  end
+  
+  def youtube_connected?
+    youtube_connection&.valid_connection? || false
+  end
+
   # Validations
   validates :name, presence: true
   validates :content_mode, presence: true

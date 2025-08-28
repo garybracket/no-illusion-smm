@@ -1,239 +1,410 @@
-<div class="space-y-8">
-  <!-- Welcome Header -->
-  <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 border border-blue-100">
-    <div class="flex items-start justify-between">
-      <div>
-        <h1 class="text-4xl font-bold text-gray-900 mb-2">
-          Welcome back, <%= @user.name %>! 👋
-        </h1>
-        <p class="text-xl text-gray-600 mb-4">
-          Ready to manage your social media the honest way?
-        </p>
-        <div class="flex items-center space-x-4">
-          <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-            <%= @user.content_mode.humanize %> Mode
-          </span>
-          <% if @user.ai_enabled? %>
-            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-              ⚡ AI Enabled
-            </span>
-          <% end %>
+<!-- Professional SMM Dashboard -->
+<div class="min-h-screen bg-gray-50 dark:bg-slate-900">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Dashboard Header -->
+    <div class="mb-8">
+      <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 rounded-2xl p-8 text-white shadow-xl">
+        <div class="flex items-center justify-between">
+          <div>
+            <h1 class="text-3xl font-bold mb-2">Social Media Command Center</h1>
+            <p class="text-blue-100 text-lg">Welcome back, <span class="font-semibold"><%= @user.name %></span></p>
+            <div class="flex items-center space-x-4 mt-4">
+              <div class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+                <%= @user.content_mode.humanize %> Mode
+              </div>
+              <% if @user.ai_enabled? %>
+                <div class="bg-green-500/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+                  ⚡ AI Enabled
+                </div>
+              <% end %>
+              <div class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-medium">
+                <%= pluralize(@user.posts.count, 'Post') %> Created
+              </div>
+            </div>
+          </div>
+          <div class="hidden md:block">
+            <div class="text-6xl opacity-30">🚀</div>
+          </div>
         </div>
       </div>
-      <div class="text-6xl opacity-20">🚀</div>
-    </div>
-  </div>
-
-  <!-- Quick Actions -->
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
-      <div class="flex items-center justify-between mb-4">
-        <div class="bg-blue-100 dark:bg-blue-900/20 p-3 rounded-xl">
-          <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-          </svg>
-        </div>
-        <span class="text-sm text-green-600 dark:text-green-400 font-medium">✓ Ready</span>
-      </div>
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Create Post</h3>
-      <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Write and publish to your connected platforms</p>
-      <%= link_to new_post_path, 
-                  class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
-        Create New Post
-      <% end %>
     </div>
 
-    <div class="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <div class="bg-green-100 p-3 rounded-xl">
-          <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
-          </svg>
-        </div>
-        <% if @user.linkedin_connected? %>
-          <span class="text-sm text-green-600 font-medium">✓ Connected</span>
-        <% else %>
-          <span class="text-sm text-gray-500">Ready</span>
-        <% end %>
-      </div>
-      <h3 class="text-lg font-semibold text-gray-900 mb-2">Connect LinkedIn</h3>
-      <p class="text-gray-600 text-sm mb-4">Connect your LinkedIn account to start posting</p>
-      <% if @user.linkedin_connected? %>
-        <div class="space-y-2">
-          <p class="text-sm text-green-600 dark:text-green-400 font-medium">
-            Connected as <%= @user.linkedin_connection.settings['name'] %>
-          </p>
-          <%= link_to new_post_path(platform: 'linkedin'), 
-                      class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors mb-2" do %>
-            📝 Create LinkedIn Post
-          <% end %>
-          <%= button_to "🔄 Sync FROM LinkedIn", linkedin_import_profile_path, 
-                        method: :post,
-                        class: "w-full bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors mb-1",
-                        data: { confirm: "Import your LinkedIn profile data to enhance AI content generation?" } %>
-          <% if AiConfigService.can_access_feature?(current_user, :can_generate_linkedin_bio) %>
-            <%= button_to "🤖 Generate LinkedIn Bio", linkedin_export_profile_path, 
-                          method: :post,
-                          class: "w-full bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors mb-2",
-                          data: { confirm: "Generate AI-powered LinkedIn bio for copy & paste?" } %>
-          <% else %>
-            <div class="w-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-4 py-2 rounded-lg text-sm font-medium text-center mb-2">
-              🤖 LinkedIn Bio Generation (Pro Feature)
+    <!-- Quick Actions Bar -->
+    <div class="mb-8">
+      <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-gray-200 dark:border-slate-700">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <%= link_to new_post_path, class: "group flex items-center p-4 bg-blue-50 dark:bg-blue-900/20 rounded-xl hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-all duration-200" do %>
+            <div class="bg-blue-600 p-2 rounded-lg mr-3">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-gray-900 dark:text-white">Create Post</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">New content</p>
             </div>
           <% end %>
-          <%= link_to "Disconnect", disconnect_platform_connections_path('linkedin'), 
-                      method: :delete, 
-                      class: "block w-full text-center bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors",
-                      data: { confirm: "Are you sure?" } %>
-        </div>
-      <% else %>
-        <%= link_to linkedin_authorize_path, 
-                    class: "block w-full text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
-          Connect LinkedIn Account
-        <% end %>
-      <% end %>
-    </div>
-
-    <div class="group bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100 dark:border-gray-700">
-      <div class="flex items-center justify-between mb-4">
-        <div class="bg-purple-100 dark:bg-purple-900/20 p-3 rounded-xl">
-          <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-          </svg>
-        </div>
-        <span class="text-sm text-green-600 dark:text-green-400 font-medium">✓ Ready</span>
-      </div>
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Manage Posts</h3>
-      <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">View and manage your published content</p>
-      <%= link_to posts_path, 
-                  class: "block w-full text-center bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition-colors" do %>
-        View All Posts
-      <% end %>
-    </div>
-
-    <!-- Admin: Beta Signups (only show for admin) -->
-    <% if current_user.email == 'real.ener.g@gmail.com' %>
-      <div class="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100">
-        <div class="flex items-center justify-between mb-4">
-          <div class="bg-orange-100 dark:bg-orange-900/20 p-3 rounded-xl">
-            <svg class="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
-            </svg>
-          </div>
-          <span class="text-sm text-blue-600 dark:text-blue-400 font-medium">🔒 Admin</span>
-        </div>
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Beta Signups</h3>
-        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">View and manage beta tester applications</p>
-        <%= link_to beta_signups_path, 
-                    class: "block w-full text-center bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors" do %>
-          View Beta Dashboard
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <!-- Profile Overview -->
-  <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl font-bold text-gray-900">Your Profile</h2>
-      <%= link_to "Edit Profile", edit_user_profile_path, 
-                  class: "bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" %>
-    </div>
-    
-    <div class="grid md:grid-cols-2 gap-8">
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>
-        <div class="space-y-3">
-          <div>
-            <span class="text-sm font-medium text-gray-500">Name</span>
-            <p class="text-gray-900"><%= @user.name %></p>
-          </div>
-          <div>
-            <span class="text-sm font-medium text-gray-500">Email</span>
-            <p class="text-gray-900"><%= @user.email %></p>
-          </div>
-          <div>
-            <span class="text-sm font-medium text-gray-500">Content Style</span>
-            <p class="text-gray-900"><%= @user.content_mode.humanize %></p>
-          </div>
+          
+          <%= link_to posts_path, class: "group flex items-center p-4 bg-purple-50 dark:bg-purple-900/20 rounded-xl hover:bg-purple-100 dark:hover:bg-purple-900/30 transition-all duration-200" do %>
+            <div class="bg-purple-600 p-2 rounded-lg mr-3">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-gray-900 dark:text-white">Manage Posts</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">View content</p>
+            </div>
+          <% end %>
+          
+          <%= link_to edit_user_profile_path, class: "group flex items-center p-4 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-all duration-200" do %>
+            <div class="bg-green-600 p-2 rounded-lg mr-3">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-gray-900 dark:text-white">Edit Profile</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Update info</p>
+            </div>
+          <% end %>
+          
+          <%= link_to pricing_path, class: "group flex items-center p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl hover:bg-yellow-100 dark:hover:bg-yellow-900/30 transition-all duration-200" do %>
+            <div class="bg-yellow-600 p-2 rounded-lg mr-3">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-medium text-gray-900 dark:text-white">Upgrade</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Pro features</p>
+            </div>
+          <% end %>
         </div>
       </div>
-      
-      <div>
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Profile Details</h3>
-        <div class="space-y-3">
-          <div>
-            <span class="text-sm font-medium text-gray-500">Bio</span>
-            <p class="text-gray-900 dark:text-white"><%= @user.bio.present? ? truncate(@user.bio, length: 150) : "Not set yet" %></p>
-          </div>
-          <div>
-            <span class="text-sm font-medium text-gray-500">Mission Statement</span>
-            <p class="text-gray-900 dark:text-white"><%= @user.mission_statement.present? ? @user.mission_statement : "Not set yet" %></p>
+    </div>
+
+    <div class="grid lg:grid-cols-3 gap-8">
+      <!-- Platform Connections -->
+      <div class="lg:col-span-2">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+          <div class="p-6 border-b border-gray-200 dark:border-slate-700">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white">Platform Connections</h2>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">Connect your social media accounts to start publishing</p>
           </div>
           
-          <!-- Quick Profile Setup -->
-          <% if @user.bio.blank? || @user.skills.blank? || @user.mission_statement.blank? %>
-            <div class="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg">
-              <h4 class="text-sm font-semibold text-blue-800 dark:text-blue-300 mb-2">Quick Profile Setup</h4>
-              <p class="text-xs text-blue-600 dark:text-blue-400 mb-3">Populate your profile with Gary's professional data from the docs folder</p>
-              <%= button_to "🚀 Setup Gary's Profile", setup_gary_profile_path, 
-                            method: :post,
-                            class: "bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors",
-                            data: { confirm: "This will populate your profile with Gary's bio, skills, and mission statement. Continue?" } %>
+          <div class="p-6">
+            <div class="grid md:grid-cols-2 gap-4">
+              
+              <!-- LinkedIn -->
+              <div class="group border border-gray-200 dark:border-slate-600 rounded-xl p-4 hover:shadow-md transition-all duration-200 <%= @user.linkedin_connected? ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-700' : 'hover:bg-gray-50 dark:hover:bg-slate-700' %>">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center">
+                    <div class="bg-blue-600 p-2 rounded-lg mr-3">
+                      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-900 dark:text-white">LinkedIn</h3>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Professional networking</p>
+                    </div>
+                  </div>
+                  <% if @user.linkedin_connected? %>
+                    <span class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Connected</span>
+                  <% else %>
+                    <span class="bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Ready</span>
+                  <% end %>
+                </div>
+                
+                <% if @user.linkedin_connected? %>
+                  <p class="text-sm text-green-700 dark:text-green-400 mb-3 font-medium">
+                    ✓ Connected as <%= @user.linkedin_connection.settings['name'] %>
+                  </p>
+                  <div class="space-y-2">
+                    <%= link_to new_post_path(platform: 'linkedin'), class: "block w-full text-center bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+                      📝 Create LinkedIn Post
+                    <% end %>
+                    <div class="grid grid-cols-2 gap-2">
+                      <%= button_to "🔄 Sync Profile", linkedin_import_profile_path, method: :post, class: "bg-green-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-green-700 transition-colors", data: { confirm: "Import LinkedIn profile data?" } %>
+                      <% if AiConfigService.can_access_feature?(current_user, :can_generate_linkedin_bio) %>
+                        <%= button_to "🤖 AI Bio", linkedin_export_profile_path, method: :post, class: "bg-purple-600 text-white px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-purple-700 transition-colors", data: { confirm: "Generate AI LinkedIn bio?" } %>
+                      <% else %>
+                        <div class="bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-3 py-1.5 rounded-lg text-xs font-medium text-center">🤖 AI Bio (Pro)</div>
+                      <% end %>
+                    </div>
+                  </div>
+                <% else %>
+                  <%= link_to linkedin_authorize_path, class: "block w-full text-center bg-blue-600 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors" do %>
+                    Connect LinkedIn
+                  <% end %>
+                <% end %>
+              </div>
+
+              <!-- Facebook -->
+              <div class="group border border-gray-200 dark:border-slate-600 rounded-xl p-4 hover:shadow-md transition-all duration-200 <%= @user.facebook_connected? ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-700' : 'hover:bg-gray-50 dark:hover:bg-slate-700' %>">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center">
+                    <div class="bg-blue-500 p-2 rounded-lg mr-3">
+                      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-900 dark:text-white">Facebook</h3>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Business pages & posts</p>
+                    </div>
+                  </div>
+                  <% if @user.facebook_connected? %>
+                    <span class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Connected</span>
+                  <% else %>
+                    <span class="bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Ready</span>
+                  <% end %>
+                </div>
+                
+                <% if @user.facebook_connected? %>
+                  <p class="text-sm text-green-700 dark:text-green-400 mb-3 font-medium">
+                    ✓ <%= pluralize(@user.facebook_connections.count, 'page') %> connected
+                  </p>
+                  <div class="space-y-2">
+                    <%= link_to new_post_path(platform: 'facebook'), class: "block w-full text-center bg-blue-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors" do %>
+                      📝 Create Facebook Post
+                    <% end %>
+                    <%= link_to platform_connections_path, class: "block w-full text-center bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-lg text-xs font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors" do %>
+                      Manage Pages
+                    <% end %>
+                  </div>
+                <% else %>
+                  <%= link_to facebook_connect_path, class: "block w-full text-center bg-blue-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors" do %>
+                    Connect Facebook
+                  <% end %>
+                <% end %>
+              </div>
+
+              <!-- Instagram -->
+              <div class="group border border-gray-200 dark:border-slate-600 rounded-xl p-4 hover:shadow-md transition-all duration-200 <%= @user.instagram_connected? ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-slate-700/50 border-gray-300 dark:border-slate-500' %>">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center">
+                    <div class="bg-gradient-to-br from-purple-600 to-pink-500 p-2 rounded-lg mr-3">
+                      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-900 dark:text-white <%= @user.instagram_connected? ? '' : 'text-gray-500 dark:text-gray-400' %>">Instagram</h3>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Visual content & stories</p>
+                    </div>
+                  </div>
+                  <% if @user.instagram_connected? %>
+                    <span class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Connected</span>
+                  <% else %>
+                    <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Coming Soon</span>
+                  <% end %>
+                </div>
+                
+                <% if @user.instagram_connected? %>
+                  <div class="space-y-2">
+                    <%= link_to new_post_path(platform: 'instagram'), class: "block w-full text-center bg-gradient-to-r from-purple-600 to-pink-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:from-purple-700 hover:to-pink-600 transition-all duration-200" do %>
+                      📸 Create Instagram Post
+                    <% end %>
+                  </div>
+                <% else %>
+                  <div class="block w-full text-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-3 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+                    Coming Soon
+                  </div>
+                <% end %>
+              </div>
+
+              <!-- TikTok -->
+              <div class="group border border-gray-200 dark:border-slate-600 rounded-xl p-4 hover:shadow-md transition-all duration-200 <%= @user.tiktok_connected? ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-slate-700/50 border-gray-300 dark:border-slate-500' %>">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center">
+                    <div class="bg-black p-2 rounded-lg mr-3">
+                      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.321 5.562a5.124 5.124 0 0 1-.443-.258 6.228 6.228 0 0 1-1.137-.966c-.736-.767-1.137-1.452-1.342-2.338h3.348V0h-4.113c-.065.896-.251 1.848-.685 2.715-.434.867-1.052 1.630-1.8 2.222-.384.304-.8.556-1.243.754v2.617a8.096 8.096 0 0 0 2.209-.631c.676-.304 1.293-.696 1.846-1.175v7.942c0 .896-.174 1.788-.513 2.617-.339.829-.835 1.583-1.462 2.222a7.775 7.775 0 0 1-2.222 1.462c-.829.339-1.721.513-2.617.513s-1.788-.174-2.617-.513a7.775 7.775 0 0 1-2.222-1.462 7.775 7.775 0 0 1-1.462-2.222C2.174 15.232 2 14.34 2 13.444s.174-1.788.513-2.617a7.775 7.775 0 0 1 1.462-2.222 7.775 7.775 0 0 1 2.222-1.462C6.996 6.804 7.888 6.63 8.784 6.63c.461 0 .917.058 1.365.174v4.426a3.62 3.62 0 0 0-1.365-.259c-.896 0-1.739.347-2.374.975-.635.628-.991 1.483-.991 2.379 0 .896.356 1.751.991 2.379.635.628 1.478.975 2.374.975.896 0 1.739-.347 2.374-.975.635-.628.991-1.483.991-2.379V5.562h3.167z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-900 dark:text-white <%= @user.tiktok_connected? ? '' : 'text-gray-500 dark:text-gray-400' %>">TikTok</h3>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Short-form videos</p>
+                    </div>
+                  </div>
+                  <% if @user.tiktok_connected? %>
+                    <span class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Connected</span>
+                  <% else %>
+                    <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Coming Soon</span>
+                  <% end %>
+                </div>
+                
+                <div class="block w-full text-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-3 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+                  Coming Soon
+                </div>
+              </div>
+
+              <!-- Twitter/X -->
+              <div class="group border border-gray-200 dark:border-slate-600 rounded-xl p-4 hover:shadow-md transition-all duration-200 <%= @user.twitter_connected? ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-slate-700/50 border-gray-300 dark:border-slate-500' %>">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center">
+                    <div class="bg-black p-2 rounded-lg mr-3">
+                      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-900 dark:text-white <%= @user.twitter_connected? ? '' : 'text-gray-500 dark:text-gray-400' %>">Twitter / X</h3>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Tweets & threads</p>
+                    </div>
+                  </div>
+                  <% if @user.twitter_connected? %>
+                    <span class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Connected</span>
+                  <% else %>
+                    <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Coming Soon</span>
+                  <% end %>
+                </div>
+                
+                <div class="block w-full text-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-3 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+                  Coming Soon
+                </div>
+              </div>
+
+              <!-- YouTube -->
+              <div class="group border border-gray-200 dark:border-slate-600 rounded-xl p-4 hover:shadow-md transition-all duration-200 <%= @user.youtube_connected? ? 'bg-green-50 dark:bg-green-900/10 border-green-200 dark:border-green-700' : 'bg-gray-50 dark:bg-slate-700/50 border-gray-300 dark:border-slate-500' %>">
+                <div class="flex items-start justify-between mb-3">
+                  <div class="flex items-center">
+                    <div class="bg-red-600 p-2 rounded-lg mr-3">
+                      <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 class="font-semibold text-gray-900 dark:text-white <%= @user.youtube_connected? ? '' : 'text-gray-500 dark:text-gray-400' %>">YouTube</h3>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">Videos & community</p>
+                    </div>
+                  </div>
+                  <% if @user.youtube_connected? %>
+                    <span class="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Connected</span>
+                  <% else %>
+                    <span class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Coming Soon</span>
+                  <% end %>
+                </div>
+                
+                <div class="block w-full text-center bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-3 py-2 rounded-lg text-sm font-medium cursor-not-allowed">
+                  Coming Soon
+                </div>
+              </div>
             </div>
-          <% end %>
-          <div>
-            <span class="text-sm font-medium text-gray-500">Skills</span>
-            <% if @user.skills.present? && @user.skills.any? %>
-              <div class="flex flex-wrap gap-2 mt-1">
-                <% @user.skills.each do |skill| %>
-                  <span class="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
-                    <%= skill %>
-                  </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="space-y-6">
+        <!-- Account Status -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Account Status</h3>
+            
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Subscription</span>
+                <span class="bg-blue-100 dark:bg-blue-900/20 text-blue-800 dark:text-blue-400 text-xs font-medium px-2.5 py-0.5 rounded-full">Free Tier</span>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">AI Posts</span>
+                <span class="text-sm font-semibold text-gray-900 dark:text-white">10/10 remaining</span>
+              </div>
+              
+              <div class="flex items-center justify-between">
+                <span class="text-sm font-medium text-gray-600 dark:text-gray-400">Platforms</span>
+                <span class="text-sm font-semibold text-gray-900 dark:text-white">
+                  <%= @user.platform_connections.active.count %> connected
+                </span>
+              </div>
+              
+              <%= link_to pricing_path, class: "block w-full text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200" do %>
+                🚀 Upgrade to Pro
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700">
+          <div class="p-6">
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
+            
+            <% if @user.posts.recent.limit(3).any? %>
+              <div class="space-y-3">
+                <% @user.posts.recent.limit(3).each do |post| %>
+                  <div class="flex items-start space-x-3 p-3 bg-gray-50 dark:bg-slate-700/50 rounded-lg">
+                    <div class="bg-blue-600 p-1.5 rounded-lg">
+                      <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                      </svg>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                        <%= truncate(post.content, length: 40) %>
+                      </p>
+                      <p class="text-xs text-gray-600 dark:text-gray-400">
+                        <%= time_ago_in_words(post.created_at) %> ago
+                      </p>
+                    </div>
+                  </div>
                 <% end %>
               </div>
             <% else %>
-              <p class="text-gray-900">No skills added yet</p>
+              <div class="text-center py-6">
+                <div class="text-gray-400 mb-2">📝</div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">No recent posts</p>
+                <p class="text-xs text-gray-500 dark:text-gray-500 mt-1">Create your first post to get started</p>
+              </div>
             <% end %>
           </div>
         </div>
+
+        <!-- Admin Panel (for admin users) -->
+        <% if current_user.email == 'real.ener.g@gmail.com' %>
+          <div class="bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl shadow-lg text-white">
+            <div class="p-6">
+              <h3 class="text-lg font-semibold mb-2">🔒 Admin Panel</h3>
+              <p class="text-orange-100 text-sm mb-4">Manage beta program</p>
+              <%= link_to beta_signups_path, class: "block w-full text-center bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/30 transition-all duration-200" do %>
+                Beta Dashboard
+              <% end %>
+            </div>
+          </div>
+        <% end %>
       </div>
     </div>
-  </div>
 
-  <!-- Getting Started -->
-  <div class="bg-gradient-to-r from-yellow-50 to-orange-50 rounded-2xl p-8 border border-yellow-200">
-    <div class="flex items-start space-x-4">
-      <div class="text-4xl">🎯</div>
-      <div class="flex-1">
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">Getting Started</h2>
-        <p class="text-gray-700 mb-6">
-          Welcome to No iLLusion SMM! We're currently building the core features. 
-          Here's what's coming next in our Rails rebuild:
-        </p>
-        
-        <div class="grid md:grid-cols-2 gap-4">
-          <div class="space-y-2">
-            <h3 class="font-semibold text-gray-900">Phase 2: Core Features</h3>
-            <ul class="text-sm text-gray-600 space-y-1">
-              <li>• Post creation and management</li>
-              <li>• LinkedIn OAuth integration</li>
-              <li>• Simple content publishing</li>
-              <li>• Basic error handling</li>
-            </ul>
-          </div>
-          
-          <div class="space-y-2">
-            <h3 class="font-semibold text-gray-900">Phase 3: AI Integration</h3>
-            <ul class="text-sm text-gray-600 space-y-1">
-              <li>• Custom prompt templates</li>
-              <li>• AI content generation</li>
-              <li>• Template management UI</li>
-              <li>• OpenAI integration</li>
-            </ul>
+    <!-- Profile Completion -->
+    <% if @user.bio.blank? || @user.skills.blank? || @user.mission_statement.blank? %>
+      <div class="mt-8">
+        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-700 rounded-2xl p-6">
+          <div class="flex items-start space-x-4">
+            <div class="bg-blue-600 p-2 rounded-lg">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-semibold text-blue-900 dark:text-blue-300 mb-2">Complete Your Profile</h3>
+              <p class="text-blue-800 dark:text-blue-400 text-sm mb-4">
+                Enhance your AI-generated content by completing your profile with professional details.
+              </p>
+              <div class="flex flex-col sm:flex-row gap-3">
+                <%= link_to edit_user_profile_path, class: "bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors text-center" do %>
+                  Complete Profile Manually
+                <% end %>
+                <%= button_to "🚀 Quick Setup (Gary's Data)", setup_gary_profile_path, method: :post, class: "bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors", data: { confirm: "Populate profile with Gary's professional data?" } %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>
