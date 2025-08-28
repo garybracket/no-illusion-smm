@@ -3,13 +3,36 @@
 ## Project Overview
 **No iLLusion SMM** - A Ruby on Rails freemium SaaS platform for social media management that helps users create and publish content across multiple platforms with optional AI assistance. Built with privacy, transparency, user empowerment, and componentized feature control at its core.
 
-## Freemium Architecture
-**Every feature is componentized and tier-gated:**
-- **Free Tier**: Basic profile management, limited posts
-- **Pro Tier**: LinkedIn sync, AI assistance, analytics  
-- **Enterprise Tier**: Multi-platform, advanced AI, white-label
+## 🎯 CRITICAL ARCHITECTURE REQUIREMENTS
 
-**Feature Control System**: All features can be enabled/disabled per user based on subscription tier.
+### Freemium Model (MANDATORY - NEVER FORGET)
+**EVERY feature must be componentized and tier-gated:**
+- **Free Tier**: Basic profile, 5 AI posts/month, LinkedIn only
+- **Pro Tier ($15/mo)**: 100 AI posts, 3 platforms, custom prompts
+- **Enterprise ($99/mo)**: Unlimited, all platforms, white-label, own API keys
+
+**Componentization Rules**:
+1. EVERY new feature MUST have tier checks
+2. ALL functionality MUST be toggle-able per subscription level
+3. ALWAYS use `AiConfigService.can_access_feature?(user, :feature_name)`
+4. NEVER hardcode features without tier gating
+5. ALWAYS think "How does this fit in the freemium model?"
+
+### 💡 Monetization & Growth Strategy
+**Claude should proactively suggest monetization improvements:**
+- Identify features that could be premium upsells
+- Suggest A/B testing opportunities for pricing
+- Recommend viral/referral program implementations
+- Point out investor-attractive metrics to track
+- Suggest features that increase user retention
+- Recommend integrations that add value for enterprise
+
+**Example suggestions Claude should make:**
+- "Consider making bulk scheduling a Pro feature - it's high value"
+- "Add usage analytics dashboard - investors love engagement metrics"
+- "Implement referral system - 3 free months for successful referrals"
+- "Track Monthly Recurring Revenue (MRR) prominently for investors"
+- "Add team collaboration for Enterprise - higher price point justified"
 
 ## Branding Requirements
 **MANDATORY**: This project MUST include a professional link to no-illusion.com with the exact text:

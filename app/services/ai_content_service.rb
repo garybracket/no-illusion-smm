@@ -141,42 +141,12 @@ class AiContentService
     
     def generate_fallback_content(prompt, platform)
       # Simple fallback content when AI is unavailable
-      platform_text = platform ? " for #{platform}" : ""
-      
-      "Here's your post#{platform_text}: #{prompt[0..100]}... [Please customize this message to match your voice and add relevant details]"
+      "#{prompt[0..100]}... [Please customize this message to match your voice and add relevant details]"
     end
     
     def generate_automatic_topic(user:, content_mode:, platform:)
-      # Create topic ideas based on user's profile and content mode
-      topics = []
-      
-      # Add topics based on content mode
-      case content_mode.to_s
-      when 'business'
-        topics += [
-          "Share a lesson learned from a recent project challenge",
-          "Discuss the importance of transparent business practices in your industry",
-          "Explain a technical concept in simple terms for non-technical business owners",
-          "Share insights about process optimization or automation",
-          "Discuss industry trends and their impact on small businesses"
-        ]
-      when 'influencer'
-        topics += [
-          "Share behind-the-scenes of your work process",
-          "Give advice to someone starting in your field",
-          "Share a success story from your experience",
-          "Discuss current industry trends and your perspective",
-          "Share productivity tips or tools you use daily"
-        ]
-      when 'personal'
-        topics += [
-          "Share a personal insight from your professional journey",
-          "Discuss work-life balance in your field",
-          "Share learning experiences or growth moments",
-          "Discuss challenges you've overcome in your career",
-          "Share appreciation for your team or community"
-        ]
-      end
+      # Get topic ideas from configuration service
+      topics = AiConfigService.get_topics(content_mode)
       
       # Add skill-based topics if user has skills
       if user.skills.present? && user.skills.any?

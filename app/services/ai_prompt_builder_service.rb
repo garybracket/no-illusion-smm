@@ -1,6 +1,19 @@
 class AiPromptBuilderService
   class << self
     def build_system_prompt(user:, content_mode:, platform: nil, context: nil)
+      # Check if user has custom prompt templates (Pro/Enterprise feature)
+      if AiConfigService.can_access_feature?(user, :can_edit_prompts)
+        custom_prompt = user.prompt_templates
+                            .where(content_mode: content_mode, is_active: true)
+                            .first
+        
+        if custom_prompt.present?
+          # Use user's custom prompt template with variable replacements
+          return apply_prompt_variables(custom_prompt.prompt_text, user: user, platform: platform)
+        end
+      end
+      
+      # Default system prompt building
       prompt_parts = []
       
       # Base role prompt based on content mode
@@ -27,6 +40,25 @@ class AiPromptBuilderService
       prompt_parts.join("\n\n")
     end
     
+    # Apply variables to custom prompt templates
+    def apply_prompt_variables(prompt_text, user:, platform: nil)
+      variables = {
+        '{user_name}' => user.name,
+        '{user_bio}' => user.bio,
+        '{user_mission}' => user.mission_statement,
+        '{user_skills}' => user.skills&.join(', '),
+        '{platform_name}' => platform || 'social media',
+        '{platform_style}' => platform ? platform_specific_prompt(platform) : ''
+      }
+      
+      result = prompt_text
+      variables.each do |var, value|
+        result = result.gsub(var, value.to_s)
+      end
+      
+      result
+    end
+    
     def build_content_generation_prompt(user:, user_prompt:, content_mode:, platform: nil)
       system_prompt = build_system_prompt(
         user: user, 
@@ -44,7 +76,7 @@ class AiPromptBuilderService
     def build_optimization_prompt(content:, platform:)
       {
         system: optimization_system_prompt(platform),
-        user: "Optimize this content for #{platform}: #{content}\n\nMake it more engaging while keeping the core message and maintaining the author's authentic voice."
+        user: "Optimize this content: #{content}\n\nMake it more engaging while keeping the core message and authentic voice. Output ONLY the optimized content with no wrapper text."
       }
     end
     
@@ -64,16 +96,7 @@ class AiPromptBuilderService
     private
     
     def base_role_prompt(content_mode)
-      case content_mode.to_s
-      when 'business'
-        "You are a professional business content creator specializing in authentic, value-driven social media posts. You help small business owners share their expertise and build trust with their audience without corporate buzzwords or salesy language."
-      when 'influencer'
-        "You are a social media strategist helping influencers create engaging, authentic content that builds genuine connections with their audience while showcasing their unique personality and expertise."
-      when 'personal'
-        "You are helping create authentic personal social media content that feels genuine and relatable while maintaining professionalism appropriate for the person's career and interests."
-      else
-        "You are a social media content strategist focused on creating authentic, engaging posts that reflect the user's genuine voice and expertise."
-      end
+      AiConfigService.get_ai_role(content_mode)
     end
     
     def personal_context_prompt(user)
@@ -90,18 +113,17 @@ class AiPromptBuilderService
     end
     
     def platform_specific_prompt(platform)
-      case platform.to_s.downcase
-      when 'linkedin'
-        "PLATFORM: LinkedIn\n- Professional tone but authentic and approachable\n- Focus on business insights, professional growth, or industry expertise\n- Use first-person perspective\n- Include relevant hashtags (2-5 max)\n- Aim for 150-300 words\n- Consider asking a thoughtful question to encourage engagement"
-      when 'facebook'
-        "PLATFORM: Facebook\n- Conversational and community-focused tone\n- Can be more personal and story-driven\n- Encourage discussion and community building\n- Use relevant hashtags sparingly (1-3 max)\n- Aim for 100-250 words"
-      when 'instagram'
-        "PLATFORM: Instagram\n- Visual-friendly content that complements images\n- Use strategic hashtags (5-10 relevant ones)\n- Shorter, punchy text with strong opening\n- Include call-to-action when appropriate\n- Aim for 50-150 words in caption"
-      when 'tiktok'
-        "PLATFORM: TikTok\n- Casual, authentic, and trendy tone\n- Hook viewers in first 3 seconds\n- Use relevant trending hashtags\n- Keep text short and punchy\n- Focus on entertainment or quick tips"
-      else
-        "PLATFORM: General Social Media\n- Adapt tone for professional but approachable audience\n- Keep content engaging and authentic\n- Use appropriate hashtags for platform\n- Aim for optimal length for engagement"
-      end
+      config = AiConfigService.get_platform(platform)
+      hints = config[:style_hints]
+      char_limits = config[:char_limits]
+      hashtag_count = config[:hashtag_count]
+      
+      "CONTENT STYLE:\n" +
+      "- #{hints[:tone]}\n" +
+      "- #{hints[:focus]}\n" +
+      "- #{hints[:engagement]}\n" +
+      "- Include #{hashtag_count[:min]}-#{hashtag_count[:max]} relevant hashtags\n" +
+      "- Aim for #{char_limits[:optimal]} words (#{char_limits[:min]}-#{char_limits[:max]} range)"
     end
     
     def context_specific_prompt(context)
@@ -119,35 +141,30 @@ class AiPromptBuilderService
     
     def final_instructions_prompt(content_mode)
       base_instructions = [
-        "IMPORTANT GUIDELINES:",
-        "- Write in the user's authentic voice based on their background and mission",
-        "- Avoid corporate buzzwords, jargon, or overly salesy language", 
+        "CRITICAL OUTPUT REQUIREMENTS:",
+        "- Output ONLY the post content itself - no introductions, explanations, or wrapper text",
+        "- Do NOT mention any specific platform names in the content",
+        "- Do NOT include phrases like 'Here's your post' or 'Here's an optimized version'",
+        "- Do NOT use quotation marks around the content",
+        "- Write in the user's authentic voice based on their background",
+        "- Avoid corporate buzzwords, jargon, or overly salesy language",
         "- Be specific and valuable rather than generic",
         "- Include genuine insights from their experience",
-        "- Make it sound like a real person, not an AI",
-        "- Don't just list skills - weave expertise naturally into the content"
+        "- Make it sound natural and human, not AI-generated",
+        "- Weave expertise naturally into the content"
       ]
       
-      case content_mode.to_s
-      when 'business'
-        base_instructions + [
-          "- Focus on providing real business value and insights",
-          "- Share practical experience and lessons learned",
-          "- Position as a trusted expert, not a salesperson"
-        ]
-      else
-        base_instructions
-      end.join("\n")
+      extra_guidelines = AiConfigService.get_extra_guidelines(content_mode)
+      all_instructions = base_instructions + extra_guidelines.map { |g| "- #{g}" }
+      all_instructions.join("\n")
     end
     
     def optimization_system_prompt(platform)
-      "You are a social media optimization expert specializing in improving content performance while maintaining authentic voice. Your goal is to make content more engaging and platform-appropriate without losing the original message or making it sound artificial."
+      "You are a social media optimization expert. Make content more engaging while maintaining the authentic voice. Output ONLY the optimized content - no introductions, explanations, or wrapper text. Never mention specific platform names in the content."
     end
     
     def enhance_user_prompt(user_prompt, content_mode, platform)
-      platform_note = platform ? " optimized for #{platform}" : ""
-      
-      "Create a #{content_mode} social media post#{platform_note} based on this request:\n\n#{user_prompt}\n\nMake sure the content reflects my authentic voice and experience as described in the system context."
+      "Create a #{content_mode} social media post based on: #{user_prompt}\n\nREMEMBER: Output ONLY the post content itself. No introductions, no 'Here's your post', no quotation marks, no platform mentions."
     end
   end
 end

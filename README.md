@@ -1,6 +1,8 @@
-# No iLLusion SMM (Rails)
+# No iLLusion SMM - Freemium SaaS Platform
 
-A Ruby on Rails freemium SaaS platform for social media management that helps users create and publish content across multiple platforms with optional AI assistance. Built with privacy, transparency, and user empowerment at its core.
+**🎯 CRITICAL: Every feature MUST be componentized for subscription tiers**
+
+A Ruby on Rails freemium SaaS platform for social media management with MANDATORY tier-gated features. Built with privacy, transparency, monetization, and user empowerment at its core.
 
 ## Project Status
 ✅ **LIVE IN PRODUCTION** - Complete Rails architecture with LinkedIn integration
@@ -24,11 +26,33 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 - **Function Over Form**: Build tools that work first, look pretty second
 - **User Choice**: Optional AI assistance - users control their content creation approach
 
-## Freemium Architecture
-**Every feature is componentized and tier-gated:**
-- **Free Tier**: Basic profile management, limited posts
-- **Pro Tier**: LinkedIn sync, AI assistance, analytics  
-- **Enterprise Tier**: Multi-platform, advanced AI, white-label
+## 🎯 Freemium Architecture (MANDATORY FOR ALL FEATURES)
+
+### Subscription Tiers (Componentized)
+| Feature | Free | Pro ($15/mo) | Enterprise ($99/mo) |
+|---------|------|--------------|--------------------|
+| AI Posts/Month | 5 | 100 | Unlimited |
+| Platforms | LinkedIn | LinkedIn, FB, IG | All Platforms |
+| Custom AI Prompts | ❌ | ✅ | ✅ |
+| Scheduling | ❌ | ✅ | ✅ |
+| Analytics | Basic | Advanced | Full + Export |
+| Team Members | 1 | 1 | Unlimited |
+| White Label | ❌ | ❌ | ✅ |
+| Own API Keys | ❌ | ❌ | ✅ |
+
+### Implementation Requirements
+- **EVERY feature** must check tier with `AiConfigService.can_access_feature?(user, :feature)`
+- **ALL new code** must include subscription checks
+- **NEVER** implement features without tier gating
+- **ALWAYS** think "What tier should access this?"
+
+### 💰 Monetization Strategy (Claude Should Suggest)
+- Premium feature identification opportunities
+- A/B testing for pricing optimization
+- Viral/referral program implementations
+- Investor-attractive metrics (MRR, CAC, LTV)
+- User retention features
+- Enterprise value-adds
 
 ## Tech Stack
 - **Framework**: Ruby on Rails 7.2.2
@@ -74,12 +98,16 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 - [x] **Resume System**: LinkedIn-synced resume generation and management
 - [x] **Content Mode Support**: Business/influencer/personal content preferences
 
-### Phase 5: Freemium Infrastructure (NEXT PRIORITY)
-- [ ] Subscription tiers (Free/Pro/Enterprise)
-- [ ] Feature gating middleware
+### Phase 5: Freemium Infrastructure (IN PROGRESS)
+- [x] Subscription tier field on User model
+- [x] AiConfigService with tier definitions
+- [x] Feature gating helper methods
+- [x] Custom prompt templates (Pro/Enterprise only)
 - [ ] Stripe payment integration
-- [ ] Usage tracking and limits
+- [ ] Usage tracking dashboard
 - [ ] Subscription management UI
+- [ ] Upgrade prompts at limit points
+- [ ] MRR/ARR tracking for investors
 
 ### Phase 6: Multi-Platform Expansion (Enterprise Tier)
 - [ ] YouTube integration (Community posts, video descriptions)
