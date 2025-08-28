@@ -7,9 +7,9 @@
 
 ### Freemium Model (MANDATORY - NEVER FORGET)
 **EVERY feature must be componentized and tier-gated:**
-- **Free Tier**: Basic profile, 5 AI posts/month, LinkedIn only
-- **Pro Tier ($15/mo)**: 100 AI posts, 3 platforms, custom prompts
-- **Enterprise ($99/mo)**: Unlimited, all platforms, white-label, own API keys
+- **Free Tier**: 10 AI posts/month, all platforms, 1 post/hour, 8MB images
+- **Pro Tier ($8/mo)**: 100 AI posts, multi-platform variants, custom prompts, analytics
+- **Ultimate Tier ($49/mo)**: Unlimited posts, AI Autopilot (6/day), own API keys, 50MB images
 
 **Componentization Rules**:
 1. EVERY new feature MUST have tier checks
@@ -55,9 +55,9 @@ Both should be prominently placed in the footer.
 - **Self-Sufficient**: Single developer doing all work personally, using AI as a tool not replacement
 
 ## Current Status
-**Early Alpha Development** - LinkedIn-only MVP working
+**Production-Ready Freemium Platform** - Comprehensive tier system implemented
 
-**Development Stage**: Single-platform (LinkedIn) prototype with AI features functional
+**Development Stage**: Full freemium architecture with multi-platform content system
 
 ## 🚀 **Current LinkedIn MVP (Working)**
 
@@ -65,7 +65,12 @@ Both should be prominently placed in the footer.
 - **Auth0 Authentication**: Sign up/sign in working perfectly
 - **LinkedIn OAuth**: Connect LinkedIn accounts
 - **LinkedIn Publishing**: Post directly to LinkedIn with tracking
-- **AI Content Generation**: 3 modes (Generate, Optimize, Auto-Generate)
+- **AI Content Generation**: 3 modes with clean output, no wrapper text
+- **Freemium System**: Complete tier-based feature gating
+- **Multi-Platform Variants**: Different content for each platform (Pro/Ultimate)
+- **AI Autopilot Architecture**: Ultimate tier with rate limiting
+- **Content Mode Safeguards**: Custom prompts enhance, don't override
+- **Professional Pricing Page**: Complete tier comparison
 - **Profile Management**: User profiles with content modes
 - **Resume Builder**: Basic LinkedIn profile import
 

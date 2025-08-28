@@ -153,9 +153,16 @@ export default class extends Controller {
   getPlatform() {
     // Get selected platform from checkboxes or form
     const platformCheckboxes = document.querySelectorAll('input[name="post[platforms][]"]:checked')
-    if (platformCheckboxes.length > 0) {
+    
+    if (platformCheckboxes.length === 1) {
+      // Single platform - use specific hints
+      return platformCheckboxes[0].value
+    } else if (platformCheckboxes.length > 1) {
+      // Multiple platforms - this will need tier checking
+      // For now, return first platform (will be handled by backend)
       return platformCheckboxes[0].value
     }
+    
     return 'linkedin' // Default
   }
 }

@@ -6,14 +6,23 @@ class AiConfigService
       {
         'free' => {
           name: 'Free',
-          ai_generations_per_month: 5,
+          ai_generations_per_month: 10,
           can_use_ai: true,
           can_edit_prompts: false,  # Can't customize prompts
           can_add_content_modes: false,
-          available_content_modes: ['business'],  # Only business mode
-          available_platforms: ['linkedin'],  # Only LinkedIn
-          can_schedule_posts: false,
-          can_use_analytics: false
+          available_content_modes: ['business', 'influencer', 'personal'],  # All modes!
+          available_platforms: :all,  # All platforms available!
+          can_schedule_posts: true,  # Can schedule
+          can_use_analytics: false,
+          # Usage-based limits (the real restrictions)
+          posts_per_hour: 1,  # 1 post per hour max
+          scheduled_posts_per_day: 1,  # 1 scheduled post per day
+          concurrent_campaigns: 1,  # 1 active campaign
+          # Image upload limits
+          max_image_size_mb: 8,
+          max_images_per_post: 1,
+          allowed_image_formats: ['jpg', 'jpeg', 'png'],
+          can_upload_images: true
         },
         'pro' => {
           name: 'Pro',
@@ -21,13 +30,23 @@ class AiConfigService
           can_use_ai: true,
           can_edit_prompts: true,  # CAN customize prompts
           can_add_content_modes: false,
-          available_content_modes: ['business', 'influencer', 'personal'],
-          available_platforms: ['linkedin', 'facebook', 'instagram'],
+          available_content_modes: :all,
+          available_platforms: :all,
           can_schedule_posts: true,
-          can_use_analytics: true
+          can_use_analytics: true,
+          can_generate_platform_variants: true,  # Different content per platform
+          # Usage-based limits (reasonable for $8/mo)
+          posts_per_hour: 5,  # 5 posts per hour max
+          scheduled_posts_per_day: 10,  # 10 scheduled posts per day
+          concurrent_campaigns: 3,  # 3 active campaigns
+          # Image upload limits
+          max_image_size_mb: 15,
+          max_images_per_post: 4,
+          allowed_image_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp'],
+          can_upload_images: true
         },
-        'enterprise' => {
-          name: 'Enterprise',
+        'ultimate' => {
+          name: 'Ultimate', # $49/month - AI Autopilot justifies premium pricing
           ai_generations_per_month: :unlimited,
           can_use_ai: true,
           can_edit_prompts: true,  # Full prompt customization
@@ -36,8 +55,20 @@ class AiConfigService
           available_platforms: :all,
           can_schedule_posts: true,
           can_use_analytics: true,
-          can_white_label: true,
-          can_use_own_api_keys: true  # Use their own AI API keys
+          can_white_label: false,  # Removed for simpler tier
+          can_use_own_api_keys: true,  # Use their own AI API keys
+          # Ultimate features
+          can_use_ai_autopilot: true,  # AI automatically creates and schedules posts
+          can_generate_platform_variants: true,  # Different content per platform
+          # AI Autopilot rate limits (prevent API spam)
+          ai_autopilot_posts_per_day: 6,  # Max 6 auto-posts per day
+          ai_autopilot_min_interval_hours: 2,  # Minimum 2 hours between auto-posts
+          ai_autopilot_max_tokens_per_day: 5000,  # Token budget limit
+          # Image upload limits
+          max_image_size_mb: 50,
+          max_images_per_post: 20,
+          allowed_image_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'tiff'],
+          can_upload_images: true
         }
       }
     end
@@ -62,14 +93,9 @@ class AiConfigService
       tier_config[:available_content_modes] || ['business']
     end
     
-    # Get available platforms for user's tier
+    # Get available platforms for user's tier (now uses dynamic Platform model)
     def available_platforms(user)
-      tier = user.subscription_tier || 'free'
-      tier_config = feature_tiers[tier]
-      
-      return platforms.keys if tier_config[:available_platforms] == :all
-      
-      tier_config[:available_platforms] || ['linkedin']
+      Platform.available_to_user(user).map(&:key)
     end
     # Content Mode Configurations (easily extensible)
     def content_modes
@@ -191,6 +217,16 @@ class AiConfigService
             focus: 'Video description and SEO',
             engagement: 'Include links and timestamps'
           }
+        },
+        'general' => {
+          name: 'Multi-Platform',
+          char_limits: { min: 100, max: 280, optimal: 200 },
+          hashtag_count: { min: 2, max: 5 },
+          style_hints: {
+            tone: 'Engaging and platform-neutral',
+            focus: 'Universal appeal and readability',
+            engagement: 'Works well across all platforms'
+          }
         }
         # Easy to add new platforms
       }
@@ -241,6 +277,45 @@ class AiConfigService
     # Check if a content mode is supported
     def content_mode_supported?(mode)
       content_modes.key?(mode.to_s)
+    end
+    
+    # Get image upload limits for user's tier
+    def get_image_limits(user)
+      tier = user.subscription_tier || 'free'
+      tier_config = feature_tiers[tier]
+      
+      {
+        max_size_mb: tier_config[:max_image_size_mb],
+        max_count: tier_config[:max_images_per_post],
+        allowed_formats: tier_config[:allowed_image_formats],
+        can_upload: tier_config[:can_upload_images]
+      }
+    end
+    
+    # Validate uploaded image against user's tier limits
+    def validate_image_upload(user, file)
+      limits = get_image_limits(user)
+      
+      errors = []
+      
+      # Check if user can upload images
+      unless limits[:can_upload]
+        return { valid: false, errors: ['Image uploads not available in your plan'] }
+      end
+      
+      # Check file size
+      size_mb = file.size.to_f / (1024 * 1024)
+      if size_mb > limits[:max_size_mb]
+        errors << "Image too large (#{size_mb.round(1)}MB). Maximum: #{limits[:max_size_mb]}MB"
+      end
+      
+      # Check file format
+      extension = File.extname(file.original_filename).downcase.delete('.')
+      unless limits[:allowed_formats].include?(extension)
+        errors << "Format '#{extension}' not supported. Allowed: #{limits[:allowed_formats].join(', ')}"
+      end
+      
+      { valid: errors.empty?, errors: errors }
     end
   end
 end

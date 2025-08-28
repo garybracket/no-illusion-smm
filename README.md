@@ -29,15 +29,18 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 ## 🎯 Freemium Architecture (MANDATORY FOR ALL FEATURES)
 
 ### Subscription Tiers (Componentized)
-| Feature | Free | Pro ($15/mo) | Enterprise ($99/mo) |
-|---------|------|--------------|--------------------|
-| AI Posts/Month | 5 | 100 | Unlimited |
-| Platforms | LinkedIn | LinkedIn, FB, IG | All Platforms |
+| Feature | Free | Pro ($8/mo) | Ultimate ($49/mo) |
+|---------|------|-------------|------------------|
+| AI Posts/Month | 10 | 100 | Unlimited |
+| Posts Per Hour | 1 | 5 | Unlimited |
+| Platforms | All | All | All |
 | Custom AI Prompts | ❌ | ✅ | ✅ |
-| Scheduling | ❌ | ✅ | ✅ |
-| Analytics | Basic | Advanced | Full + Export |
-| Team Members | 1 | 1 | Unlimited |
-| White Label | ❌ | ❌ | ✅ |
+| Multi-Platform Variants | ❌ | ✅ | ✅ |
+| Scheduling | ✅ | ✅ | ✅ |
+| Analytics | ❌ | ✅ | ✅ |
+| AI Autopilot | ❌ | ❌ | ✅ (6 posts/day) |
+| Image Upload Size | 8MB | 15MB | 50MB |
+| Images Per Post | 1 | 4 | 20 |
 | Own API Keys | ❌ | ❌ | ✅ |
 
 ### Implementation Requirements
@@ -100,26 +103,38 @@ This is a complete rebuild of the existing `social-media-manager` (Next.js + Aut
 
 ### Phase 5: Freemium Infrastructure (IN PROGRESS)
 - [x] Subscription tier field on User model
-- [x] AiConfigService with tier definitions
+- [x] AiConfigService with comprehensive tier definitions
 - [x] Feature gating helper methods
-- [x] Custom prompt templates (Pro/Enterprise only)
+- [x] Custom prompt templates (Pro/Ultimate only)
+- [x] Multi-platform content variations (Pro/Ultimate)
+- [x] AI Autopilot configuration (Ultimate only)
+- [x] Image upload limits by tier
+- [x] Professional pricing page
+- [x] Dynamic Platform model for future-proofing
+- [x] PostVariant model for platform-specific content
 - [ ] Stripe payment integration
 - [ ] Usage tracking dashboard
 - [ ] Subscription management UI
 - [ ] Upgrade prompts at limit points
 - [ ] MRR/ARR tracking for investors
 
-### Phase 6: Multi-Platform Expansion (Enterprise Tier)
-- [ ] YouTube integration (Community posts, video descriptions)
-- [ ] Facebook/Instagram integration
-- [ ] TikTok integration
-- [ ] Multi-platform publishing
-- [ ] Advanced analytics dashboard
+### Phase 6: Multi-Platform Expansion
+- [x] Dynamic Platform registry system
+- [x] Multi-platform content variants (Pro/Ultimate feature)
+- [ ] Facebook/Instagram OAuth completion
+- [ ] TikTok OAuth integration  
+- [ ] YouTube OAuth integration
+- [ ] Twitter/X OAuth integration
+- [ ] Actual multi-platform publishing implementation
+- [ ] Advanced analytics dashboard (Pro/Ultimate)
 
-### Phase 7: Advanced Features (Enterprise Tier)
-- [ ] White-label options
-- [ ] Team collaboration
-- [ ] Advanced AI (multi-provider)
+### Phase 7: Advanced Features (Ultimate Tier)
+- [x] AI Autopilot system architecture
+- [ ] AI Autopilot implementation (Sidekiq background jobs)
+- [ ] Rate limiting enforcement
+- [ ] Token budget tracking
+- [ ] Background job monitoring
+- [ ] Advanced AI prompt customization
 - [ ] Custom integrations
 
 ## LinkedIn Integration Features
@@ -267,13 +282,16 @@ The original `social-media-manager` project serves as a reference for:
 
 ## Current Status
 - **✅ Complete LinkedIn Integration**: Full OAuth, posting, profile sync, resume builder
-- **✅ AI Content Generation**: Claude API with profile-based prompting and per-post content modes
+- **✅ AI Content Generation**: Claude API with clean output, no wrapper text or platform mentions
 - **✅ User Management**: Auth0 + Devise dual authentication, complete profile system
-- **✅ Content Management**: Posts creation, AI assistance, Business/Influencer/Personal mode toggle
+- **✅ Content Management**: Posts creation with AI assistance (Generate/Optimize/Auto-Generate)
 - **✅ Resume System**: LinkedIn-synced professional resume generation
-- **✅ Platform Preparation**: YouTube, Facebook, Instagram, TikTok UI ready for future integration
-- **✅ Documentation Cleanup**: Archived unused docs, kept only active files
-- **🚧 Next**: Freemium subscription system with Stripe integration
+- **✅ Freemium Architecture**: Comprehensive tier system (Free/Pro/Ultimate)
+- **✅ Multi-Platform System**: Dynamic platform registry for future-proofing
+- **✅ Content Mode Safeguards**: Custom prompts enhance but cannot override base modes
+- **✅ Professional Pricing Page**: Three-tier comparison with all features
+- **✅ AI Autopilot Design**: Ultimate tier with 6 posts/day, 2-hour intervals, token budgets
+- **🚧 Next**: Stripe integration and background job implementation
 
 ## Privacy-First Architecture
 - **No Content Storage**: Content processed and discarded immediately

@@ -1,0 +1,366 @@
+<!-- Professional Pricing Tiers Page -->
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-purple-50 to-pink-100 dark:from-slate-900 dark:via-purple-900 dark:to-pink-900">
+  
+  <!-- Header Section -->
+  <div class="relative overflow-hidden py-16 sm:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <h1 class="text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl lg:text-6xl">
+          Choose Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Social Media</span> Plan
+        </h1>
+        <p class="mt-6 max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300">
+          Transparent pricing, powerful features, and no hidden fees. Start free and upgrade when you're ready to scale.
+        </p>
+        
+        <!-- Feature Highlights -->
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3 max-w-4xl mx-auto">
+          <div class="flex items-center justify-center space-x-2 text-green-600 dark:text-green-400">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span class="text-sm font-medium">All Platforms Available</span>
+          </div>
+          <div class="flex items-center justify-center space-x-2 text-green-600 dark:text-green-400">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span class="text-sm font-medium">AI Content Generation</span>
+          </div>
+          <div class="flex items-center justify-center space-x-2 text-green-600 dark:text-green-400">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span class="text-sm font-medium">No Hidden Fees</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pricing Cards -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      
+      <!-- Free Tier -->
+      <div class="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden">
+        <div class="p-8">
+          <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Free</h3>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+              Perfect for Testing
+            </span>
+          </div>
+          
+          <div class="mt-4">
+            <span class="text-5xl font-bold text-gray-900 dark:text-white">$0</span>
+            <span class="text-gray-500 dark:text-gray-400">/month</span>
+          </div>
+          
+          <p class="mt-4 text-gray-600 dark:text-gray-300">
+            Try all features with usage limits. Perfect for individuals getting started.
+          </p>
+          
+          <div class="mt-8">
+            <% if user_signed_in? %>
+              <%= link_to "Current Plan", dashboard_path, 
+                          class: "w-full flex justify-center items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors" %>
+            <% else %>
+              <%= link_to "Get Started Free", auth0_login_url('signup'), 
+                          class: "w-full flex justify-center items-center px-6 py-3 border border-purple-600 text-purple-600 rounded-xl font-medium hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors" %>
+            <% end %>
+          </div>
+          
+          <div class="mt-8 space-y-4">
+            <h4 class="font-semibold text-gray-900 dark:text-white">Features included:</h4>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">All Platforms</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">LinkedIn, Facebook, Instagram, TikTok, YouTube</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">10 AI Posts/Month</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">Business, Influencer & Personal modes</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">Image Uploads</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">8MB max, 1 per post, JPG/PNG</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">Post Scheduling</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">1 scheduled post per day</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-orange-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-orange-600 dark:text-orange-400 font-medium">Rate Limited</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">1 post per hour max</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pro Tier -->
+      <div class="relative bg-gradient-to-br from-purple-600 to-pink-600 rounded-3xl shadow-2xl overflow-hidden transform scale-105">
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <span class="inline-flex items-center px-4 py-1 rounded-full text-sm font-medium bg-yellow-400 text-yellow-900">
+            ⭐ Most Popular
+          </span>
+        </div>
+        
+        <div class="p-8 text-white">
+          <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-bold">Pro</h3>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white">
+              For Growing Businesses
+            </span>
+          </div>
+          
+          <div class="mt-4">
+            <span class="text-5xl font-bold">$15</span>
+            <span class="text-purple-100">/month</span>
+          </div>
+          
+          <p class="mt-4 text-purple-100">
+            Perfect for businesses and influencers who need more power and flexibility.
+          </p>
+          
+          <div class="mt-8">
+            <% if user_signed_in? %>
+              <%= link_to "Upgrade to Pro", "#", 
+                          class: "w-full flex justify-center items-center px-6 py-3 bg-white text-purple-600 rounded-xl font-medium hover:bg-purple-50 transition-colors" %>
+            <% else %>
+              <%= link_to "Start Pro Trial", auth0_login_url('signup'), 
+                          class: "w-full flex justify-center items-center px-6 py-3 bg-white text-purple-600 rounded-xl font-medium hover:bg-purple-50 transition-colors" %>
+            <% end %>
+          </div>
+          
+          <div class="mt-8 space-y-4">
+            <h4 class="font-semibold text-white">Everything in Free, plus:</h4>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-300 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-white font-medium">200 AI Posts/Month</span>
+                  <p class="text-sm text-purple-200">20x more AI generations</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-300 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-white font-medium">Custom AI Prompts</span>
+                  <p class="text-sm text-purple-200">Personalize your AI assistant</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-300 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-white font-medium">Enhanced Images</span>
+                  <p class="text-sm text-purple-200">15MB, 4 per post, GIF/WebP support</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-300 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-white font-medium">Advanced Scheduling</span>
+                  <p class="text-sm text-purple-200">20 posts/day, 5 campaigns</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-300 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-white font-medium">Analytics Dashboard</span>
+                  <p class="text-sm text-purple-200">Track performance & engagement</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-blue-300 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-blue-200 font-medium">Higher Rate Limits</span>
+                  <p class="text-sm text-purple-200">10 posts/hour (10x faster)</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Enterprise Tier -->
+      <div class="relative bg-white dark:bg-slate-800 rounded-3xl shadow-2xl border border-gray-200 dark:border-slate-700 overflow-hidden">
+        <div class="p-8">
+          <div class="flex items-center justify-between">
+            <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Enterprise</h3>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-200">
+              For Teams & Agencies
+            </span>
+          </div>
+          
+          <div class="mt-4">
+            <span class="text-5xl font-bold text-gray-900 dark:text-white">$99</span>
+            <span class="text-gray-500 dark:text-gray-400">/month</span>
+          </div>
+          
+          <p class="mt-4 text-gray-600 dark:text-gray-300">
+            Full-featured solution for agencies, teams, and enterprises needing maximum control.
+          </p>
+          
+          <div class="mt-8">
+            <% if user_signed_in? %>
+              <%= link_to "Upgrade to Enterprise", "#", 
+                          class: "w-full flex justify-center items-center px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-medium hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors" %>
+            <% else %>
+              <%= link_to "Contact Sales", "#", 
+                          class: "w-full flex justify-center items-center px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-medium hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors" %>
+            <% end %>
+          </div>
+          
+          <div class="mt-8 space-y-4">
+            <h4 class="font-semibold text-gray-900 dark:text-white">Everything in Pro, plus:</h4>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">Unlimited AI Posts</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">No monthly limits</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">White Label Option</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">Brand as your own platform</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">Premium Images</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">25MB, 10 per post, all formats</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">Team Members</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">Unlimited user accounts</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-green-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-gray-900 dark:text-white font-medium">Own API Keys</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">Use your OpenAI/Claude keys</p>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-purple-500 mt-0.5 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                </svg>
+                <div>
+                  <span class="text-purple-600 dark:text-purple-400 font-medium">Priority Support</span>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">24/7 dedicated support team</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mt-24 text-center">
+      <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+        Frequently Asked Questions
+      </h3>
+      <div class="max-w-4xl mx-auto grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div class="text-left">
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Can I change plans anytime?</h4>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            Yes! Upgrade or downgrade your plan at any time. Changes take effect immediately.
+          </p>
+        </div>
+        <div class="text-left">
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Do you offer refunds?</h4>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            We offer a 30-day money-back guarantee for all paid plans. No questions asked.
+          </p>
+        </div>
+        <div class="text-left">
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">What platforms are supported?</h4>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            LinkedIn (live), Facebook, Instagram, TikTok, and YouTube (in development).
+          </p>
+        </div>
+        <div class="text-left">
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-2">Is my content stored?</h4>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">
+            No! We process and post your content immediately, then delete it. Privacy first.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <div class="mt-16 text-center">
+      <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-3xl p-8 text-white">
+        <h3 class="text-2xl font-bold mb-4">Ready to Transform Your Social Media?</h3>
+        <p class="mb-6 text-purple-100">
+          Join thousands of businesses using transparent, honest social media management.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <% unless user_signed_in? %>
+            <%= link_to "Start Free Today", auth0_login_url('signup'), 
+                        class: "px-8 py-3 bg-white text-purple-600 rounded-xl font-medium hover:bg-purple-50 transition-colors" %>
+          <% end %>
+          <%= link_to "View Live Demo", dashboard_path, 
+                      class: "px-8 py-3 border border-white text-white rounded-xl font-medium hover:bg-white/10 transition-colors" %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

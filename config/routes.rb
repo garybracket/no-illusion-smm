@@ -68,9 +68,10 @@ Rails.application.routes.draw do
   get '/resume/download', to: 'resume#download', as: :download_resume
   post '/resume/sync_from_linkedin', to: 'resume#sync_from_linkedin', as: :sync_resume_from_linkedin
   
-  # Legal pages
+  # Legal pages and marketing
   get '/privacy', to: 'pages#privacy'
   get '/terms', to: 'pages#terms'
+  get '/pricing', to: 'pages#pricing'
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

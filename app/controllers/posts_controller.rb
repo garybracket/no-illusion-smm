@@ -11,6 +11,7 @@ class PostsController < ApplicationController
   
   def new
     @post = current_user.posts.build
+    @preferred_platform = params[:platform] if params[:platform].present?
   end
   
   def create
