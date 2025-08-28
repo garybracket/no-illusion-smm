@@ -24,22 +24,26 @@
     - Audit logging and proper error handling
     - "Danger Zone" UI with confirmation dialog
     - Data deletion instructions page at `/data-deletion`
+11. **Production Deployment**: 
+    - Automatic migrations on deployment via Procfile
+    - Light mode interface (dark mode disabled)
+    - Fixed pricing page layout and "Most Popular" pill
+    - Production error handling and monitoring
 
-### 🚧 PARTIALLY COMPLETE - NEEDS FACEBOOK CREDENTIALS
-**Facebook Integration (95% Complete)**:
-- ✅ FacebookOauthController with proper OAuth flow
-- ✅ FacebookApiService with posting and analytics
-- ✅ UI integration in platform connections
-- ✅ Routes configured
-- ❌ **MISSING**: App ID and Secret from Facebook Developer Console
-- ❌ **MISSING**: Production app review/approval for public use
+### 🚧 FACEBOOK INTEGRATION - READY FOR TESTING
+**Facebook Integration (99% Complete)**:
+- ✅ **New Facebook App Created**: App ID 829507949401219 with "Other" use case
+- ✅ **All Permissions Available**: pages_manage_posts, instagram_content_publish, business_management
+- ✅ **Environment Variables**: Updated in both development and production
+- ✅ **OAuth Redirect URLs**: Configured in Facebook Developer Console
+- ✅ **Graceful Error Handling**: Users can connect even without business pages
+- 🕐 **Testing Phase**: Standard Access available, Advanced Access unlocks after 24 hours
 
-**Next Steps for Facebook**:
-1. Get App ID and Secret from [developers.facebook.com](https://developers.facebook.com)
-2. Add to Rails credentials: `facebook: { app_id: 'xxx', app_secret: 'xxx' }`
-3. Configure OAuth redirect URIs in Facebook app settings
-4. Request permissions: `pages_manage_posts`, `pages_read_engagement`, `business_management`
-5. Submit for app review to exit developer mode
+**Current Status**:
+- **Standard Access**: Available now for testing business page posting
+- **Advanced Access**: Will unlock 24 hours after first successful API call
+- **Production Ready**: Can handle users with or without business pages
+- **Next**: Test connection → triggers API call → Advanced Access unlocks automatically
 
 ### ⚠️ KNOWN ISSUES - NEEDS FUTURE WORK
 1. **Dark Mode Not Working**: 
@@ -466,15 +470,15 @@ AUTH0_CLIENT_SECRET=xxx
 AUTH0_SECRET=xxx
 
 # AI Providers
-OPENAI_API_KEY=xxx
-ANTHROPIC_API_KEY=xxx
-GOOGLE_API_KEY=xxx
+OPENAI_API_KEY=your_openai_key_here
+ANTHROPIC_API_KEY=your_claude_key_here
+GOOGLE_API_KEY=your_google_key_here
 
 # Social Media Platform APIs  
-FACEBOOK_APP_ID=981014477450029
-FACEBOOK_APP_SECRET=8b528122dab4c647130df58ea6f66f72
+FACEBOOK_APP_ID=829507949401219
+FACEBOOK_APP_SECRET=b3ab4c67b8c04eb3a0d1bb5ed1c24a38
 LINKEDIN_CLIENT_ID=78681kh4iitymk
-LINKEDIN_CLIENT_SECRET=xxx
+LINKEDIN_CLIENT_SECRET=your_linkedin_secret_here
 TIKTOK_CLIENT_KEY=xxx
 TIKTOK_CLIENT_SECRET=xxx
 ```
