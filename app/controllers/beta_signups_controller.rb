@@ -49,9 +49,8 @@ class BetaSignupsController < ApplicationController
   end
   
   def ensure_admin!
-    # For now, check if user is signed in and has specific email
-    # You can enhance this with proper admin role system later
-    unless user_signed_in? && current_user.email == 'real.ener.g@gmail.com'
+    admin_email = ENV['ADMIN_EMAIL'] || 'real.ener.g@gmail.com'
+    unless user_signed_in? && current_user.email == admin_email
       redirect_to root_path, alert: 'Access denied'
     end
   end

@@ -3,7 +3,7 @@ class BetaSignupMailer < ApplicationMailer
 
   def new_signup(beta_signup)
     @beta_signup = beta_signup
-    @admin_email = 'real.ener.g@gmail.com'
+    @admin_email = ENV['ADMIN_NOTIFICATION_EMAIL'] || ENV['ADMIN_EMAIL'] || 'real.ener.g@gmail.com'
 
     mail(
       to: @admin_email,
