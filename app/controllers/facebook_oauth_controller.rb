@@ -36,7 +36,19 @@ class FacebookOauthController < ApplicationController
         
         redirect_to platform_connections_path, notice: "Successfully connected #{pages.length} Facebook page(s)!"
       else
-        redirect_to platform_connections_path, alert: 'No Facebook pages found. Please create a Facebook business page first.'
+        # Graceful handling: Store user connection even without pages
+        current_user.platform_connections.create!(
+          platform_name: 'facebook',
+          platform_user_id: 'no_pages_available',
+          access_token: access_token,
+          expires_at: 2.months.from_now,
+          is_active: true,
+          settings: { status: 'connected_no_pages', message: 'Facebook connected but no business pages found. Create a Facebook business page to enable posting.' }
+        )
+        
+        redirect_to platform_connections_path, 
+                    notice: 'Facebook connected! No business pages found - create a Facebook business page to enable posting.',
+                    alert: 'Tip: Facebook posting requires a business page. You can still use LinkedIn and other platforms!'
       end
     else
       redirect_to platform_connections_path, alert: "Facebook connection failed: #{result[:error]}"

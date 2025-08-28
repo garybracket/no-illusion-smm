@@ -455,26 +455,28 @@ production:
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 ```
 
-### Credentials
-```yaml
-# config/credentials.yml.enc
-ai:
-  openai:
-    api_key: xxx
-  anthropic:
-    api_key: xxx
+### Environment Variables
+```bash
+# .env file (development) / Heroku Config Vars (production)
 
-linkedin:
-  client_id: xxx
-  client_secret: xxx
+# Auth0 Authentication
+AUTH0_DOMAIN=dev-xjxc225muqx8ffbc.us.auth0.com
+AUTH0_CLIENT_ID=xxx
+AUTH0_CLIENT_SECRET=xxx
+AUTH0_SECRET=xxx
 
-facebook:
-  app_id: xxx
-  app_secret: xxx
+# AI Providers
+OPENAI_API_KEY=xxx
+ANTHROPIC_API_KEY=xxx
+GOOGLE_API_KEY=xxx
 
-youtube:
-  client_id: xxx
-  client_secret: xxx
+# Social Media Platform APIs  
+FACEBOOK_APP_ID=981014477450029
+FACEBOOK_APP_SECRET=8b528122dab4c647130df58ea6f66f72
+LINKEDIN_CLIENT_ID=78681kh4iitymk
+LINKEDIN_CLIENT_SECRET=xxx
+TIKTOK_CLIENT_KEY=xxx
+TIKTOK_CLIENT_SECRET=xxx
 ```
 
 ## Reference Implementation
