@@ -68,7 +68,7 @@
               <button type="button" 
                       class="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300"
                       data-action="click->post-form#optimizeContent"
-                      onclick="console.log('Optimize clicked!'); alert('Optimize works!')">
+                      onclick="window.testAI('optimize'); console.log('Optimize clicked!'); alert('Optimize works!')">
                 🎯 Optimize Content
               </button>
               <button type="button" 
@@ -234,7 +234,14 @@
   <% end %>
 </div>
 
-<!-- Add the Stimulus controller for interactive functionality -->
+<!-- Debug: Check if JavaScript is loading -->
 <script>
-// This will be moved to a proper Stimulus controller file
+console.log("DEBUG: JavaScript is loading on new post page");
+console.log("DEBUG: Stimulus application:", window.Stimulus);
+
+// Test function for AI buttons
+window.testAI = function(action) {
+  console.log("testAI called with action:", action);
+  alert("JavaScript function works for " + action);
+}
 </script>
