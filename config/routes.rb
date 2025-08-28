@@ -72,6 +72,7 @@ Rails.application.routes.draw do
   get '/privacy', to: 'pages#privacy'
   get '/terms', to: 'pages#terms'
   get '/pricing', to: 'pages#pricing'
+  get '/data-deletion', to: 'pages#data_deletion', as: :data_deletion
   
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
