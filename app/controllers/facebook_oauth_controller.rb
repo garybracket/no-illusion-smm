@@ -76,9 +76,9 @@ class FacebookOauthController < ApplicationController
 
   def callback_url
     if Rails.env.production?
-      "https://smm.no-illusion.com/facebook/callback"
+      "#{ENV['APP_URL'] || 'https://smm.no-illusion.com'}/facebook/callback"
     else
-      port = ENV['PORT'] || 3000
+      port = ENV['PORT'] || ENV['DEV_PORT'] || 3000
       "http://localhost:#{port}/facebook/callback"
     end
   end

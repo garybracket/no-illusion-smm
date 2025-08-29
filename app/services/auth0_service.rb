@@ -66,9 +66,9 @@ class Auth0Service
 
   def callback_url
     if Rails.env.production?
-      "https://smm.no-illusion.com/auth/auth0/callback"
+      "#{ENV['APP_URL'] || 'https://smm.no-illusion.com'}/auth/auth0/callback"
     else
-      port = ENV['PORT'] || 3000
+      port = ENV['PORT'] || ENV['DEV_PORT'] || 3000
       "http://localhost:#{port}/auth/auth0/callback"
     end
   end

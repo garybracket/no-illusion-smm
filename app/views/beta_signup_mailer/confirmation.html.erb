@@ -40,7 +40,7 @@
         </ol>
       </div>
       
-      <p>In the meantime, feel free to explore our current platform at <a href="https://smm.no-illusion.com">smm.no-illusion.com</a></p>
+      <p>In the meantime, feel free to explore our current platform at <a href="<%= ENV['APP_URL'] || 'https://smm.no-illusion.com' %>"><%= ENV['APP_DOMAIN'] || 'smm.no-illusion.com' %></a></p>
       
       <p style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px;">
         <strong>No iLLusion Software</strong><br>

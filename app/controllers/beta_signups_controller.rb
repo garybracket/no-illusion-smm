@@ -58,17 +58,19 @@ class BetaSignupsController < ApplicationController
   def check_signup_rate_limit
     # Rate limiting: max 3 signups per IP per hour to prevent email spam
     ip_address = request.remote_ip
+    rate_window = (ENV['BETA_SIGNUP_RATE_WINDOW'] || '60').to_i.minutes.ago
     recent_signups = BetaSignup.where(
       "created_at > ? AND signup_date > ?", 
-      1.hour.ago, 
-      1.hour.ago
+      rate_window, 
+      rate_window
     ).count
     
     # Also check for duplicate email attempts (prevent resubmission spam)
     if params[:beta_signup] && params[:beta_signup][:email]
+      duplicate_window = (ENV['BETA_SIGNUP_DUPLICATE_WINDOW'] || '10').to_i.minutes.ago
       recent_email_attempts = BetaSignup.where(
         email: params[:beta_signup][:email],
-        created_at: 10.minutes.ago..
+        created_at: duplicate_window..
       ).count
       
       if recent_email_attempts > 0
@@ -78,8 +80,9 @@ class BetaSignupsController < ApplicationController
       end
     end
     
-    # Global rate limiting: max 10 signups per hour total (launch day protection)
-    if recent_signups >= 10
+    # Global rate limiting: configurable max signups per hour (launch day protection)
+    rate_limit = (ENV['BETA_SIGNUP_RATE_LIMIT'] || '10').to_i
+    if recent_signups >= rate_limit
       Rails.logger.warn "High signup volume detected: #{recent_signups} signups in past hour"
       # Still allow signup but disable emails to prevent spam
       session[:skip_beta_emails] = true

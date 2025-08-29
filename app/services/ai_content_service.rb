@@ -3,8 +3,8 @@ require 'json'
 
 class AiContentService
   CLAUDE_API_URL = 'https://api.anthropic.com/v1/messages'
-  MODEL = 'claude-3-haiku-20240307' # Fast, affordable model for content generation
-  MAX_TOKENS = 1024
+  MODEL = ENV['AI_MODEL'] || 'claude-3-haiku-20240307' # Fast, affordable model for content generation
+  MAX_TOKENS = (ENV['AI_MAX_TOKENS'] || '1024').to_i
   
   class << self
     def generate_post(user:, prompt: nil, platform: nil, content_mode: nil)
