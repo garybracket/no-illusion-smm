@@ -5,7 +5,7 @@ class FacebookOauthController < ApplicationController
   FACEBOOK_APP_SECRET = ENV['FACEBOOK_APP_SECRET'] || Rails.application.credentials.dig(:facebook, :app_secret)
 
   def connect
-    redirect_to authorization_url
+    redirect_to authorization_url, allow_other_host: true
   end
 
   def callback
@@ -66,7 +66,7 @@ class FacebookOauthController < ApplicationController
     params = {
       client_id: FACEBOOK_APP_ID,
       redirect_uri: callback_url,
-      scope: 'pages_manage_posts,pages_read_engagement,business_management',
+      scope: 'public_profile,email', # Start with basic permissions only
       response_type: 'code',
       state: SecureRandom.hex(16)
     }
@@ -78,6 +78,7 @@ class FacebookOauthController < ApplicationController
     if Rails.env.production?
       "#{ENV['APP_URL'] || 'https://smm.no-illusion.com'}/facebook/callback"
     else
+      # Use localhost since you added localhost to Facebook App Domains
       port = ENV['PORT'] || ENV['DEV_PORT'] || 3000
       "http://localhost:#{port}/facebook/callback"
     end
