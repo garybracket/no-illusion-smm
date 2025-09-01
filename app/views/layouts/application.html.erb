@@ -16,6 +16,38 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    
+    <!-- Facebook SDK for JavaScript - Business Login Configuration -->
+    <script>
+      window.fbAsyncInit = function() {
+        console.log("Facebook Business SDK initializing...");
+        console.log("App ID:", '<%= ENV['FACEBOOK_APP_ID'] %>');
+        
+        FB.init({
+          appId      : '<%= ENV['FACEBOOK_APP_ID'] %>',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v22.0',
+          // Business Login specific settings
+          status     : false, // Don't check login status automatically
+          oauth      : true   // Enable OAuth for business login
+        });
+        
+        console.log("Facebook Business SDK initialized successfully");
+        FB.AppEvents.logPageView();
+        
+        // For business apps, skip the permissions check that requires user login
+        console.log("Business app - skipping user permissions check");
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "https://connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
   </head>
 
   <body class="bg-gray-50 dark:bg-gray-900 min-h-screen transition-colors duration-200">

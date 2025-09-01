@@ -64,7 +64,10 @@ Rails.application.routes.draw do
   # Facebook OAuth (direct implementation)
   get '/facebook/connect', to: 'facebook_oauth#connect', as: :facebook_connect
   get '/facebook/callback', to: 'facebook_oauth#callback', as: :facebook_callback
+  post '/facebook/sdk_callback', to: 'facebook_oauth#sdk_callback', as: :facebook_sdk_callback
   delete '/facebook/disconnect', to: 'facebook_oauth#disconnect', as: :facebook_disconnect
+  get '/facebook/test_api_access', to: 'facebook_oauth#test_api_access', as: :facebook_test_api_access
+  get '/facebook/debug_permissions', to: 'facebook_oauth#debug_permissions', as: :facebook_debug_permissions
   
   # Resume Builder
   get '/resume', to: 'resume#show', as: :resume

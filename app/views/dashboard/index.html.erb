@@ -196,9 +196,15 @@
             <% end %>
           </div>
         <% else %>
-          <%= link_to facebook_connect_path, class: "block w-full text-center bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors" do %>
-            Connect Facebook
-          <% end %>
+          <div data-controller="facebook-login">
+            <button data-action="click->facebook-login#login" data-facebook-login-target="button"
+                    class="block w-full text-center bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors">
+              Connect Facebook Business
+            </button>
+            <div class="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              <span data-facebook-login-target="status">Initializing Facebook Business SDK...</span>
+            </div>
+          </div>
         <% end %>
       </div>
 
