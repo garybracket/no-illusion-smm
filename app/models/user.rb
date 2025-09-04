@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   # Auth0 + Devise integration with database fallback
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :trackable
-  
+
   # SECURITY: Auth0 user identifier - this is our source of truth for authenticated users
   validates :auth0_id, uniqueness: true, allow_nil: true
   # Note: email validation handled by Devise :validatable module
@@ -10,57 +10,57 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :prompt_templates, dependent: :destroy
   has_many :platform_connections, dependent: :destroy
-  
+
   # LinkedIn integration helpers
   def linkedin_connection
-    platform_connections.for_platform('linkedin').active.first
+    platform_connections.for_platform("linkedin").active.first
   end
-  
+
   def linkedin_connected?
     linkedin_connection&.valid_connection? || false
   end
 
   # Facebook integration helpers
   def facebook_connections
-    platform_connections.for_platform('facebook').active
+    platform_connections.for_platform("facebook").active
   end
-  
+
   def facebook_connected?
     facebook_connections.any? { |conn| conn.valid_connection? }
   end
 
   # Instagram integration helpers (uses Facebook infrastructure)
   def instagram_connections
-    platform_connections.for_platform('instagram').active
+    platform_connections.for_platform("instagram").active
   end
-  
+
   def instagram_connected?
     instagram_connections.any? { |conn| conn.valid_connection? }
   end
 
   # TikTok integration helpers
   def tiktok_connection
-    platform_connections.for_platform('tiktok').active.first
+    platform_connections.for_platform("tiktok").active.first
   end
-  
+
   def tiktok_connected?
     tiktok_connection&.valid_connection? || false
   end
 
-  # Twitter/X integration helpers  
+  # Twitter/X integration helpers
   def twitter_connection
-    platform_connections.for_platform('twitter').active.first
+    platform_connections.for_platform("twitter").active.first
   end
-  
+
   def twitter_connected?
     twitter_connection&.valid_connection? || false
   end
 
   # YouTube integration helpers
   def youtube_connection
-    platform_connections.for_platform('youtube').active.first
+    platform_connections.for_platform("youtube").active.first
   end
-  
+
   def youtube_connected?
     youtube_connection&.valid_connection? || false
   end
@@ -79,18 +79,18 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     # SECURITY: Validate Auth0 response structure
     # Handle both omniauth objects and test hashes
-    info = auth.respond_to?(:info) ? auth.info : auth['info']
-    uid = auth.respond_to?(:uid) ? auth.uid : auth['uid']
-    
+    info = auth.respond_to?(:info) ? auth.info : auth["info"]
+    uid = auth.respond_to?(:uid) ? auth.uid : auth["uid"]
+
     # Enhanced debugging for production
     Rails.logger.info "Auth0 omniauth info: #{info.inspect}"
     Rails.logger.info "Auth0 omniauth uid: #{uid.inspect}"
-    
-    return nil unless info&.[]('email') && uid
-    
+
+    return nil unless info&.[]("email") && uid
+
     # Find or create user by Auth0 ID (most secure approach)
-    user = find_by(auth0_id: uid) || find_by(email: info['email'])
-    
+    user = find_by(auth0_id: uid) || find_by(email: info["email"])
+
     if user
       # Update Auth0 ID if user was found by email (for existing users)
       Rails.logger.info "Existing user found: #{user.email}"
@@ -98,29 +98,29 @@ class User < ApplicationRecord
     else
       # SECURITY: Create new user with required validations
       Rails.logger.info "Creating new user for Auth0 ID: #{uid}"
-      
+
       # Build user attributes
       user_attrs = {
         auth0_id: uid,
-        email: info['email'],
-        name: info['name'] || info['email'].split('@').first,
+        email: info["email"],
+        name: info["name"] || info["email"].split("@").first,
         content_mode: :business,  # Safe default
         password: Devise.friendly_token[0, 20]  # Random password for Auth0 users
       }
-      
+
       Rails.logger.info "User attributes to create: #{user_attrs.inspect}"
-      
+
       # Use create instead of create! to handle validation errors gracefully
       user = create(user_attrs)
-      
+
       unless user.persisted?
         Rails.logger.error "User creation failed with errors: #{user.errors.full_messages}"
         return nil
       end
-      
+
       Rails.logger.info "User created successfully: #{user.id}"
     end
-    
+
     user
   rescue ActiveRecord::RecordInvalid => e
     # SECURITY: Log authentication failures for monitoring
@@ -137,7 +137,7 @@ class User < ApplicationRecord
 
   def set_default_ai_preferences
     return unless self.ai_preferences.blank?
-    
+
     self.ai_preferences = {
       "generation" => true,
       "suggestions" => true,

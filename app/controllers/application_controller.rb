@@ -7,20 +7,20 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
-  
+
   def after_sign_in_path_for(resource)
     dashboard_path
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :content_mode])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name, :bio, :skills, :mission_statement, :content_mode, :ai_enabled, :ai_preferences])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name, :content_mode ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :name, :bio, :skills, :mission_statement, :content_mode, :ai_enabled, :ai_preferences ])
   end
 
   # Helper method for Auth0 authentication URLs (using Auth0 Ruby SDK)
-  def auth0_login_url(mode = 'login')
+  def auth0_login_url(mode = "login")
     # Use our Auth0 controller with screen_hint parameter
-    if mode == 'signup'
+    if mode == "signup"
       auth0_login_path + "?screen_hint=signup"
     else
       auth0_login_path
@@ -31,6 +31,6 @@ class ApplicationController < ActionController::Base
   private
 
   def skip_authentication?
-    devise_controller? || controller_name == 'home' || controller_name == 'auth0'
+    devise_controller? || controller_name == "home" || controller_name == "auth0"
   end
 end
