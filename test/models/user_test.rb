@@ -3,10 +3,10 @@ require "test_helper"
 class UserTest < ActiveSupport::TestCase
   def setup
     @valid_auth = {
-      'uid' => 'auth0|test123',
-      'info' => {
-        'email' => 'test@example.com',
-        'name' => 'Test User'
+      "uid" => "auth0|test123",
+      "info" => {
+        "email" => "test@example.com",
+        "name" => "Test User"
       }
     }
   end
@@ -98,7 +98,7 @@ class UserTest < ActiveSupport::TestCase
     )
 
     user2 = User.create!(
-      name: "User 2", 
+      name: "User 2",
       email: "test2@example.com",
       content_mode: "business"
     )
@@ -246,7 +246,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "linkedin_connected? should return false with no connection" do
     user = User.create!(
-      name: "Test User", 
+      name: "Test User",
       email: "test@example.com",
       auth0_id: "auth0|test123",
       content_mode: "business"
@@ -258,7 +258,7 @@ class UserTest < ActiveSupport::TestCase
   test "linkedin_connected? should return false with expired connection" do
     user = User.create!(
       name: "Test User",
-      email: "test@example.com", 
+      email: "test@example.com",
       auth0_id: "auth0|test123",
       content_mode: "business"
     )
@@ -335,7 +335,7 @@ class UserTest < ActiveSupport::TestCase
   test "from_omniauth should create new user when not found" do
     initial_count = User.count
     user = User.from_omniauth(@valid_auth)
-    
+
     assert_equal initial_count + 1, User.count
     assert_equal "test@example.com", user.email
     assert_equal "Test User", user.name
@@ -345,9 +345,9 @@ class UserTest < ActiveSupport::TestCase
 
   test "from_omniauth should handle missing name gracefully" do
     auth_without_name = {
-      'uid' => 'auth0|test123',
-      'info' => {
-        'email' => 'test@example.com'
+      "uid" => "auth0|test123",
+      "info" => {
+        "email" => "test@example.com"
       }
     }
 
@@ -357,9 +357,9 @@ class UserTest < ActiveSupport::TestCase
 
   test "from_omniauth should return nil for invalid auth" do
     invalid_auth = {
-      'uid' => nil,
-      'info' => {
-        'email' => 'test@example.com'
+      "uid" => nil,
+      "info" => {
+        "email" => "test@example.com"
       }
     }
 
@@ -369,9 +369,9 @@ class UserTest < ActiveSupport::TestCase
 
   test "from_omniauth should return nil for missing email" do
     invalid_auth = {
-      'uid' => 'auth0|test123',
-      'info' => {
-        'name' => 'Test User'
+      "uid" => "auth0|test123",
+      "info" => {
+        "name" => "Test User"
       }
     }
 

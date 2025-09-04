@@ -34,7 +34,7 @@ gem "devise"
 gem "httparty"
 
 # Environment variables
-gem "dotenv-rails", groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
 
 # Auth0 integration (official SDK)
 gem "auth0"
@@ -74,4 +74,3 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
-

@@ -29,7 +29,7 @@ free = SubscriptionTier.create!(
   sort_order: 1
 )
 
-# Pro Tier - $8/month  
+# Pro Tier - $8/month
 pro = SubscriptionTier.create!(
   name: 'Pro',
   slug: 'pro',
@@ -55,7 +55,7 @@ pro = SubscriptionTier.create!(
 
 # Ultimate Tier - $49/month
 ultimate = SubscriptionTier.create!(
-  name: 'Ultimate', 
+  name: 'Ultimate',
   slug: 'ultimate',
   price_cents: 4900, # $49.00
   billing_interval: 'month',

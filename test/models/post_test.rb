@@ -53,7 +53,7 @@ class PostTest < ActiveSupport::TestCase
     )
     # Note: Checking for default value - may need to be set explicitly
     # This test will help us identify if we need to add a default value
-    assert_includes ['draft', nil], post.status
+    assert_includes [ "draft", nil ], post.status
   end
 
   test "should handle scheduling for future posts" do
@@ -74,7 +74,7 @@ class PostTest < ActiveSupport::TestCase
       content: "AI generated content",
       ai_generated: true
     )
-    
+
     manual_post = Post.create!(
       user: @user,
       content: "Manually written content",
@@ -103,7 +103,7 @@ class PostTest < ActiveSupport::TestCase
 
     personal_post = Post.create!(
       user: @user,
-      content: "Personal content", 
+      content: "Personal content",
       content_mode: "personal"
     )
 
@@ -126,7 +126,7 @@ class PostTest < ActiveSupport::TestCase
       content: "Test content"
     )
     post_id = post.id
-    
+
     @user.destroy
     assert_not Post.exists?(post_id)
   end

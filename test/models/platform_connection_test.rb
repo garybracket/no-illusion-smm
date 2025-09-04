@@ -55,14 +55,14 @@ class PlatformConnectionTest < ActiveSupport::TestCase
       access_token: "token1",
       is_active: true
     )
-    
+
     duplicate_connection = PlatformConnection.new(
       user: @user,
       platform_name: "linkedin",
       access_token: "token2",
       is_active: true
     )
-    
+
     assert_not duplicate_connection.save
     assert_includes duplicate_connection.errors[:platform_name], "has already been taken"
   end
@@ -201,12 +201,12 @@ class PlatformConnectionTest < ActiveSupport::TestCase
 
     facebook_connection = PlatformConnection.create!(
       user: @user,
-      platform_name: "facebook", 
+      platform_name: "facebook",
       access_token: "test_token",
       is_active: true
     )
 
-    linkedin_connections = PlatformConnection.for_platform('linkedin')
+    linkedin_connections = PlatformConnection.for_platform("linkedin")
     assert_includes linkedin_connections, linkedin_connection
     assert_not_includes linkedin_connections, facebook_connection
   end

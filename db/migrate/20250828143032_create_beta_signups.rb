@@ -12,7 +12,7 @@ class CreateBetaSignups < ActiveRecord::Migration[7.2]
 
       t.timestamps
     end
-    
+
     add_index :beta_signups, :email, unique: true
     add_index :beta_signups, :status
     add_index :beta_signups, :signup_date

@@ -2,29 +2,29 @@ class Auth0Service
   include Rails.application.routes.url_helpers
 
   def initialize
-    @client_id = ENV['AUTH0_CLIENT_ID']
-    @client_secret = ENV['AUTH0_CLIENT_SECRET'] 
-    @domain = ENV['AUTH0_DOMAIN']
-    
+    @client_id = ENV["AUTH0_CLIENT_ID"]
+    @client_secret = ENV["AUTH0_CLIENT_SECRET"]
+    @domain = ENV["AUTH0_DOMAIN"]
+
     raise "Auth0 credentials not configured" unless @client_id && @client_secret && @domain
   end
 
   # Generate Auth0 authorization URL
   def authorization_url(state = nil, screen_hint = nil)
     state ||= SecureRandom.hex(16)
-    
+
     params = {
-      response_type: 'code',
+      response_type: "code",
       client_id: @client_id,
       redirect_uri: callback_url,
-      scope: 'openid profile email',
+      scope: "openid profile email",
       state: state,
-      connection: ENV['AUTH0_CONNECTION_ID'] || 'con_ddNa7ToSKHpDerr0'  # Force specific connection to avoid username-password-authentication
+      connection: ENV["AUTH0_CONNECTION_ID"] || "con_ddNa7ToSKHpDerr0"  # Force specific connection to avoid username-password-authentication
     }
-    
+
     # Add screen_hint for signup vs login
     params[:screen_hint] = screen_hint if screen_hint
-    
+
     "https://#{@domain}/authorize?" + params.to_query
   end
 
@@ -32,22 +32,22 @@ class Auth0Service
   def handle_callback(code, state)
     # Exchange code for tokens
     token_response = exchange_code_for_tokens(code)
-    return { success: false, error: 'Token exchange failed' } unless token_response['access_token']
+    return { success: false, error: "Token exchange failed" } unless token_response["access_token"]
 
     # Get user info
-    user_info = get_user_info(token_response['access_token'])
-    return { success: false, error: 'Failed to get user info' } unless user_info
+    user_info = get_user_info(token_response["access_token"])
+    return { success: false, error: "Failed to get user info" } unless user_info
 
     # Find or create user
     user = find_or_create_user(user_info)
-    return { success: false, error: 'User creation failed' } unless user
+    return { success: false, error: "User creation failed" } unless user
 
-    { 
-      success: true, 
+    {
+      success: true,
       user: user,
       tokens: {
-        access_token: token_response['access_token'],
-        id_token: token_response['id_token']
+        access_token: token_response["access_token"],
+        id_token: token_response["id_token"]
       }
     }
   rescue => e
@@ -68,7 +68,7 @@ class Auth0Service
     if Rails.env.production?
       "#{ENV['APP_URL'] || 'https://smm.no-illusion.com'}/auth/auth0/callback"
     else
-      port = ENV['PORT'] || ENV['DEV_PORT'] || 3000
+      port = ENV["PORT"] || ENV["DEV_PORT"] || 3000
       "http://localhost:#{port}/auth/auth0/callback"
     end
   end
@@ -79,16 +79,16 @@ class Auth0Service
     http.use_ssl = true
 
     request = Net::HTTP::Post.new(uri)
-    request['Content-Type'] = 'application/x-www-form-urlencoded'
-    
+    request["Content-Type"] = "application/x-www-form-urlencoded"
+
     body = {
-      grant_type: 'authorization_code',
+      grant_type: "authorization_code",
       client_id: @client_id,
       client_secret: @client_secret,
       code: code,
       redirect_uri: callback_url
     }
-    
+
     request.body = body.to_query
 
     Rails.logger.info "Auth0 token exchange request to: #{uri}"
@@ -97,18 +97,18 @@ class Auth0Service
     Rails.logger.info "Auth0 client_secret length: #{@client_secret.length}"
     Rails.logger.info "Auth0 client_secret first/last 5: #{@client_secret[0..4]}...#{@client_secret[-5..-1]}"
     Rails.logger.info "Request body being sent: #{request.body}"
-    
+
     response = http.request(request)
     response_body = JSON.parse(response.body)
-    
+
     Rails.logger.info "Auth0 token exchange response code: #{response.code}"
     Rails.logger.info "Auth0 token exchange response: #{response_body.inspect}"
-    
-    unless response.code == '200'
+
+    unless response.code == "200"
       Rails.logger.error "Auth0 token exchange failed with status #{response.code}: #{response_body.inspect}"
       Rails.logger.error "Full request body was: #{request.body}"
     end
-    
+
     response_body
   end
 
@@ -118,16 +118,16 @@ class Auth0Service
     http.use_ssl = true
 
     request = Net::HTTP::Get.new(uri)
-    request['Authorization'] = "Bearer #{access_token}"
+    request["Authorization"] = "Bearer #{access_token}"
 
     response = http.request(request)
     JSON.parse(response.body)
   end
 
   def find_or_create_user(user_info)
-    auth0_id = user_info['sub']
-    email = user_info['email']
-    name = user_info['name'] || user_info['email']&.split('@')&.first
+    auth0_id = user_info["sub"]
+    email = user_info["email"]
+    name = user_info["name"] || user_info["email"]&.split("@")&.first
 
     # Find existing user by Auth0 ID or email
     user = User.find_by(auth0_id: auth0_id) || User.find_by(email: email)

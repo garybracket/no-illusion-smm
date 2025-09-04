@@ -1,24 +1,24 @@
 Rails.application.routes.draw do
   # Beta signup routes
-  resources :beta_signups, only: [:create, :show, :index] do
+  resources :beta_signups, only: [ :create, :show, :index ] do
     collection do
       get :thank_you
     end
   end
   # Devise routes (skip registrations and omniauth callbacks - we handle Auth0 manually)
-  devise_for :users, skip: [:registrations, :omniauth_callbacks]
-  
+  devise_for :users, skip: [ :registrations, :omniauth_callbacks ]
+
   # Auth0 authentication routes (using Auth0 Ruby SDK)
-  get '/auth/auth0', to: 'auth0#login', as: :auth0_login
-  get '/auth/auth0/callback', to: 'auth0#callback', as: :auth0_callback
-  get '/auth/logout', to: 'auth0#logout', as: :auth0_logout
-  
+  get "/auth/auth0", to: "auth0#login", as: :auth0_login
+  get "/auth/auth0/callback", to: "auth0#callback", as: :auth0_callback
+  get "/auth/logout", to: "auth0#logout", as: :auth0_logout
+
   # Root route
   root "home#index"
-  
+
   # Dashboard
   get "dashboard", to: "dashboard#index"
-  
+
   # Profile management (since we disabled Devise registration)
   get "profile/edit", to: "profile#edit", as: :edit_user_profile
   patch "profile", to: "profile#update", as: :user_profile
@@ -26,18 +26,18 @@ Rails.application.routes.draw do
   post "profile/add_skill", to: "profile#add_skill", as: :add_skill
   delete "profile/remove_skill/:skill_name", to: "profile#remove_skill", as: :remove_skill
   delete "profile", to: "profile#destroy", as: :destroy_user_profile
-  
+
   # TODO: Re-implement Auth0 logout after Auth0 integration is restored
   # delete "logout", to: "auth/omniauth#logout", as: :destroy_user_session
-  
+
   # AI Content Generation
   namespace :ai do
-    post 'generate_post', to: 'ai#generate_post'
-    post 'generate_suggestions', to: 'ai#generate_suggestions'
-    post 'optimize_content', to: 'ai#optimize_content'
-    post 'generate_and_post', to: 'ai#generate_and_post'
+    post "generate_post", to: "ai#generate_post"
+    post "generate_suggestions", to: "ai#generate_suggestions"
+    post "optimize_content", to: "ai#optimize_content"
+    post "generate_and_post", to: "ai#generate_and_post"
   end
-  
+
   # Posts Management
   resources :posts do
     member do
@@ -45,46 +45,46 @@ Rails.application.routes.draw do
     end
   end
 
-  
+
   # Platform Connections
-  resources :platform_connections, only: [:index] do
+  resources :platform_connections, only: [ :index ] do
     collection do
-      delete 'disconnect/:platform', to: 'platform_connections#disconnect', as: :disconnect
-      post 'test/:platform', to: 'platform_connections#test_post', as: :test_post
+      delete "disconnect/:platform", to: "platform_connections#disconnect", as: :disconnect
+      post "test/:platform", to: "platform_connections#test_post", as: :test_post
     end
   end
-  
+
   # LinkedIn OAuth (direct implementation)
-  get '/linkedin/authorize', to: 'linkedin_oauth#authorize', as: :linkedin_authorize
-  get '/users/auth/linkedin/callback', to: 'linkedin_oauth#callback', as: :linkedin_callback
-  post '/linkedin/import_profile', to: 'linkedin_oauth#import_profile', as: :linkedin_import_profile
-  post '/linkedin/export_profile', to: 'linkedin_oauth#export_profile', as: :linkedin_export_profile
-  get '/linkedin/export_preview', to: 'linkedin_oauth#export_preview', as: :linkedin_export_preview
-  
+  get "/linkedin/authorize", to: "linkedin_oauth#authorize", as: :linkedin_authorize
+  get "/users/auth/linkedin/callback", to: "linkedin_oauth#callback", as: :linkedin_callback
+  post "/linkedin/import_profile", to: "linkedin_oauth#import_profile", as: :linkedin_import_profile
+  post "/linkedin/export_profile", to: "linkedin_oauth#export_profile", as: :linkedin_export_profile
+  get "/linkedin/export_preview", to: "linkedin_oauth#export_preview", as: :linkedin_export_preview
+
   # Facebook OAuth (direct implementation)
-  get '/facebook/connect', to: 'facebook_oauth#connect', as: :facebook_connect
-  get '/facebook/callback', to: 'facebook_oauth#callback', as: :facebook_callback
-  post '/facebook/sdk_callback', to: 'facebook_oauth#sdk_callback', as: :facebook_sdk_callback
-  delete '/facebook/disconnect', to: 'facebook_oauth#disconnect', as: :facebook_disconnect
-  get '/facebook/test_api_access', to: 'facebook_oauth#test_api_access', as: :facebook_test_api_access
-  get '/facebook/debug_permissions', to: 'facebook_oauth#debug_permissions', as: :facebook_debug_permissions
-  
+  get "/facebook/connect", to: "facebook_oauth#connect", as: :facebook_connect
+  get "/facebook/callback", to: "facebook_oauth#callback", as: :facebook_callback
+  post "/facebook/sdk_callback", to: "facebook_oauth#sdk_callback", as: :facebook_sdk_callback
+  delete "/facebook/disconnect", to: "facebook_oauth#disconnect", as: :facebook_disconnect
+  get "/facebook/test_api_access", to: "facebook_oauth#test_api_access", as: :facebook_test_api_access
+  get "/facebook/debug_permissions", to: "facebook_oauth#debug_permissions", as: :facebook_debug_permissions
+
   # Resume Builder
-  get '/resume', to: 'resume#show', as: :resume
-  get '/resume/edit', to: 'resume#edit', as: :edit_resume
-  patch '/resume', to: 'resume#update', as: :update_resume
-  post '/resume/import', to: 'resume#import', as: :import_resume
-  get '/resume/preview', to: 'resume#preview', as: :preview_resume
-  get '/resume/download', to: 'resume#download', as: :download_resume
-  post '/resume/sync_from_linkedin', to: 'resume#sync_from_linkedin', as: :sync_resume_from_linkedin
-  
+  get "/resume", to: "resume#show", as: :resume
+  get "/resume/edit", to: "resume#edit", as: :edit_resume
+  patch "/resume", to: "resume#update", as: :update_resume
+  post "/resume/import", to: "resume#import", as: :import_resume
+  get "/resume/preview", to: "resume#preview", as: :preview_resume
+  get "/resume/download", to: "resume#download", as: :download_resume
+  post "/resume/sync_from_linkedin", to: "resume#sync_from_linkedin", as: :sync_resume_from_linkedin
+
   # Legal pages and marketing
-  get '/privacy', to: 'pages#privacy'
-  get '/terms', to: 'pages#terms'
-  get '/pricing', to: 'pages#pricing'
-  get '/data-deletion', to: 'pages#data_deletion', as: :data_deletion
-  get '/coming-soon', to: 'pages#coming_soon', as: :coming_soon
-  
+  get "/privacy", to: "pages#privacy"
+  get "/terms", to: "pages#terms"
+  get "/pricing", to: "pages#pricing"
+  get "/data-deletion", to: "pages#data_deletion", as: :data_deletion
+  get "/coming-soon", to: "pages#coming_soon", as: :coming_soon
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
