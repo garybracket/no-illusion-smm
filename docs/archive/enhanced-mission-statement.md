@@ -1,5 +1,5 @@
 # No iLLusion Software - Enhanced Mission Statement
-*Built from authentic website content and 20+ years of real experience*
+*Built from authentic website content and extensive real experience*
 
 ---
 
@@ -211,11 +211,11 @@
 ✓ **Practical** - Function over form, results over fluff  
 ✓ **Patient** - Bridge the gap between tech and business needs  
 
-**This isn't marketing copy - it's how I've built my entire 20+ year career.**
+**This isn't marketing copy - it's how I've built my entire career.**
 
 ---
 
-*Based on authentic website content from no-illusion.com and real experience building technology solutions for small businesses since starting as a teenager fixing PCs.*
+*Based on authentic website content from no-illusion.com and extensive experience building technology solutions for small businesses since starting as a teenager fixing PCs.*
 
 **Document Created**: January 2025  
 **Next Review**: Based on real client feedback, not arbitrary schedules  

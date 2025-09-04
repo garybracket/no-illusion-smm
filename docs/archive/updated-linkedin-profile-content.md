@@ -23,7 +23,7 @@
 • **Claude App Builder** - AI-assisted application generation with multi-provider support
 
 **💡 Core Philosophy:**
-20+ years experience from teenage PC building to IT Director. I built my career on patience and helping non-tech users navigate technology. **Direct communication, transparent processes, and educational approach** - eliminating traditional agency overhead through streamlined solo development.
+Extensive experience from teenage PC building to IT Director. I built my career on patience and helping non-tech users navigate technology. **Direct communication, transparent processes, and educational approach** - eliminating traditional agency overhead through streamlined solo development.
 
 **🚀 Technical Expertise:**
 • **Backend**: Ruby on Rails 7, Node.js, PostgreSQL, REST APIs, JSON processing
@@ -142,7 +142,7 @@ Currently serving as full-time IT Director while building No iLLusion Software t
 
 ## Certifications
 - Microsoft Certified Professional  
-- Self-Taught Hardware Expert (20+ years)
+- Self-Taught Hardware Expert
 - Business Process Automation Specialist
 
 ---

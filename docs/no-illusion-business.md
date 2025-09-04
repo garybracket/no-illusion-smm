@@ -36,7 +36,7 @@
 ## Company Philosophy & Mission
 
 ### Core Mission Statement
-*"Unlike big corporations and consulting firms, we don't take advantage of people who don't understand technology. Built by someone who started as a teen fixing computers and spent 20+ years patiently helping non-tech users navigate technology, we provide honest tools that empower small business owners - not exploit them. We go the extra mile to explain, educate, and even help those who want to host their own infrastructure, because transparency and user empowerment always win over predatory practices."*
+*"Unlike big corporations and consulting firms, we don't take advantage of people who don't understand technology. Built by someone who started as a teen fixing computers and has spent extensive time patiently helping non-tech users navigate technology, we provide honest tools that empower small business owners - not exploit them. We go the extra mile to explain, educate, and even help those who want to host their own infrastructure, because transparency and user empowerment always win over predatory practices."*
 
 ### The "No iLLusion" Philosophy
 After working with small businesses and corporations, the founder realized that software development and website building have become **predatory fields** that prey on uneducated managers and small businesses. The industry lacks consistency - you can get a $50,000 quote and a $5,000 quote for the same project.
@@ -51,7 +51,7 @@ After working with small businesses and corporations, the founder realized that 
 
 #### 2. **Patient Education**
 - Bridge the gap between tech complexity and user understanding
-- 20+ years of experience helping non-tech users navigate technology
+- Extensive experience helping non-tech users navigate technology
 - Willing to teach and train users who want to host their own infrastructure
 - Communication with patience, not condescension
 
