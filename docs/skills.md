@@ -1,4 +1,4 @@
-# Gary Bracket - Technical Skills
+# Gary McQueen - Technical Skills
 
 *Based on No Illusion Software Solutions project analysis*
 

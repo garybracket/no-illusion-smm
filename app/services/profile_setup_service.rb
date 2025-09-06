@@ -16,8 +16,8 @@ class ProfileSetupService
       updates_made = []
 
       # Update name if not already set to Gary
-      if user.name != "Gary Bracket"
-        user.name = "Gary Bracket"
+      if user.name != "Gary McQueen"
+        user.name = "Gary McQueen"
         updates_made << "Name"
       end
 
